@@ -1,0 +1,3 @@
+{
+ "_readme": "Map variety slugs to images. Entry formats: (a) 'images/file.jpg' or full URL string; (b) {\"srcs\":[url1,url2],\"credit\":\"Photo(s) courtesy of ...\"} for multi-photo + credit. TERRA NOVA images REQUIRE the credit line per their published terms. For production, prefer downloading the Hi-Res files into /images over hotlinking."
+}

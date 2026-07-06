@@ -1,0 +1,50 @@
+# Westcan Greenhouses — static site config
+
+[[redirects]]
+  from = "/westcan-home.html"
+  to = "/index.html"
+  status = 301
+
+# Legacy Shopify paths → new pages (protects bookmarks + SEO)
+[[redirects]]
+  from = "/products/*"
+  to = "/catalog.html"
+  status = 301
+[[redirects]]
+  from = "/collections/*"
+  to = "/catalog.html"
+  status = 301
+[[redirects]]
+  from = "/pages/contact*"
+  to = "/contact.html"
+  status = 301
+[[redirects]]
+  from = "/pages/*"
+  to = "/index.html"
+  status = 301
+[[redirects]]
+  from = "/blogs/*"
+  to = "/index.html"
+  status = 301
+[[redirects]]
+  from = "/cart"
+  to = "/quote.html"
+  status = 301
+[[redirects]]
+  from = "/search"
+  to = "/catalog.html"
+  status = 301
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+
+[[headers]]
+  for = "/catalogs/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

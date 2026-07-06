@@ -1,0 +1,59 @@
+WESTCAN LAUNCH CHECKLIST — westcangrhs.com to Netlify
+======================================================
+
+DONE (in this build):
+[x] All 3 forms wired to Netlify Forms with spam honeypots
+    (quote-request, contact, availability-signup)
+[x] Quote submissions include the full item list (trays/cell/variety/week/
+    book-vs-quote)
+[x] Security headers (HSTS, X-Frame-Options, nosniff, referrer policy)
+[x] Legacy Shopify redirects (/products/*, /collections/*, /pages/*,
+    /cart, /search, /blogs/*)
+[x] 404 page, robots.txt, sitemap.xml, favicon
+
+YOU DO — BEFORE changing DNS:
+[x] 1. IMAGES: Site ships CLEAN — zero dependencies on the old site.
+       All old-CDN photo references removed (cards show styled
+       placeholders; video plays without a poster frame; link previews
+       show title/description only). Add fresh photos anytime:
+       - variety pages: drop files in /images + one line each in
+         variety-images.json
+       - homepage cards/sections: send new photos to Claude to wire in
+[ ] 2. Deploy: drag the westcan-site folder to app.netlify.com/drop
+[ ] 3. Netlify > Site settings > Forms > Form notifications:
+       add email notification -> sales@westcangrhs.com
+       (do this for each of the 3 forms; submissions also appear in the
+       Netlify Forms dashboard)
+[ ] 4. Send a TEST submission through each form; confirm email arrives.
+[ ] 5. Turn on 2FA: Netlify account + domain registrar account.
+
+DNS CUTOVER (the moment of switch):
+[ ] 6. Netlify > Domain management > add westcangrhs.com (and www)
+[ ] 7. At your DNS provider: A record @ -> 75.2.60.5 (Netlify load
+       balancer; Netlify's panel shows the current value — use theirs),
+       CNAME www -> your-site.netlify.app
+       *** DO NOT touch MX records — that is your email. ***
+[ ] 8. Wait for HTTPS to provision (padlock appears; can take an hour).
+[ ] 9. Keep Shopify subscription active for 2-4 weeks as a fallback,
+       then cancel once stable.
+
+AFTER LAUNCH:
+[ ] 10. Google Search Console: submit sitemap.xml
+[ ] 11. Weekly workflow reminder: forecast upload updates availability.html,
+        homepage table, top-picks cards, and the downloadable xlsx.
+
+LIVE FEDEX RATES (Stage 2 — after basic launch):
+Netlify function: netlify/functions/fedex-rates.js (credentials server-side).
+FOUR env vars needed in Netlify (Site config > Environment variables, mark
+secrets "Contains secret values"):
+  FEDEX_CA_CLIENT_ID       = the shared API Key  (one pair for whole project)
+  FEDEX_CA_CLIENT_SECRET   = the shared Secret Key
+  FEDEX_US_ACCOUNT         = US 9-digit account number
+  FEDEX_CA_ACCOUNT         = CAD 9-digit account number
+(One key pair authenticates; the account number in each request selects
+US vs CAD negotiated rates.)
+Origins: US dest -> Blaine WA 98230 ; CA dest -> Langley V2Z 2A9 (auto).
+Covers BOXES (parcel). Pallets stay on the static estimate until FedEx
+Freight's own API is available. If FedEx is unreachable, the page keeps
+the static estimate — no dead form.
+Redeploy after adding env vars so the function can read them.
