@@ -210,6 +210,15 @@ footer{background:var(--navy-deep);color:#AEB7D4;padding:60px 0 30px;font-size:1
 }
 
 @media(max-width:560px){input,select,textarea{font-size:16px!important}}
+
+.fx-head{font-family:var(--ff-body);font-size:11px;letter-spacing:.08em;color:#C9D0E8;margin:4px 0 8px;text-transform:uppercase}
+.fx-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 13px;border-radius:10px;margin-bottom:7px;cursor:pointer;background:rgba(255,255,255,.97);border:1px solid rgba(255,255,255,.25)}
+.fx-row:hover{border-color:var(--gold)}
+.fx-name{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:600;font-size:14px}
+.fx-meta{color:var(--muted);font-size:12px;font-weight:400}
+.fx-price{font-family:var(--ff-data);font-weight:600;color:var(--navy);font-size:15px;white-space:nowrap}
+.fx-row input[type=radio]{accent-color:var(--green);width:16px;height:16px}
+@media(max-width:560px){.fx-row{flex-wrap:wrap}.fx-price{margin-left:25px}}
 </style>
 <style>
 /* ---------- mobile optimization pass ---------- */
@@ -508,7 +517,14 @@ function fmtTransit(t){
   if(!t)return '';
   var m={ONE_DAY:'1 business day',TWO_DAYS:'2 business days',THREE_DAYS:'3 business days',FOUR_DAYS:'4 business days',FIVE_DAYS:'5 business days',SIX_DAYS:'6 business days',SEVEN_DAYS:'7 business days',EIGHT_DAYS:'8 business days',NINE_DAYS:'9 business days',TEN_DAYS:'10 business days'};
   if(m[t])return m[t];
-  if(/\d{4}-\d{2}-\d{2}/.test(t))return 'arrives '+t;
+  var d=/^(\d{4})-(\d{2})-(\d{2})/.exec(String(t));
+  if(d){
+    var dt=new Date(+d[1], +d[2]-1, +d[3]);
+    if(!isNaN(dt)){
+      var days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return 'arrives '+days[dt.getDay()]+', '+mo[dt.getMonth()]+' '+dt.getDate();
+    }
+  }
   return String(t).toLowerCase().replace(/_/g,' ');
 }
 document.getElementById('dest').addEventListener('change',toggleLive);
@@ -533,11 +549,11 @@ function fetchLive(){
     var cur=d.services[0].currency;
     var rows=d.services.map(function(s){
       var t=fmtTransit(s.transit);
-      return '<label class="qrow" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;margin-bottom:6px;cursor:pointer;background:var(--white)">'
-        +'<span style="display:flex;align-items:center;gap:8px"><input type="radio" name="fxsvc" value="'+s.serviceType+'"> <b>'+s.service+'</b>'+(t?' <span style="color:var(--muted);font-size:11px">· '+t+'</span>':'')+'</span>'
-        +'<span style="font-family:var(--ff-data);font-weight:600">'+cur+' $'+Number(s.amount).toFixed(2)+'</span></label>';
+      return '<label class="fx-row">'
+        +'<span class="fx-name"><input type="radio" name="fxsvc" value="'+s.serviceType+'">'+s.service+(t?' <span class="fx-meta">· '+t+'</span>':'')+'</span>'
+        +'<span class="fx-price">'+cur+' $'+Number(s.amount).toFixed(2)+'</span></label>';
     }).join('');
-    out.innerHTML='<div style="font-family:var(--ff-data);font-size:11px;letter-spacing:.08em;color:var(--muted);margin:4px 0 8px">LIVE FEDEX \u00b7 '+d.trays+' TRAYS \u00b7 '+d.boxes+' BOX'+(d.boxes>1?'ES':'')+' \u00b7 '+cur+'</div>'+rows;
+    out.innerHTML='<div class="fx-head">Live FedEx \u00b7 '+d.trays+' trays \u00b7 '+d.boxes+' box'+(d.boxes>1?'es':'')+' \u00b7 '+cur+'</div>'+rows;
   })
   .catch(function(){
     btn.disabled=false; btn.textContent='Get live FedEx rates & services →';

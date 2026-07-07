@@ -1,3 +1,178 @@
 {
- "_readme": "Map variety slugs to images. Entry formats: (a) 'images/file.jpg' or full URL string; (b) {\"srcs\":[url1,url2],\"credit\":\"Photo(s) courtesy of ...\"} for multi-photo + credit. TERRA NOVA images REQUIRE the credit line per their published terms. For production, prefer downloading the Hi-Res files into /images over hotlinking."
+ "_readme": "Map variety slugs to images. Entry formats: (a) 'images/file.jpg' or full URL string; (b) {\"srcs\":[url1,url2],\"credit\":\"Photo(s) courtesy of ...\"} for multi-photo + credit. TERRA NOVA images REQUIRE the credit line per their published terms. For production, prefer downloading the Hi-Res files into /images over hotlinking.",
+ "acorus-gramineus-ogon": {
+  "srcs": [
+   "images/acorus-gramineus-ogon-1.jpg",
+   "images/acorus-gramineus-ogon-2.jpg",
+   "images/acorus-gramineus-ogon-3.jpg"
+  ]
+ },
+ "brunnera-macrophylla-frostbite": "images/brunnera-macrophylla-frostbite-1.jpg",
+ "brunnera-macrophylla-jack-frost": "images/brunnera-macrophylla-jack-frost-1.jpg",
+ "brunnera-macrophylla-looking-glass": "images/brunnera-macrophylla-looking-glass-1.jpg",
+ "brunnera-macrophylla-sterling-silver": "images/brunnera-macrophylla-sterling-silver-1.jpg",
+ "blechnum-spicant-deer-fern": "images/blechnum-spicant-deer-fern-1.jpg",
+ "calamagrostis-x-acutiflora-karl-foerster": {
+  "srcs": [
+   "images/calamagrostis-x-acutiflora-karl-foerster-1.jpg",
+   "images/calamagrostis-x-acutiflora-karl-foerster-2.jpg",
+   "images/calamagrostis-x-acutiflora-karl-foerster-3.jpg"
+  ]
+ },
+ "carex-morrowii-evergold": "images/carex-morrowii-evergold-1.jpg",
+ "chamaecyparis-lawsoniana-ellwoodii": {
+  "srcs": [
+   "images/chamaecyparis-lawsoniana-ellwoodii-1.jpg",
+   "images/chamaecyparis-lawsoniana-ellwoodii-2.jpg"
+  ]
+ },
+ "colocasia-esculenta-black-magic": "images/colocasia-esculenta-black-magic-1.jpg",
+ "cupressus-macrocarpa-mirjam-greencrest": "images/cupressus-macrocarpa-mirjam-greencrest-1.jpg",
+ "cupressus-macrocarpa-wilma": {
+  "srcs": [
+   "images/cupressus-macrocarpa-wilma-1.jpg",
+   "images/cupressus-macrocarpa-wilma-2.jpg"
+  ]
+ },
+ "dicentra-spectabilis-amore-rose": "images/dicentra-spectabilis-amore-rose-1.jpg",
+ "deschampsia-caespitosa-northern-lights": "images/deschampsia-caespitosa-northern-lights-1.jpg",
+ "dicentra-spectabilis-gold-heart": "images/dicentra-spectabilis-gold-heart-1.jpg",
+ "dryopteris-erythrosora-autumn-fern": {
+  "srcs": [
+   "images/dryopteris-erythrosora-autumn-fern-1.jpg",
+   "images/dryopteris-erythrosora-autumn-fern-2.jpg"
+  ]
+ },
+ "dryopteris-erythrosora-brilliance": "images/dryopteris-erythrosora-brilliance-1.jpg",
+ "festuca-glauca-elijah-blue": {
+  "srcs": [
+   "images/festuca-glauca-elijah-blue-1.jpg",
+   "images/festuca-glauca-elijah-blue-2.jpg",
+   "images/festuca-glauca-elijah-blue-3.jpg"
+  ]
+ },
+ "geum-hybrida-tempo-rose": {
+  "srcs": [
+   "images/geum-hybrida-tempo-rose-1.jpg",
+   "images/geum-hybrida-tempo-rose-2.jpg"
+  ]
+ },
+ "hakonechloa-macra-aureola": {
+  "srcs": [
+   "images/hakonechloa-macra-aureola-1.jpg",
+   "images/hakonechloa-macra-aureola-2.jpg",
+   "images/hakonechloa-macra-aureola-3.jpg"
+  ]
+ },
+ "hakonechloa-macra-all-gold": {
+  "srcs": [
+   "images/hakonechloa-macra-all-gold-1.jpg",
+   "images/hakonechloa-macra-all-gold-2.jpg",
+   "images/hakonechloa-macra-all-gold-3.jpg"
+  ]
+ },
+ "heuchera-hybrida-carnival-burgundy-blast": "images/heuchera-hybrida-carnival-burgundy-blast-1.jpg",
+ "hosta-hybrida-earth-angel": {
+  "srcs": [
+   "images/hosta-hybrida-earth-angel-1.jpg",
+   "images/hosta-hybrida-earth-angel-2.jpg"
+  ]
+ },
+ "hosta-hybrida-francee": {
+  "srcs": [
+   "images/hosta-hybrida-francee-1.jpg",
+   "images/hosta-hybrida-francee-2.jpg",
+   "images/hosta-hybrida-francee-3.jpg"
+  ]
+ },
+ "hosta-fortunei-gold-standard": "images/hosta-fortunei-gold-standard-1.jpg",
+ "hosta-fortunei-patriot": "images/hosta-fortunei-patriot-1.jpg",
+ "hosta-hybrida-rainforest-sunrise": "images/hosta-hybrida-rainforest-sunrise-1.jpg",
+ "hosta-hybrida-so-sweet": "images/hosta-hybrida-so-sweet-1.jpg",
+ "kniphofia-hybrida-poco-butter-brickle": {
+  "srcs": [
+   "images/kniphofia-hybrida-poco-butter-brickle-1.jpg",
+   "images/kniphofia-hybrida-poco-butter-brickle-2.jpg"
+  ]
+ },
+ "kniphofia-hybrida-popsicle-lemon": {
+  "srcs": [
+   "images/kniphofia-hybrida-popsicle-lemon-1.jpg",
+   "images/kniphofia-hybrida-popsicle-lemon-2.jpg"
+  ]
+ },
+ "kniphofia-hybrida-popsicle-papaya": "images/kniphofia-hybrida-popsicle-papaya-1.jpg",
+ "lavandula-stoechas-primavera": {
+  "srcs": [
+   "images/lavandula-stoechas-primavera-1.jpg",
+   "images/lavandula-stoechas-primavera-2.jpg",
+   "images/lavandula-stoechas-primavera-3.jpg"
+  ]
+ },
+ "liriope-muscari-big-blue": {
+  "srcs": [
+   "images/liriope-muscari-big-blue-1.jpg",
+   "images/liriope-muscari-big-blue-2.jpg"
+  ]
+ },
+ "lavandula-stoechas-purple-rain": "images/lavandula-stoechas-purple-rain-1.jpg",
+ "lavandula-angustifolia-munstead": "images/lavandula-angustifolia-munstead-1.jpg",
+ "leucanthemum-x-hybrida-sugar-bowl": {
+  "srcs": [
+   "images/leucanthemum-x-hybrida-sugar-bowl-1.jpg",
+   "images/leucanthemum-x-hybrida-sugar-bowl-2.jpg"
+  ]
+ },
+ "miscanthus-sinensis-morning-light": {
+  "srcs": [
+   "images/miscanthus-sinensis-morning-light-1.jpg",
+   "images/miscanthus-sinensis-morning-light-2.jpg"
+  ]
+ },
+ "miscanthus-sinensis-little-kitten": "images/miscanthus-sinensis-little-kitten-1.jpg",
+ "nepeta-racemosa-walker-s-low": "images/nepeta-racemosa-walker-s-low-1.jpg",
+ "nandina-domestica-firepower": "images/nandina-domestica-firepower-1.jpg",
+ "pennisetum-alopecuroides-little-bunny": "images/pennisetum-alopecuroides-little-bunny-1.jpg",
+ "plectranthus-hybrida-nova-brilliant": "images/plectranthus-hybrida-nova-brilliant-1.jpg",
+ "pachysandra-terminalis-green-sheen": "images/pachysandra-terminalis-green-sheen-1.jpg",
+ "panicum-virgatum-heavy-metal": "images/panicum-virgatum-heavy-metal-1.jpg",
+ "panicum-virgatum-prairie-flame": "images/panicum-virgatum-prairie-flame-1.jpg",
+ "phalaris-arundinacea-picta": {
+  "srcs": [
+   "images/phalaris-arundinacea-picta-1.jpg",
+   "images/phalaris-arundinacea-picta-2.jpg",
+   "images/phalaris-arundinacea-picta-3.jpg"
+  ]
+ },
+ "phormium-tenax-black": "images/phormium-tenax-black-1.jpg",
+ "polemonium-hybrida-hurricane-ridge": {
+  "srcs": [
+   "images/polemonium-hybrida-hurricane-ridge-1.jpg",
+   "images/polemonium-hybrida-hurricane-ridge-2.jpg",
+   "images/polemonium-hybrida-hurricane-ridge-3.jpg"
+  ]
+ },
+ "polemonium-pulcherrimum-golden-feathers": "images/polemonium-pulcherrimum-golden-feathers-1.jpg",
+ "polystichum-munitum-sword-fern-no-us-eligible": "images/polystichum-munitum-sword-fern-no-us-eligible-1.jpg",
+ "rosa-hybrida-iceberg": {
+  "srcs": [
+   "images/rosa-hybrida-iceberg-1.jpg",
+   "images/rosa-hybrida-iceberg-2.jpg"
+  ]
+ },
+ "rosa-hybrida-dark-red": {
+  "srcs": [
+   "images/rosa-hybrida-dark-red-1.jpg",
+   "images/rosa-hybrida-dark-red-2.jpg"
+  ]
+ },
+ "rhododendron-azalea-vuyk-s-scarlet": "images/rhododendron-azalea-vuyk-s-scarlet-1.jpg",
+ "rosa-morden-fireglow": "images/rosa-morden-fireglow-1.jpg",
+ "rosa-hybrida-pink-coat": "images/rosa-hybrida-pink-coat-1.jpg",
+ "sagina-subulata-aurea": "images/sagina-subulata-aurea-1.jpg",
+ "stipa-nasella-tenuissima": "images/stipa-nasella-tenuissima-1.jpg",
+ "lavandula-stoechas-anouk-burgundy": "images/lavandula-stoechas-anouk-burgundy-1.jpg",
+ "abelia-grandiflora-kaleidoscope": "images/abelia-grandiflora-kaleidoscope-1.jpg",
+ "pulmonaria-hybrida-high-contrast": "images/pulmonaria-hybrida-high-contrast-1.jpg",
+ "geum-hybrdia-tempo-coral": "images/geum-hybrdia-tempo-coral-1.jpg"
 }
