@@ -1,2 +1,0 @@
-# WestcanWebsite
-Westcan Website

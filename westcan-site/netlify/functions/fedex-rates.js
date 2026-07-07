@@ -59,6 +59,7 @@ exports.handler = async (event) => {
 
     const payload = {
       accountNumber: { value: accountNumber },
+      rateRequestControlParameters: { returnTransitTimes: true },
       requestedShipment: {
         shipper: { address: origin },
         recipient: {
@@ -70,6 +71,9 @@ exports.handler = async (event) => {
         },
         pickupType: 'DROPOFF_AT_FEDEX_LOCATION',
         rateRequestType: ['ACCOUNT', 'LIST'],
+      },
+      rateRequestControlParameters: { returnTransitTimes: true },
+      __marker: {
         requestedPackageLineItems: packages,
       },
     };
