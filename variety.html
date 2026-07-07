@@ -40,7 +40,7 @@ a{color:inherit;text-decoration:none}
 .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
 
 /* ---------- utility bar ---------- */
-.utilbar{background:var(--navy-deep);color:#C9D0E8;font-size:13px;font-family:var(--ff-data)}
+.utilbar{background:var(--navy-deep);color:#C9D0E8;font-size:13.5px;font-family:var(--ff-body);letter-spacing:0;text-transform:none}
 .utilbar .wrap{display:flex;justify-content:space-between;align-items:center;min-height:36px;gap:16px;flex-wrap:wrap}
 .utilbar .creds span{margin-right:18px}
 .utilbar a:hover{color:var(--white)}
@@ -208,6 +208,8 @@ footer{background:var(--navy-deep);color:#AEB7D4;padding:60px 0 30px;font-size:1
 @media(prefers-reduced-motion:reduce){
   *{transition:none!important;scroll-behavior:auto!important}
 }
+
+@media(max-width:560px){input,select,textarea{font-size:16px!important}}
 </style>
 <style>
 /* ---------- mobile optimization pass ---------- */
@@ -305,6 +307,7 @@ footer{background:var(--navy-deep);color:#AEB7D4;padding:60px 0 30px;font-size:1
 @media(max-width:820px){.detail{grid-template-columns:1fr;gap:24px}.detail .col-info{order:2}}
 @media(max-width:560px){.bookform .grid2{grid-template-columns:1fr}}
 </style>
+<script>window.AVAIL_NOW={"acorus-gramineus-ogon":{"q":144,"c":72},"adiantum-pedatum":{"q":504,"c":72},"agastache-mexicana-blue-fortune":{"q":72,"c":72},"ajuga-reptans-black-scallop":{"q":504,"c":102},"armeria-pseudarmeria-dreameria-dream-clouds":{"q":432,"c":72},"athyrium-niponicum-red-beauty":{"q":432,"c":72},"brunnera-macrophylla-jack-frost":{"q":200,"c":72},"calamagrostis-x-acutiflora-karl-foerster":{"q":216,"c":72},"campanula-poscharskyana-blue-waterfall":{"q":72,"c":72},"carex-oshimensis-evercolor-evercream":{"q":162,"c":50},"carex-oshimensis-evercolor-everillo":{"q":168,"c":50},"carex-oshimensis-evercolor-everlime":{"q":100,"c":50},"carex-oshimensis-evercolor-eversheen":{"q":800,"c":50},"carex-morrowii-evergold":{"q":288,"c":72},"coreopsis-x-hybrida-fall-sensation-quartz":{"q":72,"c":72},"cortaderia-selloana-pumila":{"q":144,"c":72},"cotoneaster-dammeri-bearberry":{"q":432,"c":72},"dianthus-x-hybrida-rock-ruby":{"q":102,"c":102},"dianthus-x-hybrida-rock-violet":{"q":102,"c":102},"dryopteris-erythrosora-autumn-fern":{"q":470,"c":72},"dryopteris-erythrosora-brilliance":{"q":240,"c":72},"echinacea-x-hybrida-sunmagic-vintage-pearl-white":{"q":290,"c":72},"eupatorium-dubium-baby-joe":{"q":72,"c":72},"hosta-hybrida-francee":{"q":325,"c":72},"kniphofia-uvaria-flamenco":{"q":288,"c":72},"lamium-maculatum-purple-dragon":{"q":144,"c":72},"lavandula-intermediata-edelweiss":{"q":144,"c":102},"lavandula-intermediata-provence":{"q":288,"c":72},"lavandula-stoechas-primavera":{"q":360,"c":72},"lavandula-intermediata-grosso":{"q":144,"c":102},"liriope-muscari-big-blue":{"q":288,"c":72},"lysimachia-nummularia-goldilocks":{"q":714,"c":102},"lysimachia-nummularia-green-creeping":{"q":565,"c":72},"miscanthus-sinensis-morning-light":{"q":594,"c":72},"pachysandra-terminalis":{"q":504,"c":102},"panicum-virgatum-prairie-flame":{"q":1845,"c":72},"papaver-nudicaule-champagne-bubbles-mix":{"q":144,"c":72},"perovskia-atriplicifolia-crazyblue":{"q":144,"c":50},"perovskia-atriplicifolia-little-spire":{"q":92,"c":72},"phalaris-arundinacea-picta":{"q":2160,"c":72},"phormium-tenax-black":{"q":1400,"c":72},"polystichum-biaristatum":{"q":72,"c":72},"polystichum-tsus-simense-korean-rock-fern":{"q":304,"c":72},"potentilla-fruticosa-gold-star":{"q":216,"c":72},"potentilla-fruticosa-yellow-gem":{"q":216,"c":72},"rosa-hybrida-patiohit-nikoline":{"q":144,"c":72},"rosmarinus-officinalis-arp":{"q":136,"c":128},"rosmarinus-officinalis-barbeque":{"q":792,"c":72},"rosmarinus-officinalis-tuscan-blue":{"q":216,"c":72},"rudbeckia-fulgida-goldsturm":{"q":72,"c":72},"salvia-nemorosa-noble-princess":{"q":72,"c":72},"stachys-monnieri-silver-carpet":{"q":72,"c":72},"syringa-vulgaris-sensation":{"q":216,"c":72},"thymus-praecox-coccineus-major":{"q":408,"c":102},"thymus-vulgaris-silver-posie":{"q":288,"c":72},"veronica-spicata-royal-candles":{"q":126,"c":72}};</script>
 <script>
 /* ===== Westcan availability engine (Ball Webtrack 2027 rules) =====
    Auto-computes each variety's soonest-ready week from its genus + the live ISO week.
@@ -479,6 +482,18 @@ if(window.stampAvailability)stampAvailability(Object.values(DB));
 function qp(k){return new URLSearchParams(location.search).get(k);}
 const slug=qp('v')||Object.keys(DB)[0];
 const v=DB[slug]||Object.values(DB)[0];
+// live availability sync: if this variety is on this week's list, mark it available and pre-fill trays
+if(window.AVAIL_NOW && AVAIL_NOW[slug]){
+  var an=AVAIL_NOW[slug];
+  v.av={k:'now', q:an.q};
+  var applyAvail=function(){
+    var tr=document.getElementById('trays');
+    if(tr) tr.value=Math.max(1,Math.floor(an.q/an.c));
+    var ss=document.getElementById('sizeSel');
+    if(ss){ for(var i=0;i<ss.options.length;i++){ if(parseInt(ss.options[i].text)===an.c){ ss.selectedIndex=i; break; } } }
+  };
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',function(){setTimeout(applyAvail,0);}); else setTimeout(applyAvail,0);
+}
 document.getElementById('crumbs').innerHTML='<a href="catalog.html">Catalog</a> / <a href="catalog.html?cat='+encodeURIComponent(v.cat)+'">'+v.cat+'</a> / '+v.n;
 document.title=v.n+' — Westcan Greenhouses';
 const photo=document.getElementById('photo');

@@ -40,7 +40,7 @@ a{color:inherit;text-decoration:none}
 .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
 
 /* ---------- utility bar ---------- */
-.utilbar{background:var(--navy-deep);color:#C9D0E8;font-size:13px;font-family:var(--ff-data)}
+.utilbar{background:var(--navy-deep);color:#C9D0E8;font-size:13.5px;font-family:var(--ff-body);letter-spacing:0;text-transform:none}
 .utilbar .wrap{display:flex;justify-content:space-between;align-items:center;min-height:36px;gap:16px;flex-wrap:wrap}
 .utilbar .creds span{margin-right:18px}
 .utilbar a:hover{color:var(--white)}
@@ -216,6 +216,10 @@ footer{background:var(--navy-deep);color:#AEB7D4;padding:60px 0 30px;font-size:1
 @media(prefers-reduced-motion:reduce){
   *{transition:none!important;scroll-behavior:auto!important}
 }
+
+@media(max-width:560px){input,select,textarea{font-size:16px!important}}
+
+@media(max-width:700px){.avtable th:nth-child(2),.avtable td:nth-child(2),.avtable th:nth-child(3),.avtable td:nth-child(3){display:none}.avtable th,.avtable td{padding:9px 5px;font-size:13px}.avtable td.v{font-size:13.5px}.tray-in{width:62px;min-height:42px;font-size:16px}.qadd{min-height:42px;padding:9px 13px;font-size:14px}}
 </style>
 
 <style>
@@ -264,7 +268,7 @@ footer{background:var(--navy-deep);color:#AEB7D4;padding:60px 0 30px;font-size:1
 .bookform .btn{width:100%;margin-top:24px;font-size:16px;padding:14px}
 .micro{font-size:13px;color:var(--muted);text-align:center;margin-top:12px}
 .okmsg{display:none;background:var(--green-soft);border:1px solid var(--green);color:var(--green);border-radius:10px;padding:16px;margin-top:18px;font-weight:600;text-align:center}
-@media(max-width:700px){.bookform .grid2{grid-template-columns:1fr}.avtable th:nth-child(2),.avtable td:nth-child(2){display:none}}
+@media(max-width:700px){.bookform .grid2{grid-template-columns:1fr}.avtable th:nth-child(2),.avtable td:nth-child(2),.avtable th:nth-child(3),.avtable td:nth-child(3){display:none}}
 </style>
 
 <style>

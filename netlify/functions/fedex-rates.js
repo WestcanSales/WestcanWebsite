@@ -71,9 +71,6 @@ exports.handler = async (event) => {
         },
         pickupType: 'DROPOFF_AT_FEDEX_LOCATION',
         rateRequestType: ['ACCOUNT', 'LIST'],
-      },
-      rateRequestControlParameters: { returnTransitTimes: true },
-      __marker: {
         requestedPackageLineItems: packages,
       },
     };
