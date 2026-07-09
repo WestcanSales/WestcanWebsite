@@ -65,6 +65,7 @@ header{background:var(--white);border-bottom:1px solid var(--line);position:stic
 .btn-ghost:hover{background:var(--navy);color:var(--white)}
 .btn-gold{background:var(--gold);color:var(--navy-deep)}
 .btn-gold:hover{background:#B8913C}
+.btn-sm{padding:9px 18px;font-size:13.5px;align-self:flex-start}
 .menu-toggle{display:none;background:none;border:0;font-size:26px;color:var(--navy);cursor:pointer}
 
 /* ---------- hero ---------- */
@@ -166,6 +167,12 @@ section{padding:78px 0}
 .svc:hover{box-shadow:0 12px 28px rgba(31,42,92,.10);transform:translateY(-3px)}
 .svc h3{font-family:var(--ff-display);font-size:18px;color:var(--navy);margin-bottom:10px;font-weight:400}
 .svc p{font-size:14px;color:var(--muted)}
+.fulllist{display:flex;align-items:center;justify-content:space-between;gap:24px;background:var(--navy);color:var(--white);border-radius:10px;padding:26px 30px;margin-bottom:24px;transition:.18s}
+.fulllist:hover{background:var(--navy-deep);transform:translateY(-3px);box-shadow:0 14px 34px rgba(31,42,92,.22)}
+.fulllist .fl-txt h3{font-family:var(--ff-display);font-size:22px;color:var(--white);margin-bottom:6px;font-weight:400}
+.fulllist .fl-txt p{font-size:14px;color:#D7DCEC;max-width:60ch}
+.fulllist .fl-tag{flex:none;font-family:var(--ff-data);font-size:12px;letter-spacing:.06em;color:var(--navy-deep);background:var(--gold);padding:8px 14px;border-radius:20px;white-space:nowrap}
+@media(max-width:640px){.fulllist{flex-direction:column;align-items:flex-start;gap:14px}}
 
 /* ---------- broker note ---------- */
 .broker{background:var(--gold-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:54px 0}
@@ -446,22 +453,22 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
         <span class="tn-badge">Grown Under License in Langley</span>
         <h3>Genetics from the world's best breeders</h3>
         <p>We propagate licensed material from Terra Nova, Ball Seed, Selecta One, Darwin Perennials, Poulsen Roser, PanAmerican Seed, and Jelitto — finished into uniform plugs &amp; liners across Canada &amp; the US. Heuchera, Echinacea, Agastache, grasses, ferns and more, all in the catalog.</p>
-        <a class="btn btn-primary" href="catalog.html">Browse Full Catalog</a>
+        <a class="btn btn-primary btn-sm" href="catalog.html">Browse Full Catalog</a>
       </div>
-      <div class="img"></div>
+      <div class="img"><img src="images/genetics-feature.jpg" alt="Westcan trial garden in bloom — Echinacea and Kniphofia grown from licensed breeder genetics" loading="lazy" decoding="async"></div>
     </div>
 
     <div class="cat-grid">
-      <a class="cat-card" href="catalog.html?cat=Perennials"><div class="thumb"></div><h4>Perennials</h4><span>683 varieties</span></a>
-      <a class="cat-card" href="catalog.html?cat=Grasses"><div class="thumb"></div><h4>Grasses</h4><span>60 varieties</span></a>
-      <a class="cat-card" href="catalog.html?cat=Ferns"><div class="thumb"></div><h4>Ferns</h4><span>19 varieties</span></a>
-      <a class="cat-card" href="catalog.html?cat=Ground%20Covers"><div class="thumb"></div><h4>Ground Covers</h4><span>105 varieties</span></a>
-      <a class="cat-card" href="catalog.html?cat=Shrubs"><div class="thumb"></div><h4>Shrubs</h4><span>94 varieties</span></a>
-      <a class="cat-card" href="catalog.html?cat=Conifers"><div class="thumb"></div><h4>Conifers</h4><span>13 varieties</span></a>
-      <a class="cat-card" href="catalog.html?cat=Succulents"><div class="thumb"></div><h4>Succulents</h4><span>21 varieties</span></a>
-      <a class="cat-card" href="catalog.html?cat=Tropicals"><div class="thumb"></div><h4>Tropicals</h4><span>26 varieties</span></a>
-      <a class="cat-card" href="catalog.html?cat=Herbs"><div class="thumb"></div><h4>Herbs</h4><span>11 varieties</span></a>
-      <a class="cat-card" href="https://webtrack.ballseed.com/" target="_blank" rel="noopener"><div class="thumb"></div><h4>Annuals ↗</h4><span>Book via Ball WebTrack</span></a>
+      <a class="cat-card" href="catalog.html?cat=Perennials"><div class="thumb"><img src="images/cat-perennials.jpg" alt="Perennial plug — Geranium 'Rozanne'" loading="lazy" decoding="async"></div><h4>Perennials</h4><span>683 varieties</span></a>
+      <a class="cat-card" href="catalog.html?cat=Grasses"><div class="thumb"><img src="images/cat-grasses.jpg" alt="Ornamental grass plug — Calamagrostis 'Karl Foerster'" loading="lazy" decoding="async"></div><h4>Grasses</h4><span>60 varieties</span></a>
+      <a class="cat-card" href="catalog.html?cat=Ferns"><div class="thumb"><img src="images/cat-ferns.jpg" alt="Fern liner — Dryopteris 'Brilliance'" loading="lazy" decoding="async"></div><h4>Ferns</h4><span>19 varieties</span></a>
+      <a class="cat-card" href="catalog.html?cat=Ground%20Covers"><div class="thumb"><img src="images/cat-groundcovers.jpg" alt="Ground cover liner — Arctostaphylos 'Massachusetts'" loading="lazy" decoding="async"></div><h4>Ground Covers</h4><span>105 varieties</span></a>
+      <a class="cat-card" href="catalog.html?cat=Shrubs"><div class="thumb"><img src="images/cat-shrubs.jpg" alt="Shrub liner — Nandina 'Firepower'" loading="lazy" decoding="async"></div><h4>Shrubs</h4><span>94 varieties</span></a>
+      <a class="cat-card" href="catalog.html?cat=Conifers"><div class="thumb"><img src="images/cat-conifers.jpg" alt="Conifer liner — Cupressus 'Wilma'" loading="lazy" decoding="async"></div><h4>Conifers</h4><span>13 varieties</span></a>
+      <a class="cat-card" href="catalog.html?cat=Succulents"><div class="thumb"><img src="images/cat-succulents.jpg" alt="Succulent plug — Echeveria 'Azul'" loading="lazy" decoding="async"></div><h4>Succulents</h4><span>21 varieties</span></a>
+      <a class="cat-card" href="catalog.html?cat=Tropicals"><div class="thumb"><img src="images/cat-tropicals.jpg" alt="Tropical plug — Monstera 'Thai Constellation'" loading="lazy" decoding="async"></div><h4>Tropicals</h4><span>26 varieties</span></a>
+      <a class="cat-card" href="catalog.html?cat=Herbs"><div class="thumb"><img src="images/cat-herbs.jpg" alt="Herb plug — Lavandula 'Primavera'" loading="lazy" decoding="async"></div><h4>Herbs</h4><span>11 varieties</span></a>
+      <a class="cat-card" href="https://webtrack.ballseed.com/" target="_blank" rel="noopener"><div class="thumb"><img src="images/cat-annuals.jpg" alt="Annual plug — Coleus" loading="lazy" decoding="async"></div><h4>Annuals ↗</h4><span>Book via Ball WebTrack</span></a>
     </div>
   </div>
 </section>
@@ -504,10 +511,17 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
 <section class="contract" id="specialty-catalogs">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">Specialty Catalogs</div>
-      <h2>Popular booking programs, highlighting our favourites.</h2>
-      <p>Structured booking programs to draw from — inspiration, not rules. Our full catalog reflects everything we grow. Click any program below to download its PDF catalog.</p>
+      <div class="eyebrow">Booking Program Highlights</div>
+      <h2>Structured booking programs to draw inspiration from.</h2>
+      <p>A starting point, not the limit — our full catalog reflects everything we grow. Begin with the complete 2027 plant list, then browse any structured program below for ideas. Click to download the PDF.</p>
     </div>
+    <a class="fulllist" href="catalogs/Westcan_2027_Plant_List.pdf" download>
+      <div class="fl-txt">
+        <h3>Full 2027 Plant List ↓</h3>
+        <p>The complete selection we offer as plugs &amp; liners, organized A&ndash;Z — every genus and variety in one place.</p>
+      </div>
+      <span class="fl-tag">PDF &middot; 5 PAGES</span>
+    </a>
     <div class="grid">
       <a class="svc" href="catalogs/Westcan_Terra_Nova_Booking.pdf" download><h3>Terra Nova ↓</h3><p>Heuchera, Echinacea, Agastache and the full Terra Nova breeding program.</p></a>
       <a class="svc" href="catalogs/Westcan_Groundcovers_Booking.pdf" download><h3>Groundcovers ↓</h3><p>Our top-selling groundcovers — proven carpeters and fillers as 72 &amp; 102-cell liners.</p></a>

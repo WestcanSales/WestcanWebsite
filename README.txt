@@ -1,6 +1,28 @@
 WESTCAN GREENHOUSES — STATIC SITE
 =================================
 
+HOMEPAGE PHOTOS + BOOKING SECTION (Jul 9 2026):
+- Category grid: all 10 tiles now carry real plug/liner photos
+  (images/cat-*.jpg). One representative variety per category —
+  swap any tile by replacing its file, same name, same 4:3 crop.
+    perennials=Geranium 'Rozanne'   grasses=Calamagrostis 'Karl Foerster'
+    ferns=Dryopteris 'Brilliance'   groundcovers=Arctostaphylos 'Massachusetts'
+    shrubs=Nandina 'Firepower'      conifers=Cupressus 'Wilma'
+    succulents=Echeveria 'Azul'     tropicals=Monstera 'Thai Constellation'
+    herbs=Lavandula 'Primavera'     annuals=Coleus
+- "Genetics from the world's best breeders" feature: the blank right
+  panel now holds the trial-garden photo (images/genetics-feature.jpg);
+  "Browse Full Catalog" button shrunk (.btn-sm) and left-aligned.
+- Booking section (id still #specialty-catalogs): eyebrow renamed to
+  "Booking Program Highlights", heading is now "Structured booking
+  programs to draw inspiration from." A navy callout links the complete
+  list: catalogs/Westcan_2027_Plant_List.pdf (Full 2027 Plant List).
+  NOTE: footer nav still labels this link "Specialty Catalogs" (anchor
+  unchanged, still works) — rename across all pages if desired.
+- All new images are resized/compressed (~140-210KB) and lazy-loaded.
+
+
+
 Seven pages, all nav/footer in sync (Shipping in nav; no Contract Growing;
 no Terra Nova grower ribbon; single mobile menu on every page):
 
