@@ -306,6 +306,102 @@ footer{background:var(--navy-deep);color:#AEB7D4;padding:60px 0 30px;font-size:1
 .hero .ask{border-bottom-color:var(--gold)}
 .signup-mini p,.qnote,.qempty{color:#5C6270}
 </style>
+
+<!-- ============ Google Analytics 4 (Westcan Greenhouses) ============
+     Replace G-KY88KWV1W2 (both places below) with your real Measurement ID
+     from GA4: Admin -> Data Streams -> Web -> Measurement ID          -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KY88KWV1W2"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KY88KWV1W2');
+
+/* ---- Westcan custom event tracking ---- */
+document.addEventListener('DOMContentLoaded', function(){
+
+  /* 1. Click tracking: catalog PDF downloads, email, phone, outbound links */
+  document.addEventListener('click', function(e){
+    var a = e.target.closest ? e.target.closest('a') : null;
+    if(!a || !a.href) return;
+    var href = a.getAttribute('href') || '';
+    var text = (a.textContent || '').trim().slice(0, 100);
+
+    if(/\.pdf(\?|$)/i.test(href)){
+      gtag('event', 'catalog_download', {
+        file_name: href.split('/').pop(),
+        link_text: text,
+        page_location: location.href
+      });
+    } else if(href.indexOf('mailto:') === 0){
+      gtag('event', 'email_click', { link_text: text, page_location: location.href });
+    } else if(href.indexOf('tel:') === 0){
+      gtag('event', 'phone_click', { link_text: text, page_location: location.href });
+    } else if(/^https?:\/\//i.test(href) && a.hostname !== location.hostname){
+      gtag('event', 'outbound_click', {
+        link_url: href,
+        link_domain: a.hostname,
+        link_text: text
+      });
+    }
+  }, true);
+
+  /* 2. Contact form + availability signup (these fire real submit events) */
+  var cf = document.getElementById('contactForm');
+  if(cf){ cf.addEventListener('submit', function(){
+    gtag('event', 'contact_form_submit', { form_name: 'contact' });
+    gtag('event', 'generate_lead', { lead_source: 'contact_form' });
+  }); }
+  var sf = document.getElementById('signupForm');
+  if(sf){ sf.addEventListener('submit', function(){
+    gtag('event', 'availability_signup', { form_name: 'availability-signup' });
+    gtag('event', 'generate_lead', { lead_source: 'availability_signup' });
+  }); }
+
+  /* 3. Quote request: submits via fetch (no submit event), so watch the
+        success message (#ok) appear on the quote page only */
+  if(document.getElementById('quoteForm')){
+    var ok = document.getElementById('ok');
+    if(ok && window.MutationObserver){
+      var sent = false;
+      new MutationObserver(function(){
+        if(!sent && ok.style.display === 'block'){
+          sent = true;
+          gtag('event', 'quote_request_submit', { form_name: 'quote-request' });
+          gtag('event', 'generate_lead', { lead_source: 'quote_form' });
+        }
+      }).observe(ok, { attributes: true, attributeFilter: ['style'] });
+    }
+  }
+
+  /* 4. Availability / catalog search box (debounced) */
+  var q = document.getElementById('q');
+  if(q){
+    var t;
+    q.addEventListener('input', function(){
+      clearTimeout(t);
+      var val = q.value.trim();
+      if(val.length < 2) return;
+      t = setTimeout(function(){
+        gtag('event', 'search', {
+          search_term: val,
+          page_location: location.href
+        });
+      }, 1500);
+    });
+  }
+
+  /* 5. Variety detail views: variety.html?v=<slug> -> view_item */
+  if(/variety\.html$/i.test(location.pathname)){
+    var v = new URLSearchParams(location.search).get('v');
+    if(v){ gtag('event', 'view_item', {
+      items: [{ item_id: v, item_name: v.replace(/-/g, ' ') }]
+    }); }
+  }
+});
+</script>
+<!-- ============ end Google Analytics 4 ============ -->
+
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a><style>.skip-link{position:absolute;left:-9999px;top:0;background:var(--navy,#1F2A5C);color:#fff;padding:10px 18px;z-index:9999;border-radius:0 0 8px 0;font-weight:600}.skip-link:focus{left:0}</style>
