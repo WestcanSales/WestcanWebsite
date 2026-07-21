@@ -570,5 +570,31 @@ function fetchLive(){
  document.getElementById('dest').addEventListener('change',scheduleLive);
 })();
 </script>
+<script>
+/* CTA routing: if the visitor already has items in their quote, the header
+   "Book or Request a Quote" / "Request a Quote" buttons jump straight to the
+   quote page instead of back to the catalog. Reads window.name directly so it
+   works on pages that don't load the Cart object (contact, shipping). */
+(function(){
+  function cartCount(){
+    try{ var d=JSON.parse(window.name||'{}');
+         return (d && d.__wcart && d.items) ? d.items.length : 0; }
+    catch(e){ return 0; }
+  }
+  function routeCTAs(){
+    if(!cartCount()) return;
+    var links=document.querySelectorAll('a.btn-primary');
+    for(var i=0;i<links.length;i++){
+      var t=(links[i].textContent||'').trim();
+      var href=(links[i].getAttribute('href')||'');
+      if(/Request a Quote$/i.test(t) && /(^|\/)catalog\.html$/i.test(href)){
+        links[i].setAttribute('href','quote.html');
+      }
+    }
+  }
+  document.addEventListener('DOMContentLoaded',routeCTAs);
+})();
+</script>
 </body>
+
 </html>

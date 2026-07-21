@@ -1,5 +1,133 @@
+VARIETY PHOTO SLIDESHOW + AUTO-DETECT (Jul 21 2026):
+- variety.html photos are now an auto-advancing SLIDESHOW (prev/next arrows, dot
+  indicators, swipe on mobile, 4.5s autoplay that pauses on hover). Single-photo
+  varieties show just the image with no controls.
+- AUTO-DETECT by naming convention: the page probes images/{slug}-1.jpg, -2.jpg,
+  -3.jpg ... in order and stops at the first missing number (max 12). To add photos
+  to ANY variety in the future, just drop numbered files into /images named after
+  the slug — no variety-images.json editing needed. 21 existing varieties that
+  already had -1/-2/-3 files (Acorus 'Ogon', Karl Foerster, Hakonechloa, Festuca
+  'Elijah Blue', Hosta 'Francee', etc.) automatically became slideshows.
+- variety-images.json is now only needed for (a) photo CREDIT lines (Terra Nova
+  images require it) or (b) externally-hosted http image URLs; local numbered files
+  and any external srcs are merged. Existing slug->file string entries are harmless.
+- Fixes the old file:// test quirk too: photos now auto-probe even if the JSON
+  fetch fails, so they resolve from local files directly.
+- Verified over HTTP: multi-photo varieties show controls and advance; single-photo
+  don't; no JS errors.
+
+WEEK 30 AVAILABILITY + LAVENDER PHOTOS (Jul 21 2026):
+- Rebuilt availability from WESTCAN_FORECAST_AVAILABILITY_2026WK30-2027.xlsx (Table 1).
+  87 AVAILABLE NOW (40,078 plugs) + 1,245 soonest. Week label WK28 -> WK30 everywhere.
+  Download link -> westcan-availability-wk30.xlsx (wk28 removed).
+- Forecast hygiene handled in the build: several lavenders (Munstead, Hidcote Blue,
+  Primavera, Silver Anouk, Grosso, Provence) appear as DUPLICATE rows in the forecast
+  (one 0-qty, one real, with a "102 Cell"/"72 CELL" suffix); collapsed by name.
+  Also a new "FINISHED GRASS" group with 4IN Miscanthus/Pennisetum -> mapped to
+  "Grasses & Sedges" and the "4IN" suffix stripped from display names.
+- Re-applied the Tier-1 name fixes to the feed (forecast still carries the old typos
+  from GrowPoint). Residual typos in feed after rebuild: none.
+- 4 lavender photos added (Matt's greenhouse shots), registered in variety-images.json:
+    lavandula-angustifolia-munstead, lavandula-stoechas-primavera,
+    lavandula-stoechas-silver-anouk, and the "Hidcote Blue" photo -> existing
+    lavandula-angustifolia-hidcote (Matt confirmed Hidcote Blue == Hidcote).
+  Silver Anouk was already a catalog entry (no new row needed).
+- Top Picks set to the 3 in-stock lavenders: Munstead / Primavera / Silver Anouk
+  (all verified in the WK30 now-list, all with photos). Homepage table refreshed.
+- Verified over HTTP: all 4 variety pages load their photo (file:// fetch fails in
+  testing but works in production); Top Pick card images load; no JS errors.
+
+NAME / TYPO CLEANUP — TIER 1 (Jul 16 2026):
+Audited all 1,168 catalog varieties for name errors. Applied 72 renames + 6 quote-style
+normalisations to BOTH catalog.html ROWS and variety.html DB (and 1 in the availability
+feed), keyed on slug so the two stores cannot drift apart.
+
+  - 34 broken cultivar quotes fixed (missing open/close, doubled quote, backtick).
+      e.g. "Salvia nemorosa 'Noche"  ->  "Salvia nemorosa 'Noche'"
+           "Gaura lindheimeri Belleza White'" -> "... 'Belleza White'"
+  - 16 stray/double spaces removed (also cleaned double spaces in `common`).
+  - 27 botanical epithet misspellings corrected:
+      Matteuccia strutipteris->struthiopteris; Veronica armstronguii->armstrongii;
+      Veronica longigolia->longifolia; Hebe armtrongii->armstrongii;
+      Iberis sempervivens->sempervirens (x4); Lavandula intermediata->x intermedia (x5);
+      Gaura linderheimeri->lindheimeri (x2); Armeria pseudoarmeria->pseudarmeria (x2);
+      Hedera Helix->helix (x2); Cortaderia sellona->selloana;
+      Gaillardia grandiflorus->grandiflora; Geum hybrdia->hybrida;
+      Ophiopogon planiscapens->planiscapus; Arctostaphylos uva ursi->uva-ursi (x2)
+  - 6 cultivar spellings corrected against Terra Nova's own list:
+      Heuchera 'Odsidian'->'Obsidian'; Agastache 'Kudos Siver Blue'->'Kudos Silver Blue';
+      Agastache 'Princess Plume'->"Prince's Plume"; Polemonium 'Huricane Ridge'->'Hurricane Ridge';
+      Bergenia 'VINTAGE Bouquete'->'Bouquet'; Monstera 'Thai Constalation'->'Thai Constellation'
+      plus Arctostaphylos 'Massachussets'->'Massachusetts' (x2)
+  - curly quotes normalised to straight apostrophes (6 rows).
+
+SLUGS WERE NOT CHANGED — display name and slug are independent, so no variety-page links
+broke and no Details links went dead. Slugs still carry the old spelling (e.g.
+heuchera-hybrida-odsidian); that is cosmetic only and safe to leave.
+
+LEFT ALONE (Tier 2 — needs Matt's decision), see Catalog_Name_Audit.md:
+  - genus field problems: Kahori, Actaeasimplex, Buddleia vs Buddleja, Rhododendron(azalea)
+  - 5 same-plant-twice pairs (incl. an exact duplicate Panicum virgatum 'Heavy Metal')
+  - truncated names: "Geranium Rozanne (" and "Geranium Purple Glow ("
+  - 10 rows using a common name as the cultivar
+  - hybrid notation inconsistency (hybrida vs x hybrida)
+  NOTE: fixing Gaillardia grandiflorus->grandiflora means the two 'Arizona Sun' rows are
+  now spelled identically (they were already flagged as a Tier 2 duplicate).
+
+UPSTREAM: the same typos appear in the forecast/availability spreadsheets, so they very
+likely live in GrowPoint/GreenStock. The website is fixed; the item master is not.
+
+HARDINESS ZONES ON VARIETY PAGES (Jul 13 2026):
+- Root cause of "only some varieties show a zone": the site has TWO data stores.
+  catalog.html ROWS already had zones for 1,166/1,168 varieties (the pills on the
+  catalog page), but the variety detail pages read from a SEPARATE `const DB` whose
+  `culture` field was null for all but ~9 varieties — so most detail pages showed
+  no Hardiness row.
+- Fix: ported the zone from catalog ROWS into each variety.html DB entry's culture
+  object (culture:null -> {zone:"X-Y"}; existing culture blocks kept as-is).
+  1,157 newly added + 9 already present = 1,166 detail pages now show Hardiness.
+- The only 2 still blank are the Calendula 'Cheers' annuals (correctly blank - no
+  meaningful perennial zone). No zones were re-fetched; existing catalog data reused.
+- If any specific zone looks wrong, it lives in catalog.html ROWS (`z`) and now also
+  in variety.html DB culture.zone for the same slug - fix both to keep them in sync.
+
 WESTCAN GREENHOUSES — STATIC SITE
 =================================
+
+WEEK 28 AVAILABILITY (Jul 9 2026) — from the FORECAST file:
+- Source: WESTCAN_FORECAST_AVAILABILITY_2026WK28-2027.xlsx (sheet "Table 1").
+  This is the correct input for the website feed. Current week = the FIRST WK
+  column (WK28) — which matches today's real ISO week.
+- Rebuilt with scripts/build_feed.py logic (see westcan-website-availability-update
+  skill): qty>0 in current week -> AVAILABLE NOW; else first WK column with qty>0
+  -> SOONEST (with year when it lands in 2027); no qty anywhere -> not listed.
+- 1,344 feed items: 105 AVAILABLE NOW (42,034 plugs) + 1,239 forward weeks.
+  253 items' soonest week falls in 2027.
+- NEW: availability_feed.json (full feed, keyed on WCAN code — ready for the
+  GreenStock swap). availability.html carries the 105 available-now items.
+- Download link -> westcan-availability-wk28.xlsx (generated from the feed).
+- Homepage highlights table + Top Picks refreshed to real WK28 stock.
+  All three original Top Picks (Brunnera 'Jack Frost', Dryopteris 'Autumn Fern',
+  Lavandula 'Primavera') ARE in stock in WK28 and were restored.
+- Slug hygiene (unchanged rule): slugs are validated against catalog.html's live
+  ROWS array (1,168 rows) before being written; anything not found shows quick-add
+  only, never a dead "Details" link. 76 of 105 now-items link to a variety page.
+  (Westcan_Catalog_Master.json, the old 864-row master, was DELETED this build —
+  it was stale and unused at runtime. catalog.html ROWS is the only catalog source.)
+
+NOTE ON THE BROKER FILE: PLUG_AVAILABILITY_BROKER_29.xlsx (week of July 12) is
+the broker-facing sheet for the FOLLOWING week and is NOT the website input.
+The website feed comes from the WESTCAN_FORECAST_AVAILABILITY_* file.
+
+UI CHANGES (Jul 9 2026):
+- contact.html: "Send us a message" subtitle reworded.
+- "Request a Booking" -> "Request a Quote" (catalog.html, variety.html).
+- CTA ROUTING: header/mobile "Book or Request a Quote" and "Request a Quote"
+  buttons jump to quote.html when the visitor already has items in their quote,
+  otherwise catalog.html as before. Self-contained block before </body> on
+  index/catalog/variety/availability/contact/shipping (reads window.name directly
+  so it works on contact + shipping, which don't load the Cart object).
+  quote.html intentionally excluded.
 
 HOMEPAGE PHOTOS + BOOKING SECTION (Jul 9 2026):
 - Category grid: all 10 tiles now carry real plug/liner photos
@@ -40,7 +168,6 @@ av:'now' to show as "Book".
 
 ASSETS YOU SUPPLY (not in this zip):
   westcan-reel.mp4, catalogs/*.pdf, logo_green.jpg,
-  Westcan_Catalog_Master.json
 Drop this folder's HTML on top of those.
 
 ZONES: 810 varieties carry a USDA zone; ~54 left blank for manual review

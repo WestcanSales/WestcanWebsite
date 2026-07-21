@@ -1,5 +1,5 @@
 {
- "_readme": "Map variety slugs to images. Entry formats: (a) 'images/file.jpg' or full URL string; (b) {\"srcs\":[url1,url2],\"credit\":\"Photo(s) courtesy of ...\"} for multi-photo + credit. TERRA NOVA images REQUIRE the credit line per their published terms. For production, prefer downloading the Hi-Res files into /images over hotlinking.",
+ "_readme": "AUTO-DETECT: variety pages now auto-load images/{slug}-1.jpg, -2.jpg, -3.jpg ... in order (stops at the first missing number, max 12) and show them as a slideshow. To add photos to a variety, just drop numbered files into /images named after the slug — NO edit needed here. This JSON is only needed for (a) photo CREDIT lines: {\"slug\":{\"credit\":\"Photo(s) courtesy of ...\"}} (Terra Nova images REQUIRE this per their terms), or (b) externally-hosted image URLs: {\"slug\":{\"srcs\":[\"https://...\"],\"credit\":\"...\"}}. Local numbered files and any external srcs are merged. Slug-only string entries like the ones below are now redundant but harmless.",
  "acorus-gramineus-ogon": {
   "srcs": [
    "images/acorus-gramineus-ogon-1.jpg",
@@ -102,13 +102,7 @@
   ]
  },
  "kniphofia-hybrida-popsicle-papaya": "images/kniphofia-hybrida-popsicle-papaya-1.jpg",
- "lavandula-stoechas-primavera": {
-  "srcs": [
-   "images/lavandula-stoechas-primavera-1.jpg",
-   "images/lavandula-stoechas-primavera-2.jpg",
-   "images/lavandula-stoechas-primavera-3.jpg"
-  ]
- },
+ "lavandula-stoechas-primavera": "images/lavandula-stoechas-primavera-1.jpg",
  "liriope-muscari-big-blue": {
   "srcs": [
    "images/liriope-muscari-big-blue-1.jpg",
@@ -174,5 +168,7 @@
  "lavandula-stoechas-anouk-burgundy": "images/lavandula-stoechas-anouk-burgundy-1.jpg",
  "abelia-grandiflora-kaleidoscope": "images/abelia-grandiflora-kaleidoscope-1.jpg",
  "pulmonaria-hybrida-high-contrast": "images/pulmonaria-hybrida-high-contrast-1.jpg",
- "geum-hybrdia-tempo-coral": "images/geum-hybrdia-tempo-coral-1.jpg"
+ "geum-hybrdia-tempo-coral": "images/geum-hybrdia-tempo-coral-1.jpg",
+ "lavandula-angustifolia-hidcote": "images/lavandula-angustifolia-hidcote-1.jpg",
+ "lavandula-stoechas-silver-anouk": "images/lavandula-stoechas-silver-anouk-1.jpg"
 }

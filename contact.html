@@ -384,7 +384,7 @@ footer{background:var(--navy-deep);color:#AEB7D4;padding:60px 0 30px;font-size:1
 <div class="wrap contact-grid">
   <div class="bookform" style="margin-top:0">
     <h2>Send us a message</h2>
-    <p class="sub">Or skip the form: call or email and you'll reach a real person in Langley.</p>
+    <p class="sub">Or skip the form: call or email and we will help you as quickly as we can!</p>
     <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="contactForm">
 <input type="hidden" name="form-name" value="contact"><p style="display:none"><label>Leave blank: <input name="bot-field"></label></p>
       <div class="grid2">
@@ -462,5 +462,31 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
   .catch(function(){alert('Something went wrong — please email sales@westcangrhs.com');});
 });
 </script>
+<script>
+/* CTA routing: if the visitor already has items in their quote, the header
+   "Book or Request a Quote" / "Request a Quote" buttons jump straight to the
+   quote page instead of back to the catalog. Reads window.name directly so it
+   works on pages that don't load the Cart object (contact, shipping). */
+(function(){
+  function cartCount(){
+    try{ var d=JSON.parse(window.name||'{}');
+         return (d && d.__wcart && d.items) ? d.items.length : 0; }
+    catch(e){ return 0; }
+  }
+  function routeCTAs(){
+    if(!cartCount()) return;
+    var links=document.querySelectorAll('a.btn-primary');
+    for(var i=0;i<links.length;i++){
+      var t=(links[i].textContent||'').trim();
+      var href=(links[i].getAttribute('href')||'');
+      if(/Request a Quote$/i.test(t) && /(^|\/)catalog\.html$/i.test(href)){
+        links[i].setAttribute('href','quote.html');
+      }
+    }
+  }
+  document.addEventListener('DOMContentLoaded',routeCTAs);
+})();
+</script>
 </body>
+
 </html>
