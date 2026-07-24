@@ -1,3 +1,23 @@
+FREIGHT V2 — AUTO-SYNCED SHIPPING IN THE QUOTE (Jul 24 2026, round 3):
+- Quote page: freight now renders under its own gold "Shipping" heading below the
+  plant items (mode, destination, postal, price bold) instead of a table row.
+  The estimate is ALWAYS based on the quote's current tray total and re-prices
+  automatically when tray counts change (US pallet from the LTL lane table; box
+  via the live FedEx netlify function, debounced + cached per tray count; CA
+  pallet stays "confirmed on your quote"). No stale "quoted for 4 trays, ordering
+  100" mismatch is possible.
+- Built-in "Add shipping to this quote" mini-estimator in the quote sidebar
+  (dashed gold panel): box/pallet toggle + destination + postal. Shows only when
+  the quote has items and no freight line yet. CA/US tables duplicated from
+  shipping.html — KEEP IN SYNC if lane rates change.
+- shipping.html "Add to my quote" stores structured fields (mode/dest/postal) so
+  the quote page re-prices it; legacy text-only freight items still render with
+  a re-add hint. Submitted email line: "FREIGHT REQUEST · Pallet LTL to
+  Washington · for 100 trays · est USD $432 (FedEx Freight LTL estimate)".
+- Fetch failures/unavailable rates show a no-price fallback (never $0.00).
+- Verified in headless Chromium: pallet auto-recalc 2->100 trays ($216->$432),
+  box fetch-fail fallback, remove/re-add, shipping-page handoff, submit text.
+
 QUOTE FLOW + HEADER CLEANUP (Jul 24 2026, round 2):
 - quote.html: removed a CORRUPTED DUPLICATED TAIL (second footer + okmsg + menu
   script after </body>) that rendered a double bottom ribbon; also removed a

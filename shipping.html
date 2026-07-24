@@ -714,7 +714,7 @@ window.addEventListener('pageshow',function(){ if(typeof updateCartBadge==='func
     }catch(e){}
     var full='Freight \u2014 '+(isBox?'FedEx box':'pallet (LTL)')+' to '+name+(pc?' '+pc:'')+' \u00b7 '+trays+' trays'+est;
     var items=cartRead().filter(function(x){return !x.ship;});
-    items.push({ship:true,slug:'__freight',full:full,prog:'Shipping',cell:'\u2014',trays:0,week:'',av:'ship'});
+    items.push({ship:true,slug:'__freight',mode:(isBox?'box':'pallet'),dest:dv,country:country,destName:name,postal:pc,full:full,prog:'Shipping',cell:'\u2014',trays:0,week:'',av:'ship'});
     cartWrite(items);
     ok.style.display='block';
     ok.innerHTML='Shipping added to your quote \u2014 <a href="quote.html" style="color:var(--green-dark);font-weight:700">view my quote \u2192</a>';

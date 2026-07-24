@@ -210,6 +210,23 @@ footer{background:var(--navy-deep);color:#AEB7D4;padding:60px 0 30px;font-size:1
 }
 
 @media(max-width:560px){input,select,textarea{font-size:16px!important}}
+
+/* --- freight (gold callout + mini estimator) --- */
+.freight-h{font-family:var(--ff-display);font-weight:400;font-size:22px;color:var(--navy);margin:26px 0 10px}
+.freight-panel{background:var(--gold-soft,#FBF3DC);border:1.5px solid var(--gold,#C9A227);border-radius:12px;padding:18px 20px}
+.freight-panel .fp-row{display:flex;justify-content:space-between;gap:14px;align-items:baseline;flex-wrap:wrap}
+.freight-panel .fp-dest{font-weight:700;color:var(--navy);font-size:16px}
+.freight-panel .fp-price{font-family:var(--ff-data);font-weight:700;font-size:20px;color:var(--gold-ink,#8F6E22);white-space:nowrap}
+.freight-panel .fp-meta{font-family:var(--ff-data);font-size:12.5px;color:var(--gold-ink,#8F6E22);margin-top:6px}
+.freight-panel .fp-note{font-size:12.5px;color:var(--muted);margin-top:10px}
+.freight-panel .rm{float:right;margin-left:10px}
+.shipadd{border:1.5px dashed var(--gold,#C9A227);background:var(--gold-soft,#FBF3DC);border-radius:12px;padding:16px 18px;margin:18px 0}
+.shipadd h3{font-size:15px;color:var(--navy);margin-bottom:4px}
+.shipadd p{font-size:12.5px;color:var(--muted);margin-bottom:10px}
+.shipadd select,.shipadd input{width:100%;box-sizing:border-box;margin-bottom:10px}
+.shipadd .modes{display:flex;gap:8px;margin-bottom:10px}
+.shipadd .modes button{flex:1;padding:8px 6px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:12.5px;font-weight:600;color:var(--navy)}
+.shipadd .modes button.on{border-color:var(--gold,#C9A227);background:#fff;box-shadow:inset 0 0 0 1px var(--gold,#C9A227)}
 </style>
 <style>
 /* ---------- mobile optimization pass ---------- */
@@ -469,6 +486,10 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
       <thead><tr><th>Variety</th><th>Type</th><th>Program</th><th>Cell</th><th class="r">Trays</th><th>Delivery Wk</th><th></th></tr></thead>
       <tbody id="qbody"></tbody>
     </table>
+    <div id="freightSec" style="display:none">
+      <h2 class="freight-h">Shipping</h2>
+      <div class="freight-panel" id="freightPanel"></div>
+    </div>
     <div class="empty" id="empty" style="display:none">Your quote is empty.<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:16px"><a class="btn btn-primary" href="catalog.html">Browse the catalog →</a><a class="btn btn-ghost" href="availability.html">Current availability →</a></div></div>
   </div>
   <div class="summary" id="summary">
@@ -480,6 +501,17 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
     <div class="srow tot"><span>Total plugs</span><span id="sPlug">0</span></div>
     <p class="sub">Each tray = 72 plugs. Minimum 4 trays per variety. Pricing is confirmed on your quote.</p>
     <form name="quote-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="quoteForm"><input type="hidden" name="form-name" value="quote-request"><input type="hidden" name="items" id="itemsField"><p style="display:none"><label>Leave blank: <input name="bot-field"></label></p><label>How would you like to order?</label>
+    <div class="shipadd" id="shipAdd" style="display:none">
+      <h3>Add shipping to this quote</h3>
+      <p>Freight is often the deciding factor — estimate it right here. It re-prices automatically as your tray count changes.</p>
+      <div class="modes">
+        <button type="button" id="fBox" class="on">📦 By the box</button>
+        <button type="button" id="fPal">🚛 By the pallet</button>
+      </div>
+      <select id="fDest"><option value="">Destination…</option><optgroup label="Canada" id="fog_ca"></optgroup><optgroup label="United States" id="fog_us"></optgroup></select>
+      <input type="text" id="fPostal" placeholder="Postal / ZIP (for live FedEx box rates)">
+      <button class="btn btn-gold" id="fAdd" type="button" style="width:100%">Add shipping</button>
+    </div>
     <div class="radio-cards">
       <div class="radio-card on" id="rb" onclick="route(true)"><b>Through my broker</b></div>
       <div class="radio-card" id="rd" onclick="route(false)"><b>Direct with Westcan</b></div>
@@ -545,14 +577,7 @@ function render(){
   document.getElementById('qtable').style.display=items.length?'':'none';
   tb.innerHTML='';let trays=0,bookN=0,quoteN=0;
   items.forEach((it,i)=>{
-    if(it.ship){
-      const tr=document.createElement('tr');
-      tr.innerHTML='<td><div class="vn">'+it.full+'</div></td>'+
-        '<td><span class="chip chip-week" title="Freight is confirmed on your quote">Freight</span></td>'+
-        '<td class="vg">Shipping</td><td>—</td><td class="r">—</td><td>—</td>'+
-        '<td><button class="rm" data-rm="'+i+'" title="Remove">×</button></td>';
-      tb.appendChild(tr); return;
-    }
+    if(it.ship){ return; }
     trays+=parseInt(it.trays)||0;
     const isBook=(it.av==='now');
     if(isBook)bookN++;else quoteN++;
@@ -573,6 +598,7 @@ function render(){
   document.getElementById('sTray').textContent=trays.toLocaleString();
   document.getElementById('sPlug').textContent=(trays*TRAY).toLocaleString();
   updateActionUI(bookN,quoteN);
+  if(typeof Freight!=='undefined')Freight.render(trays);
 }
 document.addEventListener('input',e=>{
   if(e.target.dataset.f){ let v=e.target.value; if(e.target.dataset.f==='trays'){v=Math.max(4,parseInt(v)||4);} Cart.update(+e.target.dataset.i,e.target.dataset.f,v);
@@ -593,7 +619,7 @@ function updateActionUI(bookN,quoteN){
 function route(b){document.getElementById('rb').classList.toggle('on',b);document.getElementById('rd').classList.toggle('on',!b);document.getElementById('brokwrap').style.display=b?'':'none';var c=document.querySelector('input[name="company"]');if(c)c.placeholder=b?'Your nursery':'Your nursery or brokerage';}
 document.getElementById('submit').addEventListener('click',function(){
   if(!Cart.count()){return;}
-  var items=Cart.read().map(function(x){if(x.ship)return 'FREIGHT REQUEST \u00b7 '+x.full;return (x.trays||'?')+' trays \u00b7 '+(x.cell||'?')+' cell \u00b7 '+x.full+' \u00b7 week '+(x.week||'ASAP')+' \u00b7 '+((x.av==='now')?'BOOK (available now)':'QUOTE (grown to order)');}).join('\n');
+  var items=Cart.read().map(function(x){if(x.ship)return Freight.submitLine(x);return (x.trays||'?')+' trays \u00b7 '+(x.cell||'?')+' cell \u00b7 '+x.full+' \u00b7 week '+(x.week||'ASAP')+' \u00b7 '+((x.av==='now')?'BOOK (available now)':'QUOTE (grown to order)');}).join('\n');
   document.getElementById('itemsField').value=items;
   if(typeof gtag==='function')gtag('event','quote_submitted',{item_count:Cart.count()});
   var f=document.getElementById('quoteForm');
@@ -616,6 +642,127 @@ render();
 <script>
 /* refresh My Quote badge when returning via back/forward (bfcache) */
 window.addEventListener('pageshow',function(){ if(typeof updateCartBadge==='function') updateCartBadge(); });
+</script>
+<script>
+/* ===== Freight module — keep CA/US tables in sync with shipping.html ===== */
+const CA = {
+ "British Columbia":[22,140,220],"Alberta":[30,210,340],"Saskatchewan":[34,240,430],"Manitoba":[36,260,460],
+ "Ontario":[42,330,700],"Québec":[44,340,720],"New Brunswick":[50,400,860],"Nova Scotia":[52,410,900],
+ "Prince Edward Island":[54,420,920],"Newfoundland & Labrador":[60,480,1100]
+};
+const US = {
+ "Alabama":[68,542,642],"Arizona":[47,405,606],"Arkansas":[55,455,583],"California":[52,323,589],
+ "Colorado":[41,323,570],"Connecticut":[66,517,836],"Delaware":[68,542,816],"Florida":[68,542,1100],
+ "Georgia":[69,549,660],"Idaho":[36,143,1048],"Illinois":[58,486,555],"Indiana":[69,548,546],
+ "Iowa":[55,455,506],"Kansas":[50,437,641],"Kentucky":[69,549,581],"Louisiana":[68,542,658],
+ "Maine":[89,518,920],"Maryland":[86,518,757],"Massachusetts":[86,518,988],"Michigan":[89,549,606],
+ "Minnesota":[68,431,624],"Mississippi":[89,549,751],"Missouri":[79,480,537],"Montana":[39,223,520],
+ "Nebraska":[68,542,641],"Nevada":[45,254,880],"New Hampshire":[86,518,1000],"New Jersey":[86,518,834],
+ "New Mexico":[69,437,579],"New York":[65,518,890],"North Carolina":[89,593,662],"North Dakota":[68,472,532],
+ "Ohio":[89,593,619],"Oklahoma":[76,499,537],"Oregon":[19,149,208],"Pennsylvania":[86,566,743],
+ "Rhode Island":[86,566,943],"South Carolina":[89,600,662],"South Dakota":[69,472,542],"Tennessee":[89,593,581],
+ "Texas":[79,527,690],"Utah":[49,319,489],"Vermont":[89,593,889],"Virginia":[86,567,789],
+ "Washington":[32,188,216],"West Virginia":[89,575,684],"Wisconsin":[79,513,517],"Wyoming":[52,350,532]
+};
+
+const F_TRAYS_PALLET=80;
+(function(){
+  var og=document.getElementById('fog_ca');
+  Object.keys(CA).forEach(function(k){var o=document.createElement('option');o.value='ca|'+k;o.textContent=k;og.appendChild(o);});
+  var ou=document.getElementById('fog_us');
+  Object.keys(US).forEach(function(k){var o=document.createElement('option');o.value='us|'+k;o.textContent=k;ou.appendChild(o);});
+})();
+var Freight={
+  mode:'box',
+  _timer:null,
+  item:function(){ var it=Cart.read(); for(var i=0;i<it.length;i++){ if(it[i].ship) return {i:i,it:it[i]}; } return null; },
+  priceText:function(it,trays){
+    if(!it.dest) return {t:'Exact freight confirmed on your quote',est:''};
+    if(it.mode==='pallet'){
+      if(it.country==='ca') return {t:'Canadian pallet freight is quoted per shipment \u2014 confirmed on your quote',est:''};
+      var R=US[it.destName];
+      if(!R) return {t:'Confirmed on your quote',est:''};
+      var t=Math.ceil(trays/F_TRAYS_PALLET)*F_TRAYS_PALLET, u=t/F_TRAYS_PALLET;
+      var c=(R[2]*u).toFixed(0);
+      return {t:u+' pallet'+(u>1?'s':'')+' ('+t+' tray spots)',est:'USD $'+c,sub:'FedEx Freight LTL estimate'};
+    }
+    // box mode: live FedEx (cached per tray count)
+    if(it.rate && it.rate.trays===trays){ if(it.rate.amount==null) return {t:'Live rate unavailable right now \u2014 exact freight confirmed on your quote',est:''}; return {t:it.rate.service+' \u00b7 live FedEx',est:it.rate.currency+' $'+Number(it.rate.amount).toFixed(2)}; }
+    if(it.postal){ Freight.scheduleFetch(trays); return {t:'Fetching live FedEx rate for '+trays+' tray'+(trays===1?'':'s')+'\u2026',est:''}; }
+    return {t:'Add a postal / ZIP for live box rates \u2014 otherwise confirmed on your quote',est:''};
+  },
+  scheduleFetch:function(trays){
+    clearTimeout(Freight._timer);
+    Freight._timer=setTimeout(function(){ Freight.fetchRate(trays); },700);
+  },
+  fetchRate:function(trays){
+    var f=Freight.item(); if(!f||f.it.mode!=='box'||!f.it.postal) return;
+    fetch('/.netlify/functions/fedex-rates',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({country:f.it.country,postalCode:f.it.postal,trays:trays})})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      var f2=Freight.item(); if(!f2) return;
+      if(d&&d.services&&d.services.length){
+        var best=d.services.reduce(function(a,b){return Number(a.amount)<=Number(b.amount)?a:b;});
+        Cart.update(f2.i,'rate',{trays:trays,amount:best.amount,currency:best.currency,service:best.service});
+      } else {
+        Cart.update(f2.i,'rate',{trays:trays,amount:null,currency:'',service:'unavailable'});
+      }
+      render();
+    })
+    .catch(function(){
+      var f2=Freight.item(); if(!f2) return;
+      Cart.update(f2.i,'rate',{trays:trays,amount:null,currency:'',service:'unavailable'});
+      render();
+    });
+  },
+  render:function(trays){
+    var sec=document.getElementById('freightSec'), pan=document.getElementById('freightPanel'), add=document.getElementById('shipAdd');
+    var f=Freight.item();
+    if(!f){ sec.style.display='none'; add.style.display=Cart.read().length?'block':'none'; return; }
+    add.style.display='none'; sec.style.display='block';
+    var it=f.it;
+    if(!it.dest && it.full){  // legacy freight item from the old flow
+      pan.innerHTML='<button class="rm" data-rm="'+f.i+'" title="Remove">\u00d7</button><div class="fp-dest">'+it.full+'</div>'+
+        '<div class="fp-note">Remove and re-add shipping to get automatic re-pricing with your tray count.</div>';
+      return;
+    }
+    var p=Freight.priceText(it,trays);
+    var modeTxt=(it.mode==='box'?'\ud83d\udce6 FedEx box':'\ud83d\ude9b Pallet (LTL)');
+    var rateBad=(it.rate&&it.rate.service==='unavailable'&&it.mode==='box'&&it.rate.trays===trays);
+    pan.innerHTML='<button class="rm" data-rm="'+f.i+'" title="Remove">\u00d7</button>'+
+      '<div class="fp-row"><span class="fp-dest">'+modeTxt+' \u2192 '+it.destName+(it.postal?' \u00b7 '+it.postal:'')+'</span>'+
+      (p.est?'<span class="fp-price">'+p.est+'</span>':'')+'</div>'+
+      '<div class="fp-meta">'+(rateBad?'Live rate unavailable right now \u2014 exact freight confirmed on your quote':p.t)+(p.sub?' \u00b7 '+p.sub:'')+'</div>'+
+      '<div class="fp-note">Based on the <b>'+trays+' tray'+(trays===1?'':'s')+'</b> in this quote \u2014 re-prices automatically when you change tray counts. Final freight is confirmed on your quote.</div>';
+  },
+  submitLine:function(x){
+    var trays=0; Cart.read().forEach(function(y){ if(!y.ship) trays+=parseInt(y.trays)||0; });
+    if(!x.dest&&x.full) return 'FREIGHT REQUEST \u00b7 '+x.full;
+    var p=Freight.priceText(x,trays);
+    return 'FREIGHT REQUEST \u00b7 '+(x.mode==='box'?'FedEx box':'Pallet LTL')+' to '+x.destName+(x.postal?' '+x.postal:'')+
+      ' \u00b7 for '+trays+' trays'+(p.est?' \u00b7 est '+p.est+(p.sub?' ('+p.sub+')':''):' \u00b7 exact freight to be confirmed');
+  }
+};
+(function(){
+  function setM(m){ Freight.mode=m;
+    document.getElementById('fBox').classList.toggle('on',m==='box');
+    document.getElementById('fPal').classList.toggle('on',m==='pallet'); }
+  document.getElementById('fBox').addEventListener('click',function(){setM('box');});
+  document.getElementById('fPal').addEventListener('click',function(){setM('pallet');});
+  document.getElementById('fAdd').addEventListener('click',function(){
+    var dv=document.getElementById('fDest').value;
+    var pc=(document.getElementById('fPostal').value||'').trim();
+    if(!dv){ document.getElementById('fDest').focus(); return; }
+    var parts=dv.split('|');
+    var items=Cart.read().filter(function(x){return !x.ship;});
+    items.push({ship:true,slug:'__freight',mode:Freight.mode,dest:dv,country:parts[0],destName:parts[1],postal:pc,
+                full:'',prog:'Shipping',cell:'\u2014',trays:0,week:'',av:'ship'});
+    Cart.write(items); render();
+    if(typeof gtag==='function')gtag('event','add_shipping_to_quote',{destination:parts[1],mode:Freight.mode,page:'quote'});
+  });
+})();
+if(typeof render==='function')render();
 </script>
 </body>
 </html>
