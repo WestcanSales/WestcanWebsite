@@ -423,22 +423,20 @@ document.addEventListener('DOMContentLoaded', function(){
       <ul>
         <li><a href="index.html">Who We Are</a></li>
         <li><a href="catalog.html">Catalog</a></li>
-        <li><a href="availability.html" class="hot">Current Availability</a></li>
+        <li><a href="availability.html">Current Availability</a></li>
         <li><a href="shipping.html">Shipping</a></li>
                 <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
-    <a href="quote.html" style="position:relative;font-weight:600;font-size:15px;color:var(--navy);margin-right:6px;white-space:nowrap">My Quote <span class="cart-badge" style="display:none;align-items:center;justify-content:center;background:var(--green);color:#fff;border-radius:99px;font-family:var(--ff-data);font-size:11px;min-width:18px;height:18px;padding:0 5px;margin-left:2px;vertical-align:middle"></span></a>
-    <a class="btn btn-primary" href="catalog.html">Book or Request a Quote</a>
+    <a href="quote.html" class="btn btn-primary" style="position:relative;margin-right:6px;white-space:nowrap">My Quote <span class="cart-badge" style="display:none;align-items:center;justify-content:center;background:#fff;color:var(--green);border-radius:99px;font-family:var(--ff-data);font-size:11px;min-width:18px;height:18px;padding:0 5px;margin-left:2px;vertical-align:middle"></span></a>
     <button class="menu-toggle" aria-label="Open menu">☰</button>
   </div>
 <nav class="mmenu" id="mmenu" aria-label="Mobile menu">
   <a href="index.html">Who We Are</a>
   <a href="catalog.html">Catalog</a>
-  <a href="availability.html" class="hot">Current Availability</a>
+  <a href="availability.html">Current Availability</a>
   <a href="shipping.html">Shipping</a>
   <a href="contact.html">Contact</a>
-  <a class="btn btn-primary cta" href="catalog.html">Book or Request a Quote</a>
 </nav>
 </header>
 
@@ -467,20 +465,6 @@ document.addEventListener('DOMContentLoaded', function(){
       <div><label># of trays</label><input type="number" id="trays" min="1" placeholder="e.g. 16" oninput="calc()"></div>
       <div><label>Postal / ZIP <span style="color:var(--muted);font-weight:400">(for live rates)</span></label><input type="text" id="destPostal" placeholder="e.g. V6B 1A1 or 98101" oninput="toggleLive()"></div>
     </div>
-    <div id="quoteform" style="margin-top:8px">
-      <label style="margin-top:22px">Want the exact number? <span style="color:var(--gold)">→</span></label>
-      <div class="grid2">
-        <div><input type="text" placeholder="Name"></div>
-        <div><input type="text" placeholder="Company"></div>
-      </div>
-      <div class="grid2" style="margin-top:12px">
-        <div><input type="email" placeholder="Email"></div>
-        <div><input type="text" placeholder="Destination postal / ZIP"></div>
-      </div>
-      <button class="btn btn-primary" onclick="document.getElementById('ok').style.display='block';this.style.display='none'">Request exact freight quote</button>
-      <div class="okmsg" id="ok">Got it — we'll confirm exact freight with your quote.</div>
-      <p class="micro" style="margin-top:14px">Prefer a different carrier or your own shipping method? No problem — just ask when you book and we'll ship your way.</p>
-    </div>
   </div>
   <div class="quote-card" id="qcard">
     <div class="qhead">Freight · Langley, BC (CAD) / Blaine, WA (US)</div>
@@ -490,6 +474,8 @@ document.addEventListener('DOMContentLoaded', function(){
       <div id="liveOut" style="margin-top:12px"></div>
       <p class="qnote" style="margin-top:8px;font-size:11px;color:var(--muted)">Live box rates pull directly from FedEx for your destination. Pallet (LTL) estimates remain approximate — confirmed on your quote.</p>
     </div>
+    <button type="button" id="addShip" class="btn btn-gold" style="width:100%;margin-top:14px">Add to my quote</button>
+    <div class="okmsg" id="shipok" style="margin-top:12px">Shipping added to your quote — <a href="quote.html" style="color:var(--green-dark);font-weight:700">view my quote →</a></div>
   </div>
 </div>
 <!-- Footer -->
@@ -689,6 +675,51 @@ function fetchLive(){
     }
   }
   document.addEventListener('DOMContentLoaded',routeCTAs);
+})();
+</script>
+<script>
+/* cart badge (reads window.name cart directly) */
+function updateCartBadge(){
+  var n=0; try{ var d=JSON.parse(window.name||'{}'); n=(d&&d.__wcart&&d.items)?d.items.length:0; }catch(e){}
+  var bs=document.querySelectorAll('.cart-badge');
+  for(var i=0;i<bs.length;i++){ bs[i].textContent=n; bs[i].style.display=n?'inline-flex':'none'; }
+}
+document.addEventListener('DOMContentLoaded',updateCartBadge);
+</script>
+<script>
+/* refresh My Quote badge when returning via back/forward (bfcache) */
+window.addEventListener('pageshow',function(){ if(typeof updateCartBadge==='function') updateCartBadge(); });
+</script>
+<script>
+/* Add the current freight estimate to the visitor's quote */
+(function(){
+  function cartRead(){ try{ var d=JSON.parse(window.name||'{}'); return (d&&d.__wcart)?d.items:[]; }catch(e){ return []; } }
+  function cartWrite(items){ window.name=JSON.stringify({__wcart:1,items:items}); if(typeof updateCartBadge==='function')updateCartBadge(); }
+  var btn=document.getElementById('addShip');
+  if(!btn) return;
+  btn.addEventListener('click',function(){
+    var dv=document.getElementById('dest').value||'';
+    var trays=parseInt(document.getElementById('trays').value)||0;
+    var pc=(document.getElementById('destPostal').value||'').trim();
+    var ok=document.getElementById('shipok');
+    if(!dv||trays<1){ ok.style.display='block'; ok.innerHTML='Choose a destination and tray count first.'; return; }
+    var parts=dv.split('|'), country=parts[0], name=parts[1];
+    var isBox=(typeof mode==='undefined'?true:mode==='box');
+    var est='';
+    try{
+      if(!isBox && country==='us' && typeof US!=='undefined' && US[name]){
+        var per=TRAYS_PALLET, t=Math.ceil(trays/per)*per, units=t/per;
+        est=' \u00b7 est USD $'+(US[name][2]*units).toFixed(0)+' (LTL)';
+      }
+    }catch(e){}
+    var full='Freight \u2014 '+(isBox?'FedEx box':'pallet (LTL)')+' to '+name+(pc?' '+pc:'')+' \u00b7 '+trays+' trays'+est;
+    var items=cartRead().filter(function(x){return !x.ship;});
+    items.push({ship:true,slug:'__freight',full:full,prog:'Shipping',cell:'\u2014',trays:0,week:'',av:'ship'});
+    cartWrite(items);
+    ok.style.display='block';
+    ok.innerHTML='Shipping added to your quote \u2014 <a href="quote.html" style="color:var(--green-dark);font-weight:700">view my quote \u2192</a>';
+    if(typeof gtag==='function')gtag('event','add_shipping_to_quote',{destination:name,trays:trays,mode:isBox?'box':'pallet'});
+  });
 })();
 </script>
 </body>

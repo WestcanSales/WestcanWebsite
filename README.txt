@@ -1,3 +1,27 @@
+QUOTE FLOW + HEADER CLEANUP (Jul 24 2026, round 2):
+- quote.html: removed a CORRUPTED DUPLICATED TAIL (second footer + okmsg + menu
+  script after </body>) that rendered a double bottom ribbon; also removed a
+  duplicate menu-toggle listener that made the mobile menu toggle twice.
+- After submitting a quote the page now stays at the top (was jumping to the
+  footer); Company placeholder switches to "Your nursery or brokerage" when
+  "Direct with Westcan" is selected; empty-quote state now offers two buttons:
+  Browse the catalog / Current availability.
+- FREIGHT IN THE QUOTE: shipping.html's "Want the exact number?" block removed;
+  new "Add to my quote" button adds the current freight estimate (mode,
+  destination, postal, trays, LTL est if computable) as a Freight line in the
+  quote cart; quote.html renders it as a Freight row (excluded from variety/tray
+  counts) and submits it as "FREIGHT REQUEST · ..." (GA4: add_shipping_to_quote).
+- HEADER (all 7 pages): "My Quote" is now a primary button (badge inverted
+  white-on-green); the "Book or Request a Quote" header/mobile buttons removed
+  (clutter); green "hot" highlight removed from Current Availability nav link.
+- BADGE FIX: cart badge refreshes on pageshow, so returning via "Keep browsing"/
+  back no longer shows a stale count. shipping/contact now update the badge too
+  (they previously never rendered it).
+- variety.html: cart cell value stored as "72" not "72 cell" (fixes "72 cell
+  cell" in submitted quote text).
+- Verified in headless Chromium over HTTP: 7 pages error-free; add → back badge
+  correct; freight add → quote row → submit text; scroll stays top; placeholders.
+
 WEEK 31 AVAILABILITY + UX + GA4 EVENTS (Jul 24 2026):
 - Rebuilt availability from WESTCAN_FORECAST_AVAILABILITY_2026WK31-2027.xlsx (Table 1).
   89 AVAILABLE NOW (39,941 plugs) + 1,234 soonest. Week label WK30 -> WK31 everywhere.

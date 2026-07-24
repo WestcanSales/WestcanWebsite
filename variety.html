@@ -490,22 +490,20 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
       <ul>
         <li><a href="contact.html">Who We Are</a></li>
         <li><a href="catalog.html">Catalog</a></li>
-        <li><a href="availability.html" class="hot">Current Availability</a></li>
+        <li><a href="availability.html">Current Availability</a></li>
                 <li><a href="shipping.html">Shipping</a></li>
                 <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
-    <a href="quote.html" style="position:relative;font-weight:600;font-size:15px;color:var(--navy);margin-right:6px;white-space:nowrap">My Quote <span class="cart-badge" style="display:none;align-items:center;justify-content:center;background:var(--green);color:#fff;border-radius:99px;font-family:var(--ff-data);font-size:11px;min-width:18px;height:18px;padding:0 5px;margin-left:2px;vertical-align:middle"></span></a>
-    <a class="btn btn-primary" href="catalog.html">Request a Quote</a>
+    <a href="quote.html" class="btn btn-primary" style="position:relative;margin-right:6px;white-space:nowrap">My Quote <span class="cart-badge" style="display:none;align-items:center;justify-content:center;background:#fff;color:var(--green);border-radius:99px;font-family:var(--ff-data);font-size:11px;min-width:18px;height:18px;padding:0 5px;margin-left:2px;vertical-align:middle"></span></a>
     <button class="menu-toggle" aria-label="Open menu">☰</button>
   </div>
 <nav class="mmenu" id="mmenu" aria-label="Mobile menu">
   <a href="contact.html">Who We Are</a>
   <a href="catalog.html">Catalog</a>
-  <a href="availability.html" class="hot">Current Availability</a>
+  <a href="availability.html">Current Availability</a>
   <a href="shipping.html">Shipping</a>
   <a href="contact.html">Contact</a>
-  <a class="btn btn-primary cta" href="catalog.html">Request a Quote</a>
 </nav></header>
 
 
@@ -730,7 +728,7 @@ rel.forEach(function(e){var d=document.createElement('div');d.className='rel-car
   d.onclick=function(){location.href='variety.html?v='+e[0];};rb.appendChild(d);});
 document.getElementById('addbtn').addEventListener('click',function(){
   const trays=Math.max(1,parseInt(document.getElementById('trays').value)||4);
-  Cart.add({slug:slug,full:v.n,g:v.g,prog:v.cat,cell:document.getElementById('sizeSel').value,trays:trays,week:document.getElementById('week').value||window.DEFAULT_WEEK||'ASAP',av:'order'});
+  Cart.add({slug:slug,full:v.n,g:v.g,prog:v.cat,cell:document.getElementById('sizeSel').value.replace(' cell',''),trays:trays,week:document.getElementById('week').value||window.DEFAULT_WEEK||'ASAP',av:'order'});
   document.getElementById('ok').style.display='block';
 });
 document.querySelector('.menu-toggle').addEventListener('click',function(){document.getElementById('mmenu').classList.toggle('open');});
@@ -760,6 +758,10 @@ document.querySelector('.menu-toggle').addEventListener('click',function(){docum
   }
   document.addEventListener('DOMContentLoaded',routeCTAs);
 })();
+</script>
+<script>
+/* refresh My Quote badge when returning via back/forward (bfcache) */
+window.addEventListener('pageshow',function(){ if(typeof updateCartBadge==='function') updateCartBadge(); });
 </script>
 </body>
 
