@@ -1,3 +1,25 @@
+PHOTO DROP — WEBSITE PHOTOS FOLDER (Jul 24 2026, evening):
+- Processed all 216 photos from Matt's OneDrive "Website Photos" folder.
+  85 NEW photos added across ~70 varieties (auto-matched filename -> catalog
+  slug, typos fixed: Alplenium/Massechusettes/Hackonechloa/Drypopteris/
+  Kinphofia/tanex/Haspen etc.). EXIF orientation applied, resized to <=1600px,
+  compressed to ~40-340KB. Numbered after existing slug-N files.
+- 70 skipped as duplicates: 67 near-duplicates (this folder is the SOURCE of the
+  photos already on the site - verified visually on a 6-pair sample), 3 exact.
+- 1 mislabeled pair withheld: "Kinphofia Popsicle Lemon" and "Kniphofia 'Poco
+  Butter Brickle'" are byte-identical but claim different varieties - neither
+  published. Matt: check which variety that photo actually shows.
+- 59 photos have NO catalog entry to attach to (no variety page exists), e.g.
+  Panicum 'Shenandoah', Miscanthus 'Red Chief', Astrantia 'Roma', Polystichum
+  rigens, Rumohra 'Variegata', many specialty Hostas (Abiqua Drinking Gourd,
+  Blue Mouse Ears, Canadian Blue, Fragrant Blue/Bouquet, Hadspen Blue, Praying
+  Hands, Red Cadet, Rembrandt Blue, Sun Mouse, Wolverine, sieboldiana Elegans,
+  Lets Twist Again), Helleborus FrostKiss series, Cyclamen, Coleus, Bergenia,
+  Lewisia, Asplenium, plus genus-only names (Rosa/Kniphofia/Fern/Sunbeckia
+  72 Cell). Full list in the photo report. Adding these varieties to catalog
+  ROWS would let their photos go live - future task.
+- Full processing log: photo_report (kept out of the repo).
+
 MOBILE PASS + POLISH (Jul 24 2026, round 5):
 - Quote page on mobile (<=700px) is now app-style CARDS: variety name + remove x,
   Book/Quote chip row, full-width TRAYS and DELIVERY WK fields (44px touch targets);
