@@ -470,7 +470,6 @@ document.addEventListener('DOMContentLoaded', function(){
     <div class="qhead">Freight · Langley, BC (CAD) / Blaine, WA (US)</div>
     <div id="qbody"><p class="qempty">Choose a destination and tray count and your estimate appears here — instantly, no email required.</p></div>
     <div id="liveWrap" style="margin-top:14px;display:none">
-      <button type="button" id="liveBtn" class="btn btn-primary" style="width:100%">Get live FedEx rates &amp; services →</button>
       <div id="liveOut" style="margin-top:12px"></div>
       <p class="qnote" style="margin-top:8px;font-size:11px;color:var(--muted)">Live box rates pull directly from FedEx for your destination. Pallet (LTL) estimates remain approximate — confirmed on your quote.</p>
     </div>
@@ -611,19 +610,17 @@ function fmtTransit(t){
 }
 document.getElementById('dest').addEventListener('change',toggleLive);
 function fetchLive(){
-  var btn=document.getElementById('liveBtn'); if(!btn)return;
   var dv=document.getElementById('dest').value||''; var parts=dv.split('|');
   var country=parts[0];
   var pc=(document.getElementById('destPostal').value||'').trim();
   var trays=parseInt(document.getElementById('trays').value)||4;
   if(!country||!pc)return;
   var out=document.getElementById('liveOut');
-  btn.disabled=true; btn.textContent='Fetching FedEx rates…';
+  out.innerHTML='<p class="qnote">Fetching live FedEx rates…</p>';
   fetch('/.netlify/functions/fedex-rates',{method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({country:country,postalCode:pc,trays:trays})})
   .then(function(r){return r.json();})
   .then(function(d){
-    btn.disabled=false; btn.textContent='Refresh live FedEx rates →';
     if(d.error||!d.services||!d.services.length){
       out.innerHTML='<p class="qnote" style="color:var(--gold-ink)">Live rates unavailable for that postal code — double-check it, or exact freight will be confirmed on your quote.</p>';
       return;
@@ -638,13 +635,10 @@ function fetchLive(){
     out.innerHTML='<div class="fx-head">Live FedEx \u00b7 '+d.trays+' trays \u00b7 '+d.boxes+' box'+(d.boxes>1?'es':'')+' \u00b7 '+cur+'</div>'+rows;
   })
   .catch(function(){
-    btn.disabled=false; btn.textContent='Get live FedEx rates & services →';
     out.innerHTML='<p class="qnote" style="color:var(--gold-ink)">Couldn\'t reach FedEx just now — exact freight is confirmed on your quote.</p>';
   });
 }
 (function(){
- var btn=document.getElementById('liveBtn');
- if(btn) btn.addEventListener('click',fetchLive);
  var pcIn=document.getElementById('destPostal');
  if(pcIn) pcIn.addEventListener('input',function(){toggleLive();scheduleLive();});
  var trIn=document.getElementById('trays');
@@ -702,7 +696,7 @@ window.addEventListener('pageshow',function(){ if(typeof updateCartBadge==='func
     var trays=parseInt(document.getElementById('trays').value)||0;
     var pc=(document.getElementById('destPostal').value||'').trim();
     var ok=document.getElementById('shipok');
-    if(!dv||trays<1){ ok.style.display='block'; ok.innerHTML='Choose a destination and tray count first.'; return; }
+    if(!dv||trays<1){ ok.style.display='block'; ok.style.cursor='default'; ok.onclick=null; ok.innerHTML='Choose a destination and tray count first.'; return; }
     var parts=dv.split('|'), country=parts[0], name=parts[1];
     var isBox=(typeof mode==='undefined'?true:mode==='box');
     var est='';
@@ -717,7 +711,9 @@ window.addEventListener('pageshow',function(){ if(typeof updateCartBadge==='func
     items.push({ship:true,slug:'__freight',mode:(isBox?'box':'pallet'),dest:dv,country:country,destName:name,postal:pc,full:full,prog:'Shipping',cell:'\u2014',trays:0,week:'',av:'ship'});
     cartWrite(items);
     ok.style.display='block';
-    ok.innerHTML='Shipping added to your quote \u2014 <a href="quote.html" style="color:var(--green-dark);font-weight:700">view my quote \u2192</a>';
+    ok.style.cursor='pointer';
+    ok.onclick=function(){location.href='quote.html';};
+    ok.innerHTML='Shipping added to your quote \u2014 <span style="color:var(--green-dark);font-weight:700;text-decoration:underline">view my quote \u2192</span>';
     if(typeof gtag==='function')gtag('event','add_shipping_to_quote',{destination:name,trays:trays,mode:isBox?'box':'pallet'});
   });
 })();

@@ -589,7 +589,7 @@ function render(){
   inp.addEventListener('click',function(e){e.stopPropagation();});
   btn.addEventListener('click',function(e){
     e.stopPropagation();
-    var trays=parseInt(inp.value)||defTrays;
+    var trays=Math.max(4,parseInt(inp.value)||defTrays);
     Cart.add({slug:r.slug,full:r.n,g:(r.n.split(' ')[0]||''),prog:r.cat,cell:String(r.cell),trays:trays,week:'ASAP',av:'now'});
     if(typeof gtag==='function')gtag('event','add_to_quote',{item_name:r.n,item_category:r.cat,cell_size:String(r.cell),trays:trays,week:'ASAP',page:'availability'});
     btn.textContent='\u2713 Added'; btn.classList.add('added');

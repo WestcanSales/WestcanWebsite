@@ -227,6 +227,15 @@ footer{background:var(--navy-deep);color:#AEB7D4;padding:60px 0 30px;font-size:1
 .shipadd .modes{display:flex;gap:8px;margin-bottom:10px}
 .shipadd .modes button{flex:1;padding:8px 6px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:12.5px;font-weight:600;color:var(--navy)}
 .shipadd .modes button.on{border-color:var(--gold,#C9A227);background:#fff;box-shadow:inset 0 0 0 1px var(--gold,#C9A227)}
+
+/* freight round-4: estimator contrast + service options */
+.summary .shipadd select,.summary .shipadd input{background:#fff;color:var(--navy,#1F2A5C);border:1px solid var(--line,#D8D3C4)}
+.summary .shipadd select option{color:var(--navy,#1F2A5C);background:#fff}
+.summary .shipadd input::placeholder{color:#7d8391;opacity:1}
+.fp-svc{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:7px 10px;margin-top:6px;background:#fff;border:1px solid var(--gold,#C9A227);border-radius:8px;cursor:pointer;font-size:13px}
+.fp-svc b{font-family:var(--ff-data);color:var(--gold-ink,#8F6E22);white-space:nowrap}
+.fp-svc input{margin-right:7px}
+#minNote{display:none;background:#FBE9E7;border:1px solid #F1C9C2;color:#A0392B;border-radius:8px;padding:9px 13px;font-size:13px;margin-top:10px;font-weight:600}
 </style>
 <style>
 /* ---------- mobile optimization pass ---------- */
@@ -486,6 +495,7 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
       <thead><tr><th>Variety</th><th>Type</th><th>Program</th><th>Cell</th><th class="r">Trays</th><th>Delivery Wk</th><th></th></tr></thead>
       <tbody id="qbody"></tbody>
     </table>
+    <div id="minNote">Minimum order is 4 trays per variety — adjusted to 4.</div>
     <div id="freightSec" style="display:none">
       <h2 class="freight-h">Shipping</h2>
       <div class="freight-panel" id="freightPanel"></div>
@@ -589,7 +599,7 @@ function render(){
       '<td>'+typeChip+'</td>'+
       '<td class="vg">'+it.prog+'</td>'+
       '<td>'+it.cell+'</td>'+
-      '<td class="r"><input type="number" min="4" step="4" value="'+it.trays+'" data-i="'+i+'" data-f="trays"></td>'+
+      '<td class="r"><input type="number" min="4" step="1" value="'+it.trays+'" data-i="'+i+'" data-f="trays"></td>'+
       '<td><input class="wk" type="text" value="'+(it.week||'')+'" data-i="'+i+'" data-f="week"></td>'+
       '<td><button class="rm" data-rm="'+i+'" title="Remove">×</button></td>';
     tb.appendChild(tr);
@@ -601,9 +611,29 @@ function render(){
   if(typeof Freight!=='undefined')Freight.render(trays);
 }
 document.addEventListener('input',e=>{
-  if(e.target.dataset.f){ let v=e.target.value; if(e.target.dataset.f==='trays'){v=Math.max(4,parseInt(v)||4);} Cart.update(+e.target.dataset.i,e.target.dataset.f,v);
-    if(e.target.dataset.f==='trays'){render();}}
+  if(e.target.dataset.f){ let v=e.target.value;
+    if(e.target.dataset.f==='trays'){ Cart.update(+e.target.dataset.i,'trays',parseInt(v)||0); updateTotals(); }
+    else Cart.update(+e.target.dataset.i,e.target.dataset.f,v);
+  }
 });
+document.addEventListener('change',e=>{
+  if(e.target.dataset.f==='trays'){
+    let v=parseInt(e.target.value)||0;
+    if(v<4){ v=4; e.target.value=4; Cart.update(+e.target.dataset.i,'trays',4); showMinNote(); }
+    updateTotals();
+  }
+});
+let minT=null;
+function showMinNote(){ const n=document.getElementById('minNote'); n.style.display='block'; clearTimeout(minT); minT=setTimeout(()=>{n.style.display='none';},3500); }
+function updateTotals(){
+  const items=Cart.read(); let trays=0,bookN=0,quoteN=0;
+  items.forEach(it=>{ if(it.ship)return; trays+=parseInt(it.trays)||0; if(it.av==='now')bookN++;else quoteN++; });
+  document.getElementById('sVar').textContent=items.filter(x=>!x.ship).length;
+  document.getElementById('sTray').textContent=trays.toLocaleString();
+  document.getElementById('sPlug').textContent=(trays*TRAY).toLocaleString();
+  updateActionUI(bookN,quoteN);
+  if(typeof Freight!=='undefined')Freight.render(trays);
+}
 document.addEventListener('click',e=>{
   if(e.target.dataset.rm!==undefined){ Cart.remove(+e.target.dataset.rm); render(); }
 });
@@ -687,7 +717,13 @@ var Freight={
       return {t:u+' pallet'+(u>1?'s':'')+' ('+t+' tray spots)',est:'USD $'+c,sub:'FedEx Freight LTL estimate'};
     }
     // box mode: live FedEx (cached per tray count)
-    if(it.rate && it.rate.trays===trays){ if(it.rate.amount==null) return {t:'Live rate unavailable right now \u2014 exact freight confirmed on your quote',est:''}; return {t:it.rate.service+' \u00b7 live FedEx',est:it.rate.currency+' $'+Number(it.rate.amount).toFixed(2)}; }
+    if(it.rate && it.rate.trays===trays){
+      if(it.rate.amount==null) return {t:'Live rate unavailable right now \u2014 exact freight confirmed on your quote',est:''};
+      var svc=null;
+      if(it.rate.services){ for(var k=0;k<it.rate.services.length;k++){ if(it.rate.services[k].serviceType===it.rate.chosen){svc=it.rate.services[k];break;} } }
+      if(svc) return {t:svc.service+' \u00b7 live FedEx',est:it.rate.currency+' $'+Number(svc.amount).toFixed(2)};
+      return {t:it.rate.service+' \u00b7 live FedEx',est:it.rate.currency+' $'+Number(it.rate.amount).toFixed(2)};
+    }
     if(it.postal){ Freight.scheduleFetch(trays); return {t:'Fetching live FedEx rate for '+trays+' tray'+(trays===1?'':'s')+'\u2026',est:''}; }
     return {t:'Add a postal / ZIP for live box rates \u2014 otherwise confirmed on your quote',est:''};
   },
@@ -704,7 +740,7 @@ var Freight={
       var f2=Freight.item(); if(!f2) return;
       if(d&&d.services&&d.services.length){
         var best=d.services.reduce(function(a,b){return Number(a.amount)<=Number(b.amount)?a:b;});
-        Cart.update(f2.i,'rate',{trays:trays,amount:best.amount,currency:best.currency,service:best.service});
+        Cart.update(f2.i,'rate',{trays:trays,amount:best.amount,currency:best.currency,service:best.service,services:d.services,chosen:best.serviceType});
       } else {
         Cart.update(f2.i,'rate',{trays:trays,amount:null,currency:'',service:'unavailable'});
       }
@@ -730,18 +766,32 @@ var Freight={
     var p=Freight.priceText(it,trays);
     var modeTxt=(it.mode==='box'?'\ud83d\udce6 FedEx box':'\ud83d\ude9b Pallet (LTL)');
     var rateBad=(it.rate&&it.rate.service==='unavailable'&&it.mode==='box'&&it.rate.trays===trays);
+    var svcRows='';
+    if(it.mode==='box'&&it.rate&&it.rate.trays===trays&&it.rate.services&&it.rate.services.length>1){
+      svcRows=it.rate.services.map(function(s){
+        return '<label class="fp-svc"><span><input type="radio" name="fpsvc" value="'+s.serviceType+'"'+(s.serviceType===it.rate.chosen?' checked':'')+'>'+s.service+'</span><b>'+s.currency+' $'+Number(s.amount).toFixed(2)+'</b></label>';
+      }).join('');
+      svcRows='<div class="fp-meta" style="margin-top:10px">Choose a service:</div>'+svcRows;
+    }
     pan.innerHTML='<button class="rm" data-rm="'+f.i+'" title="Remove">\u00d7</button>'+
       '<div class="fp-row"><span class="fp-dest">'+modeTxt+' \u2192 '+it.destName+(it.postal?' \u00b7 '+it.postal:'')+'</span>'+
       (p.est?'<span class="fp-price">'+p.est+'</span>':'')+'</div>'+
       '<div class="fp-meta">'+(rateBad?'Live rate unavailable right now \u2014 exact freight confirmed on your quote':p.t)+(p.sub?' \u00b7 '+p.sub:'')+'</div>'+
+      svcRows+
       '<div class="fp-note">Based on the <b>'+trays+' tray'+(trays===1?'':'s')+'</b> in this quote \u2014 re-prices automatically when you change tray counts. Final freight is confirmed on your quote.</div>';
+    var radios=pan.querySelectorAll('input[name="fpsvc"]');
+    for(var r0=0;r0<radios.length;r0++){ radios[r0].addEventListener('change',function(){
+      var f3=Freight.item(); if(!f3||!f3.it.rate)return;
+      var nr={}; for(var kk in f3.it.rate) nr[kk]=f3.it.rate[kk];
+      nr.chosen=this.value; Cart.update(f3.i,'rate',nr); render();
+    }); }
   },
   submitLine:function(x){
     var trays=0; Cart.read().forEach(function(y){ if(!y.ship) trays+=parseInt(y.trays)||0; });
     if(!x.dest&&x.full) return 'FREIGHT REQUEST \u00b7 '+x.full;
     var p=Freight.priceText(x,trays);
     return 'FREIGHT REQUEST \u00b7 '+(x.mode==='box'?'FedEx box':'Pallet LTL')+' to '+x.destName+(x.postal?' '+x.postal:'')+
-      ' \u00b7 for '+trays+' trays'+(p.est?' \u00b7 est '+p.est+(p.sub?' ('+p.sub+')':''):' \u00b7 exact freight to be confirmed');
+      ' \u00b7 for '+trays+' trays'+(p.est?' \u00b7 est '+p.est+' ('+(p.sub||p.t)+')':' \u00b7 exact freight to be confirmed');
   }
 };
 (function(){

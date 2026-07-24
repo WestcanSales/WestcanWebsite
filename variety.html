@@ -521,7 +521,7 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
       <div id="availnote" style="margin:2px 0 10px;font-size:14px"></div>
       <div class="grid2">
         <div><label>Plug size</label><select id="sizeSel"><option>50 cell</option><option selected>72 cell</option><option>102 cell</option><option>288 cell</option></select></div>
-        <div><label># of trays</label><input type="number" id="trays" min="1" value="4"></div>
+        <div><label># of trays <span style="font-weight:400;color:var(--muted);font-size:12px">(minimum 4)</span></label><input type="number" id="trays" min="4" value="4"></div>
       </div>
       <label>Target delivery week</label>
       <input type="text" id="week" placeholder="e.g. Wk 38 — or ASAP">
@@ -727,7 +727,7 @@ rel.forEach(function(e){var d=document.createElement('div');d.className='rel-car
   d.innerHTML='<div class="rn">'+e[1].n+'</div><div class="rg">'+(e[1].common||e[1].cat)+'</div>';
   d.onclick=function(){location.href='variety.html?v='+e[0];};rb.appendChild(d);});
 document.getElementById('addbtn').addEventListener('click',function(){
-  const trays=Math.max(1,parseInt(document.getElementById('trays').value)||4);
+  const trays=Math.max(4,parseInt(document.getElementById('trays').value)||4);
   Cart.add({slug:slug,full:v.n,g:v.g,prog:v.cat,cell:document.getElementById('sizeSel').value.replace(' cell',''),trays:trays,week:document.getElementById('week').value||window.DEFAULT_WEEK||'ASAP',av:'order'});
   document.getElementById('ok').style.display='block';
 });

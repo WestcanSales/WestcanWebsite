@@ -1,3 +1,24 @@
+SHIPPING UX ROUND 4 (Jul 24 2026):
+- shipping.html: "Get/Refresh live FedEx rates" button removed - rates now fetch
+  automatically (debounced) once destination + trays + postal are in. The
+  "Shipping added to your quote" confirmation is fully clickable -> quote.html
+  (error state does not navigate).
+- quote.html tray inputs: arrows step by 1 and any number can be typed freely;
+  totals update live; on blur below 4 the value snaps to 4 with a red
+  "Minimum order is 4 trays per variety" note (3.5s). Table rebuild no longer
+  interrupts typing (updateTotals() refreshes summary/freight without re-render).
+- FedEx SERVICE OPTIONS in the quote: box-mode live rates now list every returned
+  service (Ground / Express Saver / Priority etc.) as selectable rows inside the
+  gold freight panel; the chosen service drives the displayed price and the
+  submitted line, e.g. "est CAD $238.10 (FedEx Express Saver · live FedEx)".
+- Estimator contrast fixed: .summary's white-on-navy input styling was bleeding
+  into the gold Add-shipping panel; selects/inputs there are now navy-on-white.
+- variety.html: "# of trays (minimum 4)" with min=4 and clamp on add;
+  availability.html quick-add also clamps to 4.
+- Verified in headless Chromium with a mocked fedex-rates response: auto-fetch,
+  clickable confirmation, free typing/min-4 note, service picking changes price
+  and submit text, contrast computed navy-on-white.
+
 FREIGHT V2 — AUTO-SYNCED SHIPPING IN THE QUOTE (Jul 24 2026, round 3):
 - Quote page: freight now renders under its own gold "Shipping" heading below the
   plant items (mode, destination, postal, price bold) instead of a table row.
