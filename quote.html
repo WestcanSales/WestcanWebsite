@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png"><link rel="shortcut icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Quote — Westcan Greenhouses</title>
 <meta name="description" content="Review your liner selections and request one quote for everything — through your broker or direct.">
@@ -236,6 +236,37 @@ footer{background:var(--navy-deep);color:#AEB7D4;padding:60px 0 30px;font-size:1
 .fp-svc b{font-family:var(--ff-data);color:var(--gold-ink,#8F6E22);white-space:nowrap}
 .fp-svc input{margin-right:7px}
 #minNote{display:none;background:#FBE9E7;border:1px solid #F1C9C2;color:#A0392B;border-radius:8px;padding:9px 13px;font-size:13px;margin-top:10px;font-weight:600}
+
+/* mobile: My Quote pill appears in the top bar when the quote has items */
+@media(max-width:820px){
+  #myQuoteBtn{display:none}
+  #myQuoteBtn.has-items{display:inline-flex;align-items:center;padding:8px 14px;font-size:13px;border-radius:99px;margin-right:2px}
+}
+
+/* --- mobile: quote items as cards --- */
+@media(max-width:700px){
+  .qwrap{grid-template-columns:1fr;gap:26px;padding:16px 14px 60px}
+  .summary{position:static}
+  .qtable{border:0;background:transparent;display:block}
+  .qtable thead{display:none}
+  .qtable tbody{display:block}
+  .qtable tr{display:flex;flex-wrap:wrap;align-items:center;position:relative;background:var(--white);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 3px 12px rgba(31,42,92,.07)}
+  .qtable td{display:block;border:0!important;padding:0!important;flex:0 0 auto}
+  .qtable td:nth-child(1){flex:0 0 100%;padding-right:34px!important;margin-bottom:9px}
+  .qtable td:nth-child(1) .vn{font-size:15px}
+  .qtable tbody tr td:nth-child(2){display:block;margin-right:8px}
+  .qtable td:nth-child(3){font-family:var(--ff-data);font-size:12px;color:var(--muted);margin-right:8px}
+  .qtable td:nth-child(4){font-family:var(--ff-data);font-size:12px;color:var(--muted)}
+  .qtable td:nth-child(5){flex:0 0 100%;margin-top:12px;text-align:left}
+  .qtable td:nth-child(6){flex:0 0 100%;margin-top:10px}
+  .qtable td:nth-child(5)::before{content:'TRAYS';display:block;font-family:var(--ff-data);font-size:10.5px;letter-spacing:.08em;color:var(--muted);margin-bottom:4px}
+  .qtable td:nth-child(6)::before{content:'DELIVERY WK';display:block;font-family:var(--ff-data);font-size:10.5px;letter-spacing:.08em;color:var(--muted);margin-bottom:4px}
+  .qtable td:nth-child(5) input,.qtable td:nth-child(6) input{width:100%;box-sizing:border-box;min-height:44px}
+  .qtable td:nth-child(7){position:absolute;top:10px;right:10px}
+  .qtable .rm{width:34px;height:34px;font-size:19px}
+  .freight-panel{padding:15px 14px}
+  .shipadd .modes button{min-height:42px}
+}
 </style>
 <style>
 /* ---------- mobile optimization pass ---------- */
@@ -433,7 +464,7 @@ var Cart = {
   read:function(){ try{ var d=JSON.parse(window.name||'{}'); return (d&&d.__wcart)?d.items:[]; }catch(e){ return []; } },
   write:function(items){ window.name = JSON.stringify({__wcart:1, items:items}); updateCartBadge(); },
   add:function(item){ var items=Cart.read();
-    var i=items.findIndex(function(x){return x.slug===item.slug && x.cell===item.cell;});
+    var i=items.findIndex(function(x){return x.cell===item.cell && (item.slug ? x.slug===item.slug : (!x.slug && x.full===item.full));});
     if(i>=0){ items[i].trays=(parseInt(items[i].trays)||0)+(parseInt(item.trays)||0); }
     else items.push(item);
     Cart.write(items); },
@@ -444,7 +475,9 @@ var Cart = {
 };
 function updateCartBadge(){
   var bs=document.querySelectorAll('.cart-badge');
-  for(var i=0;i<bs.length;i++){ var n=Cart.count(); bs[i].textContent=n; bs[i].style.display=n?'inline-flex':'none'; }
+  var n=Cart.count();
+  for(var i=0;i<bs.length;i++){ bs[i].textContent=n; bs[i].style.display=n?'inline-flex':'none'; }
+  var mq=document.getElementById('myQuoteBtn'); if(mq) mq.classList.toggle('has-items', n>0);
 }
 document.addEventListener('DOMContentLoaded',updateCartBadge);
 </script>
@@ -472,7 +505,7 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
                 <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
-    <a href="quote.html" class="btn btn-primary" style="position:relative;margin-right:6px;white-space:nowrap">My Quote <span class="cart-badge" style="display:none;align-items:center;justify-content:center;background:#fff;color:var(--green);border-radius:99px;font-family:var(--ff-data);font-size:11px;min-width:18px;height:18px;padding:0 5px;margin-left:2px;vertical-align:middle"></span></a>
+    <a href="quote.html" id="myQuoteBtn" class="btn btn-primary" style="position:relative;margin-right:6px;white-space:nowrap">My Quote <span class="cart-badge" style="display:none;align-items:center;justify-content:center;background:#fff;color:var(--green);border-radius:99px;font-family:var(--ff-data);font-size:11px;min-width:18px;height:18px;padding:0 5px;margin-left:2px;vertical-align:middle"></span></a>
     <button class="menu-toggle" aria-label="Open menu">☰</button>
   </div>
 <nav class="mmenu" id="mmenu" aria-label="Mobile menu">
@@ -480,6 +513,7 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
   <a href="catalog.html">Catalog</a>
   <a href="availability.html">Current Availability</a>
   <a href="shipping.html">Shipping</a>
+  <a href="quote.html">My Quote</a>
   <a href="contact.html">Contact</a>
 </nav>
 </header>

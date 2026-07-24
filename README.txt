@@ -1,3 +1,24 @@
+MOBILE PASS + POLISH (Jul 24 2026, round 5):
+- Quote page on mobile (<=700px) is now app-style CARDS: variety name + remove x,
+  Book/Quote chip row, full-width TRAYS and DELIVERY WK fields (44px touch targets);
+  summary/freight/estimator stack single-column. (NOTE: a legacy <=880px rule hides
+  the Type column; the card block overrides it with a higher-specificity selector.)
+- Header on mobile: "My Quote" pill (rounded, with count badge) appears in the top
+  bar as soon as the quote has items (#myQuoteBtn.has-items, toggled by
+  updateCartBadge); My Quote is also ALWAYS in the hamburger menu on all pages.
+- Availability on mobile: the tray-count input and Category column are hidden; the
+  "+ Add" pill is shown instead (was hidden!), so every row - including varieties
+  WITHOUT a website page (no slug) - can be added. Desktop unchanged.
+- Cart.add merge fix: slugless items used to merge with each other (slug '' ==
+  slug ''); now matched by name when there is no slug. (All 5 pages with Cart.)
+- Variety page: trays box shows a ghost hint "of N available now" (N = plugs/cell
+  from AVAIL_NOW) while the entered count fits stock; hides above it.
+- Favicon: /favicon.ico added (16/32/48 multi-size, generated from favicon.png) +
+  explicit shortcut/apple-touch-icon links on every page - fixes Safari.
+- shipping.html: "view my quote" confirmation text is plain (no bold/underline).
+- Verified in headless Chromium at 390px + 1440px: no horizontal overflow on any
+  page, no JS errors, mobile add flows (incl. slugless), pill/menu, hint logic.
+
 SHIPPING UX ROUND 4 (Jul 24 2026):
 - shipping.html: "Get/Refresh live FedEx rates" button removed - rates now fetch
   automatically (debounced) once destination + trays + postal are in. The
