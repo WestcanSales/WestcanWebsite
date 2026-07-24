@@ -142,7 +142,7 @@ section{padding:78px 0}
 .cat-card .thumb{aspect-ratio:4/3;background:var(--green-soft)}
 .cat-card .thumb img{width:100%;height:100%;object-fit:cover}
 .cat-card h4{font-size:15px;font-weight:600;color:var(--navy);padding:13px 16px 2px}
-.cat-card span{font-family:var(--ff-data);font-size:11.5px;color:var(--muted);padding:0 16px}
+.cat-card span{display:block;font-family:var(--ff-data);font-size:11.5px;color:var(--muted);padding:0 16px;line-height:1.45}
 
 /* ---------- availability ---------- */
 .avail{background:var(--white);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -455,7 +455,7 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
       <h1>Westcan Starts, <em>what you can finish.</em></h1>
       <p class="lede">We propagate wholesale plugs &amp; liners for growers across Canada &amp; the US — the perennials, grasses, ferns and ground covers you need, when you need them, grown to your specs.</p>
       <div class="ctas">
-        <a class="btn btn-primary" href="catalog.html">Book Available Stock</a>
+        <a class="btn btn-primary" href="availability.html">Book Available Stock</a>
         <a class="btn btn-ghost" href="catalog.html">Request a Quote</a>
         <a class="ask" href="contact.html">Or ask us a question →</a>
       
@@ -471,7 +471,7 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
       </div>
       
       <div class="featured">
-        <div class="ftitle"><b>This Week's Top Picks</b><span class="wk">WK 30</span></div>
+        <div class="ftitle"><b>This Week's Top Picks</b><span class="wk">WK 31</span></div>
         <div class="fcards">
           <a class="fcard" href="variety.html?v=lavandula-angustifolia-munstead">
             <div class="fthumb"><img src="images/lavandula-angustifolia-munstead-1.jpg" alt="Lavandula ’Munstead’" loading="lazy" decoding="async" class="fthumb-img"><span class="chip chip-now">Available now</span></div>
@@ -587,16 +587,16 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
       </div>
     </div>
     <div>
-      <div style="font-family:var(--ff-mono,monospace);font-size:12px;letter-spacing:.08em;color:var(--muted);margin-bottom:8px">FROM THIS WEEK&rsquo;S LIST &middot; WK 30 &middot; 2026</div>
+      <div style="font-family:var(--ff-mono,monospace);font-size:12px;letter-spacing:.08em;color:var(--muted);margin-bottom:8px">FROM THIS WEEK&rsquo;S LIST &middot; WK 31 &middot; 2026</div>
       <table aria-label="Sample of current availability">
         <thead><tr><th>Variety</th><th>Cell</th><th>Status</th></tr></thead>
         <tbody>
-          <tr><td class="v">Lavandula angustifolia 'Hidcote Blue'</td><td class="cell">102</td><td><span class="chip chip-now">AVAILABLE NOW</span></td></tr>
           <tr><td class="v">Calamagrostis x acutiflora 'Overdam'</td><td class="cell">72</td><td><span class="chip chip-now">AVAILABLE NOW</span></td></tr>
           <tr><td class="v">Panicum virgatum 'Shenandoah'</td><td class="cell">72</td><td><span class="chip chip-now">AVAILABLE NOW</span></td></tr>
-          <tr><td class="v">Sedum 'Angelina'</td><td class="cell">102</td><td><span class="chip chip-now">AVAILABLE NOW</span></td></tr>
-          <tr><td class="v">Liriope muscari 'Big Blue'</td><td class="cell">72</td><td><span class="chip chip-now">AVAILABLE NOW</span></td></tr>
-          <tr><td class="v">Athyrium niponicum 'Red Beauty'</td><td class="cell">72</td><td><span class="chip chip-now">AVAILABLE NOW</span></td></tr>
+          <tr><td class="v">Phalaris arundinacea 'Picta'</td><td class="cell">72</td><td><span class="chip chip-now">AVAILABLE NOW</span></td></tr>
+          <tr><td class="v">Miscanthus oligostachyus 'Purpurascens'</td><td class="cell">72</td><td><span class="chip chip-now">AVAILABLE NOW</span></td></tr>
+          <tr><td class="v">Matteuccia struthiopteris</td><td class="cell">72</td><td><span class="chip chip-now">AVAILABLE NOW</span></td></tr>
+          <tr><td class="v">Knautia macedonica 'Thunder and Lightning'</td><td class="cell">72</td><td><span class="chip chip-now">AVAILABLE NOW</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -714,6 +714,16 @@ document.querySelector('.menu-toggle').addEventListener('click',function(){
   }
   document.addEventListener('DOMContentLoaded',routeCTAs);
 })();
+</script>
+<script>
+/* GA4 event tracking: catalog PDF downloads, WebTrack referrals, availability xlsx */
+document.addEventListener('click',function(e){
+  var a=e.target.closest&&e.target.closest('a'); if(!a||typeof gtag!=='function')return;
+  var h=a.getAttribute('href')||'';
+  if(h.indexOf('catalogs/')===0){var f=h.split('/').pop();gtag('event','catalog_download',{catalog_name:f.replace('Westcan_','').replace('_Booking.pdf','').replace('.pdf','').replace(/_/g,' '),file_name:f});}
+  else if(h.indexOf('webtrack')>-1){gtag('event','webtrack_click',{link_url:h});}
+  else if(/westcan-availability-wk\d+\.xlsx/.test(h)){gtag('event','availability_download',{file_name:h.split('/').pop()});}
+});
 </script>
 </body>
 

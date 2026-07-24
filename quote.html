@@ -589,6 +589,7 @@ document.getElementById('submit').addEventListener('click',function(){
   if(!Cart.count()){return;}
   var items=Cart.read().map(function(x){return (x.trays||'?')+' trays \u00b7 '+(x.cell||'?')+' cell \u00b7 '+x.full+' \u00b7 week '+(x.week||'ASAP')+' \u00b7 '+((x.av==='now')?'BOOK (available now)':'QUOTE (grown to order)');}).join('\n');
   document.getElementById('itemsField').value=items;
+  if(typeof gtag==='function')gtag('event','quote_submitted',{item_count:Cart.count()});
   var f=document.getElementById('quoteForm');
   if(!f.reportValidity()){return;}
   fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},

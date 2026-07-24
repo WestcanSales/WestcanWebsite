@@ -1,3 +1,35 @@
+WEEK 31 AVAILABILITY + UX + GA4 EVENTS (Jul 24 2026):
+- Rebuilt availability from WESTCAN_FORECAST_AVAILABILITY_2026WK31-2027.xlsx (Table 1).
+  89 AVAILABLE NOW (39,941 plugs) + 1,234 soonest. Week label WK30 -> WK31 everywhere.
+  Download link -> westcan-availability-wk31.xlsx. Duplicate-row collapse, FINISHED
+  GRASS mapping, 4IN strip and Tier-1 typo fixes all re-applied (804/1,327 feed items
+  matched to catalog ROWS for slug/us). Top Picks unchanged - all 3 lavenders verified
+  still in stock in WK31. Homepage table refreshed. AVAIL_NOW (variety quick-sync)
+  regenerated - it had been stale since WK26.
+- catalog ROWS + variety DB stored av refreshed from the forecast for matched items
+  (62 now / 604 ahead); unmatched left k:none for the runtime Ball engine as before.
+- UX (Matt's requests):
+  * Hero "Book Available Stock" now -> availability.html (was catalog).
+  * Annuals tile: category-card span made display:block - "Book via Ball WebTrack"
+    no longer loses its padding when it wraps on phones.
+  * Variety "Added!" box is now two tappable buttons; "Keep browsing" returns the
+    visitor to the exact page + scroll position they came from (history.back +
+    scroll-restore blocks on catalog/availability).
+  * Variety order box: available-now items show "<qty> plugs available now" and
+    placeholder "ASAP - or any week"; grow-to-order items show "First ready: WK NN"
+    and placeholder "Any week after WK NN" (uses the same av the badges use).
+    Blank week field now records "Any week after WK NN" instead of "ASAP".
+- GA4 EVENTS (base G-KY88KWV1W2 tag was already on all pages; events are new):
+  add_to_quote (item_name/category/cell/trays/week/page - fires from variety page
+  and availability quick-add), catalog_download (per-PDF catalog_name), quote_submitted
+  (item_count), webtrack_click, availability_download. See Reports -> Engagement ->
+  Events in GA4; variety page views are page_view with ?v=slug in the URL.
+- update_site.py (repo root, gitignored - local helper, not deployed): one-command
+  weekly rebuild: python3 update_site.py <forecast.xlsx>. Used by the Wednesday
+  Claude scheduled task; outputs everything above.
+- Verified over HTTP in headless Chromium: all 5 changed pages load with no JS
+  errors; add/back/placeholder flows and GA dataLayer events confirmed.
+
 VARIETY PHOTO SLIDESHOW + AUTO-DETECT (Jul 21 2026):
 - variety.html photos are now an auto-advancing SLIDESHOW (prev/next arrows, dot
   indicators, swipe on mobile, 4.5s autoplay that pauses on hover). Single-photo

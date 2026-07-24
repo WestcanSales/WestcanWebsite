@@ -1,6 +1,7 @@
 # Local helper scripts — used on your computer, never published to the site
 deploy.sh
 deploy.bat
+update_site.py
 
 # OS clutter
 .DS_Store
