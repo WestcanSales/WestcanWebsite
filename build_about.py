@@ -37,7 +37,7 @@ desc = "Westcan Greenhouses — wholesale plug & liner propagators in Langley, B
 canon = "https://westcangrhs.com/about.html"
 ld = {"@context":"https://schema.org","@type":"AboutPage","name":title,"url":canon,
       "mainEntity":{"@id":"https://westcangrhs.com/#business"}}
-partners = ["Terra Nova Nurseries","Ball Seed","Dümmen Orange","Selecta One","Darwin Perennials","Poulsen Roser A/S","PanAmerican Seed","Jelitto Perennial Seeds","Bull Plant Genetics"]
+partners = ["Terra Nova Nurseries","Ball Seed","Dümmen Orange","Selecta One","Darwin Perennials","Poulsen Roser A/S","PanAmerican Seed","Bull Plant Genetics"]
 
 page = f'''{head(title, desc, canon, "https://westcangrhs.com/og-image.jpg", ABOUT_CSS)}
 <body>
@@ -71,15 +71,9 @@ page = f'''{head(title, desc, canon, "https://westcangrhs.com/og-image.jpg", ABO
 <h2 class="sec">How we work with growers</h2>
 <p>Most of our product moves two ways. The <strong>booking program</strong> reserves trays for future delivery weeks — the right fit for planned production, contract grows and spring programs. The <strong>weekly availability list</strong> is for product that's ready now; it's refreshed every Monday and can ship the same week. Either way, quotes flow through your broker or direct to us, and <a href="/shipping.html" style="text-decoration:underline">freight is estimated instantly</a> for boxed FedEx and pallet shipments across Canada and the US.</p>
 <h2 class="sec">Come see what we're growing</h2>
-<div class="growing">
 <div>
 <p>Start with the <a href="/catalog.html" style="text-decoration:underline">full catalog</a>, browse by range — <a href="/perennial-liners.html" style="text-decoration:underline">perennials</a>, <a href="/ornamental-grass-plugs.html" style="text-decoration:underline">grasses &amp; sedges</a>, <a href="/fern-liners.html" style="text-decoration:underline">ferns</a>, <a href="/ground-cover-plugs.html" style="text-decoration:underline">ground covers</a>, <a href="/shrub-conifer-liners.html" style="text-decoration:underline">shrubs &amp; conifers</a> — or jump straight to <a href="/availability.html" style="text-decoration:underline">what ships this week</a>.</p>
 <p>Questions? <a href="/contact.html" style="text-decoration:underline">Ask us anything</a> — or call +1&nbsp;604-530-9298.</p>
-</div>
-<figure>
-<img src="/images/about-iceplants.jpg" alt="Delosperma ice plant ground covers in full bloom at Westcan Greenhouses" loading="lazy">
-<figcaption>Delosperma ground covers in bloom at the nursery.</figcaption>
-</figure>
 </div>
 </main>
 {FOOTER}
