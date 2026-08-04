@@ -5,12 +5,16 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png"><link rel="shortcut icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Westcan Greenhouses — Wholesale Plugs &amp; Liners | Langley, BC</title>
-<meta name="description" content="Propagators since 1981. Wholesale plugs and liners — perennials, grasses, ferns, ground covers and more, from your favourite breeders — shipped to growers across Canada & the US. Book or request a quote.">
+<meta name="description" content="Wholesale plugs & liners from Langley, BC — perennials, grasses, ferns & ground covers shipped to growers across Canada & the US. Propagators since 1981.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Westcan Greenhouses">
 <meta property="og:title" content="Westcan Greenhouses — Wholesale Plugs & Liners">
 <meta property="og:description" content="Wholesale plug & liner propagators since 1981. Perennials, grasses, ferns and ground covers from leading breeders, shipped to growers across Canada and the US.">
 <meta property="og:url" content="https://westcangrhs.com/">
+<link rel="canonical" href="https://westcangrhs.com/">
+<meta property="og:image" content="https://westcangrhs.com/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -72,8 +76,8 @@ header{background:var(--white);border-bottom:1px solid var(--line);position:stic
 .hero{background:linear-gradient(180deg,var(--white) 0%,var(--cream) 100%);border-bottom:1px solid var(--line);overflow:hidden}
 .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:start;padding-top:72px;padding-bottom:80px}
 .eyebrow{font-family:var(--ff-data);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:18px}
-.hero h1{font-family:var(--ff-display);font-size:clamp(34px,4.6vw,54px);line-height:1.12;color:var(--navy);margin-bottom:20px}
-.hero h1 em{font-style:normal;color:var(--green)}
+.hero .hero-headline{font-family:var(--ff-display);font-size:clamp(34px,4.6vw,54px);line-height:1.12;color:var(--navy);margin-bottom:20px}
+.hero .hero-headline em{font-style:normal;color:var(--green)}
 .hero p.lede{font-size:18px;color:var(--muted);max-width:48ch;margin-bottom:32px}
 .hero .ctas{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
 .hero .ask{font-size:15px;font-weight:600;color:var(--navy);border-bottom:2px solid var(--gold);padding-bottom:2px}
@@ -388,6 +392,39 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 <!-- ============ end Google Analytics 4 ============ -->
 
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "LocalBusiness",
+ "@id": "https://westcangrhs.com/#business",
+ "name": "Westcan Greenhouses",
+ "description": "Wholesale plug and liner propagators since 1981 \u2014 perennials, grasses, ferns and ground covers shipped to growers across Canada and the US.",
+ "url": "https://westcangrhs.com/",
+ "image": "https://westcangrhs.com/og-image.jpg",
+ "logo": "https://westcangrhs.com/logo_green.jpg",
+ "telephone": "+1-604-530-9298",
+ "email": "sales@westcangrhs.com",
+ "foundingDate": "1981",
+ "address": {
+  "@type": "PostalAddress",
+  "streetAddress": "2527 210 Street",
+  "addressLocality": "Langley",
+  "addressRegion": "BC",
+  "postalCode": "V2Z 2A9",
+  "addressCountry": "CA"
+ },
+ "areaServed": [
+  {
+   "@type": "Country",
+   "name": "Canada"
+  },
+  {
+   "@type": "Country",
+   "name": "United States"
+  }
+ ]
+}
+</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a><style>.skip-link{position:absolute;left:-9999px;top:0;background:var(--navy,#1F2A5C);color:#fff;padding:10px 18px;z-index:9999;border-radius:0 0 8px 0;font-weight:600}.skip-link:focus{left:0}
@@ -434,7 +471,7 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
     </a>
     <nav>
       <ul>
-        <li><a href="#">Who We Are</a></li>
+        <li><a href="/about.html">Who We Are</a></li>
         <li><a href="catalog.html">Catalog</a></li>
         <li><a href="availability.html">Current Availability</a></li>
         <li><a href="shipping.html">Shipping</a></li>
@@ -445,7 +482,7 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
     <button class="menu-toggle" aria-label="Open menu">☰</button>
   </div>
 <nav class="mmenu" id="mmenu" aria-label="Mobile menu">
-  <a href="#">Who We Are</a>
+  <a href="/about.html">Who We Are</a>
   <a href="catalog.html">Catalog</a>
   <a href="availability.html">Current Availability</a>
   <a href="shipping.html">Shipping</a>
@@ -458,8 +495,8 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
 <div class="hero">
   <div class="wrap">
     <div class="hero-text">
-      <div class="eyebrow">Wholesale Plugs &amp; Liners · Propagators Since 1981 · Langley, BC</div>
-      <h1>Westcan Starts, <em>what you can finish.</em></h1>
+      <h1 class="eyebrow">Wholesale Plugs &amp; Liners · Propagators Since 1981 · Langley, BC</h1>
+      <p class="hero-headline">Westcan Starts, <em>what you can finish.</em></p>
       <p class="lede">We propagate wholesale plugs &amp; liners for growers across Canada &amp; the US — the perennials, grasses, ferns and ground covers you need, when you need them, grown to your specs.</p>
       <div class="ctas">
         <a class="btn btn-primary" href="availability.html">Book Available Stock</a>
@@ -671,7 +708,7 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
       </div>
       <div>
         <h5>Company</h5>
-        <ul><li><a href="#">Who We Are</a></li><li><a href="availability.html">Current Availability</a></li><li><a href="shipping.html">Shipping</a></li><li><a href="contact.html">Contact</a></li></ul>
+        <ul><li><a href="/about.html">Who We Are</a></li><li><a href="availability.html">Current Availability</a></li><li><a href="shipping.html">Shipping</a></li><li><a href="contact.html">Contact</a></li></ul>
       </div>
       <div>
         <h5>Contact</h5>

@@ -4,13 +4,17 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png"><link rel="shortcut icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2027 Catalog — Westcan Greenhouses</title>
+<title>Plug &amp; Liner Catalog — Westcan Greenhouses</title>
 <meta name="description" content="Everything Westcan Greenhouses grows — perennial, grass, fern, shrub and conifer liners. Search, filter by availability and US-export eligibility, and request a quote.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Westcan Greenhouses">
-<meta property="og:title" content="Catalog — Westcan Greenhouses">
+<meta property="og:title" content="Plug & Liner Catalog — Westcan Greenhouses">
 <meta property="og:description" content="Browse 860+ perennial, grass, fern and ground cover varieties with hardiness zones, US export status and booking weeks.">
 <meta property="og:url" content="https://westcangrhs.com/catalog.html">
+<link rel="canonical" href="https://westcangrhs.com/catalog.html">
+<meta property="og:image" content="https://westcangrhs.com/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -511,7 +515,7 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
     </a>
     <nav>
       <ul>
-        <li><a href="/">Who We Are</a></li>
+        <li><a href="/about.html">Who We Are</a></li>
         <li><a href="catalog.html">Catalog</a></li>
         <li><a href="availability.html">Current Availability</a></li>
         <li><a href="shipping.html">Shipping</a></li>
@@ -522,7 +526,7 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
     <button class="menu-toggle" aria-label="Open menu">☰</button>
   </div>
 <nav class="mmenu" id="mmenu" aria-label="Mobile menu">
-  <a href="/">Who We Are</a>
+  <a href="/about.html">Who We Are</a>
   <a href="catalog.html">Catalog</a>
   <a href="availability.html">Current Availability</a>
   <a href="shipping.html">Shipping</a>
@@ -588,7 +592,7 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
       </div>
       <div>
         <h5>Company</h5>
-        <ul><li><a href="#">Who We Are</a></li><li><a href="availability.html">Current Availability</a></li><li><a href="shipping.html">Shipping</a></li><li><a href="contact.html">Contact</a></li></ul>
+        <ul><li><a href="/about.html">Who We Are</a></li><li><a href="availability.html">Current Availability</a></li><li><a href="shipping.html">Shipping</a></li><li><a href="contact.html">Contact</a></li></ul>
       </div>
       <div>
         <h5>Contact</h5>
@@ -627,6 +631,7 @@ all.onclick=()=>{fCat='All';syncChips();build();};catchips.appendChild(all);
 cats.forEach(v=>{const b=document.createElement('button');b.className='chip-f';b.dataset.val=v;
   b.innerHTML=v+' <span class="ct">'+countBy(v)+'</span>';b.onclick=()=>{fCat=v;syncChips();build();};catchips.appendChild(b);});
 function syncChips(){catchips.querySelectorAll('.chip-f').forEach(b=>b.classList.toggle('on',(b.dataset.val||'All')===fCat));}
+const _pcat=new URLSearchParams(location.search).get('cat');if(_pcat){const _m=cats.find(c=>c.toLowerCase()===_pcat.toLowerCase());if(_m){fCat=_m;syncChips();}}
 const letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
 function build(){
   const f=q.value.toLowerCase().trim(),onlyNow=togNow.checked,onlyUS=togUS.checked;
