@@ -72,64 +72,62 @@ def head(title, desc, canon, ogimg, extra=''):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Archivo:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{{--navy:#1F2A5C;--navy-deep:#16204A;--green:#2B7D43;--green-soft:#E3F0E7;--cream:#F7F2E8;--gold:#C9A24A;--gold-soft:#F6EDD9;--ink:#23262E;--muted:#5C6270;--line:#E4DDCE;--white:#FFFFFF;--ff-display:'Young Serif',Georgia,serif;--ff-body:'Archivo',system-ui,sans-serif;--ff-data:'Spline Sans Mono',ui-monospace,monospace}}
-*{{margin:0;padding:0;box-sizing:border-box}}
-body{{font-family:var(--ff-body);color:var(--ink);background:var(--cream);line-height:1.6;font-size:16px}}
-img{{max-width:100%;display:block}}a{{color:inherit;text-decoration:none}}
-.wrap{{max-width:1180px;margin:0 auto;padding:0 24px}}
-.utilbar{{background:var(--navy-deep);color:#C9D0E8;font-size:13.5px}}
-.utilbar .wrap{{display:flex;justify-content:space-between;align-items:center;min-height:36px;gap:16px;flex-wrap:wrap}}
-.utilbar a:hover{{color:var(--white)}}
-header{{background:var(--white);border-bottom:1px solid var(--line)}}
-.nav{{display:flex;align-items:center;justify-content:space-between;min-height:72px;gap:20px}}
-.brand img{{height:44px;width:auto}}
-.nav nav{{display:flex;gap:26px;font-weight:500;flex-wrap:wrap}}
-.nav nav a:hover{{color:var(--green)}}
-.btn{{display:inline-block;padding:13px 26px;border-radius:8px;font-weight:600;border:2px solid transparent}}
-.btn-primary{{background:var(--green);color:var(--white)}}
-.btn-primary:hover{{background:#236636}}
-.btn-ghost{{border-color:var(--navy);color:var(--navy)}}
-.btn-ghost:hover{{background:var(--navy);color:var(--white)}}
+{SITE_CSS}
 .crumbs{{font-size:13.5px;color:var(--muted);padding:18px 0}}
 .crumbs a:hover{{color:var(--green)}}
 main{{padding-bottom:70px}}
 h1{{font-family:var(--ff-display);color:var(--navy);line-height:1.15}}
-.chip{{display:inline-block;font-family:var(--ff-data);font-size:12px;padding:4px 12px;border-radius:99px;font-weight:600;letter-spacing:.04em}}
-.chip-now{{background:var(--green-soft);color:var(--green)}}
 .chip-ahead{{background:var(--gold-soft);color:#8a6b1f}}
 .chip-none{{background:#ECEDF2;color:var(--muted)}}
-.chip-us{{background:var(--navy);color:#fff}}
-footer{{background:var(--navy-deep);color:#C9D0E8;padding:44px 0;font-size:14.5px}}
-footer a:hover{{color:#fff}}
-.fcols{{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}}
 {extra}
 </style>
 </head>'''
 
-UTILBAR = '''<div class="utilbar"><div class="wrap">
-<div class="creds"><span>GCP Certified&nbsp;&nbsp;·&nbsp;&nbsp;Ball Rooting Station</span></div>
-<div class="contact"><a href="tel:+16045309298">+1 604-530-9298</a> &nbsp;·&nbsp; <a href="mailto:sales@westcangrhs.com">sales@westcangrhs.com</a></div>
-</div></div>'''
+# ---------- real site chrome, extracted from shipping.html at build time ----------
+# (keeps generated pages pixel-identical to the main site's header/nav/footer)
+_sh = open(f'{SRC}/shipping.html', encoding='utf-8').read()
+_styles = re.findall(r'<style>(.*?)</style>', _sh, re.S)
+SITE_CSS = '\n'.join(b for b in _styles if (':root' in b or '.mmenu' in b or 'brandlogo' in b))
+
+def _rootify(block):
+    """make page links root-relative so they work from /varieties/"""
+    for p in ('index.html', 'catalog.html', 'availability.html', 'shipping.html',
+              'contact.html', 'quote.html', 'about.html', 'variety.html'):
+        block = block.replace(f'href="{p}', f'href="/{p}')
+    block = block.replace('href="/index.html"', 'href="/"')
+    block = block.replace('href="//', 'href="/')  # already-absolute stays sane
+    return block
+
+def _save_b64_logos(block):
+    """swap inline base64 logos for a shared file so 1,168 pages don't each carry 30KB"""
+    import base64
+    out_imgs = os.path.join(OUT, 'images')
+    os.makedirs(out_imgs, exist_ok=True)
+    for m in set(re.findall(r'data:image/png;base64,([A-Za-z0-9+/=]+)', block)):
+        data = base64.b64decode(m)
+        name = f'brand-logo-{len(data)}.png'
+        path = os.path.join(out_imgs, name)
+        if not os.path.exists(path):
+            open(path, 'wb').write(data)
+        block = block.replace('data:image/png;base64,' + m, f'/images/{name}')
+    return block
+
+_h0 = _sh.find('<div class="utilbar"')
+_h1 = _sh.find('</header>') + len('</header>')
+HEADER_HTML = _save_b64_logos(_rootify(_sh[_h0:_h1]))
+HEADER_HTML = re.sub(r'<span>Ball Rooting Station</span>', '', HEADER_HTML)
+_f0 = _sh.find('<footer')
+_f1 = _sh.find('</footer>') + len('</footer>')
+FOOTER = _save_b64_logos(_rootify(_sh[_f0:_f1]))
+MENU_JS = '''<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){
+  var m=document.getElementById('mmenu');m.classList.toggle('open');
+  this.setAttribute('aria-expanded',m.classList.contains('open'));
+});
+</script>'''
 
 def header_nav():
-    return f'''{UTILBAR}
-<header><div class="wrap nav">
-<a class="brand" href="/"><img src="/logo_green.jpg" alt="Westcan Greenhouses Ltd." style="height:44px"></a>
-<nav>
-<a href="/about.html">Who We Are</a>
-<a href="/catalog.html">Catalog</a>
-<a href="/availability.html">Current Availability</a>
-<a href="/shipping.html">Shipping</a>
-<a href="/contact.html">Contact</a>
-</nav>
-<a class="btn btn-primary" href="/quote.html">My Quote</a>
-</div></header>'''
-
-FOOTER = f'''<footer><div class="wrap fcols">
-<div><strong style="color:#fff">Westcan Greenhouses Ltd.</strong><br>2527 – 210 Street, Langley, BC V2Z 2A9<br>Wholesale plug &amp; liner propagators since 1981</div>
-<div><a href="/catalog.html">Catalog</a> · <a href="/availability.html">Availability</a> · <a href="/shipping.html">Shipping</a> · <a href="/about.html">Who We Are</a> · <a href="/contact.html">Contact</a></div>
-<div><a href="tel:+16045309298">+1 604-530-9298</a><br><a href="mailto:sales@westcangrhs.com">sales@westcangrhs.com</a></div>
-</div></footer>'''
+    return HEADER_HTML
 
 # live availability chip updater (reads weekly feed; keyed by slug)
 AV_JS = '''<script>
@@ -270,6 +268,7 @@ for r in ROWS:
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 <script type="application/ld+json">{json.dumps(bc, ensure_ascii=False)}</script>
 {AV_JS}
+{MENU_JS}
 </body>
 </html>'''
     open(f'{OUT}/varieties/{slug}.html', 'w', encoding='utf-8').write(page)
@@ -385,6 +384,7 @@ for fname, c in CAT_COPY.items():
 </main>
 {FOOTER}
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
+{MENU_JS}
 </body>
 </html>'''
     open(f'{OUT}/{fname}', 'w', encoding='utf-8').write(page)
