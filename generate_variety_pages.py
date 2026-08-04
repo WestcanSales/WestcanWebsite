@@ -45,10 +45,11 @@ CAT_PAGE = {
     'Heathers':      ('shrub-conifer-liners.html', 'Shrub & Conifer Liners'),
 }
 def cat_link(cat):
-    if cat in CAT_PAGE:
-        return '/' + CAT_PAGE[cat][0], CAT_PAGE[cat][1]
+    """User-facing links go to the filtered catalog (category landing pages are
+    kept sitemap-only by request — no user-visible path leads to them)."""
     from urllib.parse import quote
-    return '/catalog.html?cat=' + quote(cat), cat
+    label = CAT_PAGE[cat][1] if cat in CAT_PAGE else cat
+    return '/catalog.html?cat=' + quote(cat), label
 
 # ---------- shared chrome ----------
 def head(title, desc, canon, ogimg, extra=''):
@@ -224,11 +225,29 @@ for r in ROWS:
     if common: ld["alternateName"] = common
     bc = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
-        {"@type": "ListItem", "position": 2, "name": cpn, "item": BASE + cpl.split('?')[0]},
+        {"@type": "ListItem", "position": 2, "name": "Catalog", "item": BASE + "/catalog.html"},
         {"@type": "ListItem", "position": 3, "name": name, "item": canon}]}
 
     photo_html = (f'<img src="{photo}" alt="{esc(name)} — wholesale plug/liner" loading="lazy">'
                   if photo else f'<div class="noimg">Photo coming soon — see live page for details</div>')
+
+    # body copy — factual, from catalog + availability data only
+    p1 = f'{esc(name)}{f" ({esc(common)})" if common else ""} is propagated by Westcan Greenhouses as a wholesale plug/liner for growers, landscapers and re-wholesalers across Canada{" and the US" if us == "yes" else ""}.'
+    if z: p1 += f' Hardy in zones {esc(z)}.'
+    gsibs = [x for x in by_genus.get(r['g'], []) if x['slug'] != primary_slug[name]]
+    if len(gsibs) >= 1:
+        p1 += f' It is one of {len(gsibs) + 1} {esc(r["g"])} selections in the Westcan range.'
+    k = (r.get('av') or {}).get('k', 'none')
+    if k == 'now':
+        p2av = 'It is on the current availability list and can ship now — check live stock and plug sizes on the booking page.'
+    elif k == 'ahead':
+        wk, yr = r['av'].get('wk', ''), r['av'].get('y', '')
+        p2av = f'First trays of the season are forecast for {esc(str(wk))} {yr} — book ahead to lock in varieties and delivery weeks.'
+    else:
+        p2av = 'It is grown to order — reserve trays and delivery weeks through our booking program, direct or through your broker.'
+    p2 = (f'Like everything we grow, it leaves our Langley, BC greenhouses as a uniform, well-rooted tray — '
+          f'on carts, boxed, or as palletized freight. {p2av}')
+    body_paras = f'<p>{p1}</p>\n<p style="margin-top:12px">{p2}</p>'
     facts = []
     facts.append(f'<div><dt>Botanical name</dt><dd>{esc(name)}</dd></div>')
     if common: facts.append(f'<div><dt>Common name</dt><dd>{esc(common)}</dd></div>')
@@ -252,7 +271,7 @@ for r in ROWS:
 <span id="avchip" data-slug="{esc(slug)}" class="chip {cl}">{ct}</span>
 <h1 style="font-size:clamp(28px,3.6vw,42px);margin-top:14px">{esc(name)}</h1>
 <p class="common">{esc(common) + " · " if common else ""}Wholesale {esc(cpn.lower() if cat in CAT_PAGE else "plugs & liners")} grown in Langley, BC</p>
-<p>{esc(name)}{f" ({esc(common)})" if common else ""} is propagated by Westcan Greenhouses as a wholesale plug/liner for growers, landscapers and re-wholesalers across Canada{" and the US" if us == "yes" else ""}. {"Hardy in zones " + esc(z) + ". " if z else ""}We custom-grow to your specs and ship from our Langley, BC greenhouses — boxed FedEx or freight pallets.</p>
+{body_paras}
 <dl class="facts">{''.join(facts)}</dl>
 <div class="ctas">
 <a class="btn btn-primary" href="/variety.html?v={esc(slug)}">Check availability &amp; book</a>
