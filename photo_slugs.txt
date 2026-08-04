@@ -83,7 +83,7 @@ lavandula-intermediata-grosso
 lavandula-intermediata-phenomenal
 lavandula-stoechas-anouk
 lavandula-stoechas-anouk-burgundy
-lavandula-stoechas-anouk-purple-flare-or-twight-sky
+lavandula-stoechas-anouk-purple-flare
 lavandula-stoechas-primavera
 lavandula-stoechas-purple-rain
 lavandula-stoechas-silver-anouk

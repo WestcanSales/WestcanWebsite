@@ -35,6 +35,12 @@
   to = "/catalog.html"
   status = 301
 
+# Twight Sky merged entry renamed to Anouk Purple Flare (Aug 2026)
+[[redirects]]
+  from = "/varieties/lavandula-stoechas-anouk-purple-flare-or-twight-sky.html"
+  to = "/varieties/lavandula-stoechas-anouk-purple-flare.html"
+  status = 301
+
 [[headers]]
   for = "/*"
   [headers.values]
