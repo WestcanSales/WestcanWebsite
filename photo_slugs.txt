@@ -35,6 +35,10 @@ cupressus-macrocarpa-wilma
 cyrtomium-fortunei-clivicola
 delosperma-hybrida-jewel-of-the-desert-peridot
 deschampsia-caespitosa-northern-lights
+dianthus-x-hybrida-mountain-frost-pink-pompom
+dianthus-x-hybrida-mountain-frost-red-garnet
+dianthus-x-hybrida-mountain-frost-ruby-glitter
+dianthus-x-hybrida-mountain-frost-ruby-snow
 dicentra-spectabilis-amore-rose
 dicentra-spectabilis-gold-heart
 digitalis-hybrida-arctic-fox
