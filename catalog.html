@@ -502,7 +502,6 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
 <!-- Utility bar -->
 <div class="utilbar">
   <div class="wrap">
-    <div class="creds"><span>GCP Certified</span></div>
     <div class="contact"><a href="tel:+16045309298">+1 604-530-9298</a> &nbsp;·&nbsp; <a href="mailto:sales@westcangrhs.com">sales@westcangrhs.com</a></div>
   </div>
 </div>
@@ -634,12 +633,15 @@ function syncChips(){catchips.querySelectorAll('.chip-f').forEach(b=>b.classList
 const _pcat=new URLSearchParams(location.search).get('cat');if(_pcat){const _m=cats.find(c=>c.toLowerCase()===_pcat.toLowerCase());if(_m){fCat=_m;syncChips();}}
 const letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
 function build(){
-  const f=q.value.toLowerCase().trim(),onlyNow=togNow.checked,onlyUS=togUS.checked;
-  const filtered=ROWS.filter(r=>
-    (fCat==='All'||r.cat===fCat)&&
-    (!onlyNow||(r.av&&r.av.k==='now'))&&
-    (!onlyUS||r.us==='yes')&&
-    (!f||(r.g+' '+r.n+' '+(r.common||'')+' z'+(r.z||'')).toLowerCase().includes(f)));
+  const norm=s=>s.toLowerCase().replace(/[\u2018\u2019'"\u201C\u201D\u00AE\u2122]/g,'');
+  const toks=norm(q.value).split(/\s+/).filter(Boolean),onlyNow=togNow.checked,onlyUS=togUS.checked;
+  const filtered=ROWS.filter(r=>{
+    if(fCat!=='All'&&r.cat!==fCat)return false;
+    if(onlyNow&&!(r.av&&r.av.k==='now'))return false;
+    if(onlyUS&&r.us!=='yes')return false;
+    if(!toks.length)return true;
+    const hay=norm(r.g+' '+r.n+' '+(r.common||'')+' z'+(r.z||''));
+    return toks.every(t=>hay.includes(t));});
   const genera=[...new Set(filtered.map(r=>r.g))];
   cat.innerHTML='';const seenL=new Set();
   const present=new Set(genera.map(g=>g[0].toUpperCase()));
