@@ -489,6 +489,7 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
 <!-- Utility bar -->
 <div class="utilbar">
   <div class="wrap">
+    <div class="creds"><span>GCP Certified</span></div>
     <div class="contact"><a href="tel:+16045309298">+1 604-530-9298</a> &nbsp;·&nbsp; <a href="mailto:sales@westcangrhs.com">sales@westcangrhs.com</a></div>
   </div>
 </div>
@@ -547,7 +548,7 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
     <div class="srow"><span>Total trays</span><span id="sTray">0</span></div>
     <div class="srow tot"><span>Total plugs</span><span id="sPlug">0</span></div>
     <p class="sub">Each tray = 72 plugs. Minimum 4 trays per variety. Pricing is confirmed on your quote.</p>
-    <form name="quote-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="quoteForm"><input type="hidden" name="form-name" value="quote-request"><input type="hidden" name="items" id="itemsField"><p style="display:none"><label>Leave blank: <input name="bot-field"></label></p><label>How would you like to order?</label>
+    <form name="quote-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="quoteForm"><input type="hidden" name="form-name" value="quote-request"><input type="hidden" name="items" id="itemsField"><input type="hidden" name="order_method" id="orderMethod" value="Through my broker"><p style="display:none"><label>Leave blank: <input name="bot-field"></label></p><label>How would you like to order?</label>
     <div class="shipadd" id="shipAdd" style="display:none">
       <h3>Add shipping to this quote</h3>
       <p>Freight is often the deciding factor — estimate it right here. It re-prices automatically as your tray count changes.</p>
@@ -564,7 +565,7 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
       <div class="radio-card" id="rd" onclick="route(false)"><b>Direct with Westcan</b></div>
     </div>
     <div id="brokwrap"><label>Your broker</label>
-    <select name="broker"><option>Ball Seed</option><option>EHR</option><option>Express Seed</option><option>JVK</option><option>McHutchison</option><option>Other</option></select></div>
+    <select name="broker" id="brokerSel" required><option value="" selected disabled hidden>Select your broker…</option><option>Ball Seed</option><option>EHR</option><option>Express Seed</option><option>JVK</option><option>McHutchison</option><option>Other</option></select></div>
     <label>Company</label><input type="text" name="company" placeholder="Your nursery" required>
     <label>Contact name</label><input type="text" name="name" placeholder="Full name" required>
     <label>Email</label><input type="email" name="email" placeholder="you@yournursery.com" required>
@@ -683,7 +684,7 @@ function updateActionUI(bookN,quoteN){
   else if(bookN===0&&quoteN>0)btn.textContent='Request quote for all items';
   else btn.textContent='Book & request quote for all items';
 }
-function route(b){document.getElementById('rb').classList.toggle('on',b);document.getElementById('rd').classList.toggle('on',!b);document.getElementById('brokwrap').style.display=b?'':'none';var c=document.querySelector('input[name="company"]');if(c)c.placeholder=b?'Your nursery':'Your nursery or brokerage';}
+function route(b){document.getElementById('rb').classList.toggle('on',b);document.getElementById('rd').classList.toggle('on',!b);document.getElementById('brokwrap').style.display=b?'':'none';var s=document.getElementById('brokerSel');if(s){s.disabled=!b;if(!b)s.value='';}var om=document.getElementById('orderMethod');if(om)om.value=b?'Through my broker':'Direct with Westcan';var c=document.querySelector('input[name="company"]');if(c)c.placeholder=b?'Your nursery':'Your nursery or brokerage';}
 document.getElementById('submit').addEventListener('click',function(){
   if(!Cart.count()){return;}
   var items=Cart.read().map(function(x){if(x.ship)return Freight.submitLine(x);return (x.trays||'?')+' trays \u00b7 '+(x.cell||'?')+' cell \u00b7 '+x.full+' \u00b7 week '+(x.week||'ASAP')+' \u00b7 '+((x.av==='now')?'BOOK (available now)':'QUOTE (grown to order)');}).join('\n');
