@@ -500,7 +500,7 @@ document.addEventListener('DOMContentLoaded', function(){
     <h2>Subscribe to the weekly availability list</h2>
     <p class="sub">Plug &amp; liner availability in your inbox every week — promotions, announcements &amp; special sales included.</p>
     <form name="availability-signup" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="signupForm">
-<input type="hidden" name="form-name" value="availability-signup"><p style="display:none"><label>Leave blank: <input name="bot-field"></label></p>
+<input type="hidden" name="form-name" value="availability-signup"><input type="hidden" name="works_with_broker" id="wwb" value=""><p style="display:none"><label>Leave blank: <input name="bot-field"></label></p>
       <div class="grid2">
         <div><label>First name <span class="req">*</span></label><input type="text" name="first_name" required></div>
         <div><label>Last name <span class="req">*</span></label><input type="text" name="last_name" required></div>
@@ -515,8 +515,9 @@ document.addEventListener('DOMContentLoaded', function(){
         <div class="radio-card" id="by" onclick="brok(true)"><b>Yes</b></div>
         <div class="radio-card" id="bn" onclick="brok(false)"><b>No</b></div>
       </div>
+      <div id="brokReq" style="display:none;color:#A0392B;font-size:13.5px;margin:-4px 0 10px">Please tell us whether you work with a broker.</div>
       <div id="bw" style="display:none"><label>Which broker?</label>
-      <select name="broker"><option>Ball Seed</option><option>EHR</option><option>Express Seed</option><option>JVK</option><option>McHutchison</option><option>Other</option></select></div>
+      <select name="broker" id="sigBroker" required disabled><option value="" selected disabled hidden>Select your broker…</option><option>Ball Seed</option><option>EHR</option><option>Express Seed</option><option>JVK</option><option>McHutchison</option><option>Other</option></select></div>
       <button class="btn btn-gold" type="submit">Subscribe Now</button>
     </form>
     <div class="okmsg" id="ok">You're on the list! The next weekly availability will land in your inbox.</div>
@@ -611,7 +612,7 @@ function render(){
   });
   tb.appendChild(tr);});}
 q.addEventListener('input',render);cat.addEventListener('change',render);render();
-function brok(yes){document.getElementById('by').classList.toggle('on',yes);document.getElementById('bn').classList.toggle('on',!yes);document.getElementById('bw').style.display=yes?'':'none';}
+function brok(yes){document.getElementById('by').classList.toggle('on',yes);document.getElementById('bn').classList.toggle('on',!yes);document.getElementById('bw').style.display=yes?'':'none';var s=document.getElementById('sigBroker');if(s){s.disabled=!yes;if(!yes)s.value='';}var w=document.getElementById('wwb');if(w)w.value=yes?'Yes':'No';var n=document.getElementById('brokReq');if(n)n.style.display='none';}
 </script>
 <script>
 document.querySelector('.menu-toggle').addEventListener('click',function(){
@@ -621,7 +622,7 @@ document.querySelector('.menu-toggle').addEventListener('click',function(){
 </script>
 <script>
 document.getElementById('signupForm').addEventListener('submit',function(e){
-  e.preventDefault(); var f=this;
+  e.preventDefault(); var f=this;if(!document.getElementById('by').classList.contains('on')&&!document.getElementById('bn').classList.contains('on')){document.getElementById('brokReq').style.display='block';return;}
   fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},
     body:new URLSearchParams(new FormData(f)).toString()})
   .then(function(){document.getElementById('ok').style.display='block';f.style.display='none';})
