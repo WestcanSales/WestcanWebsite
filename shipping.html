@@ -298,6 +298,9 @@ footer{background:var(--navy-deep);color:#AEB7D4;padding:60px 0 30px;font-size:1
 .qrow span:last-child{font-family:var(--ff-data)}
 .qnote{font-size:13px;color:#AEB7D4;margin-top:20px;line-height:1.55}
 .qempty{color:#B9C2DE;font-size:15px;line-height:1.6}
+.quote-card .qroute{font-size:15px;color:#fff;font-weight:600;margin-bottom:10px}
+.quote-card .qrow{padding:9px 0}
+.quote-card .fx-price small{display:block;font-size:11px;font-weight:600;opacity:.85;text-align:right}
 .okmsg{display:none;background:var(--green-soft);border:1px solid var(--green);color:var(--green);border-radius:10px;padding:16px;margin-top:18px;font-weight:600;text-align:center}
 @media(max-width:900px){.ship-grid{grid-template-columns:1fr;padding-left:0;padding-right:0}.quote-card{position:static}}
 @media(max-width:560px){.bookform .grid2,.mode-cards{grid-template-columns:1fr}.bookform{padding:24px 18px}}
@@ -315,6 +318,7 @@ footer{background:var(--navy-deep);color:#AEB7D4;padding:60px 0 30px;font-size:1
 .info-card a{color:#E8C76B!important}
 .hero .ask{border-bottom-color:var(--gold)}
 .signup-mini p,.qnote,.qempty{color:#5C6270}
+.quote-card .qnote{color:#AEB7D4}.quote-card .qempty{color:#B9C2DE}
 </style>
 
 <!-- ============ Google Analytics 4 (Westcan Greenhouses) ============
@@ -497,7 +501,7 @@ document.addEventListener('DOMContentLoaded', function(){
       </div>
       <div>
         <h5>Catalog</h5>
-        <ul><li><a href="catalog.html?cat=Perennials">Perennials</a></li><li><a href="catalog.html?cat=Grasses%20%26%20Sedges">Grasses &amp; Sedges</a></li><li><a href="catalog.html?cat=Ferns">Ferns</a></li><li><a href="catalog.html">All categories</a></li><li><a href="tissue-culture.html">Tissue Culture</a></li><li><a href="index.html#specialty-catalogs">Specialty Catalogs</a></li></ul>
+        <ul><li><a href="catalog.html?cat=Perennials">Perennials</a></li><li><a href="catalog.html?cat=Grasses">Grasses &amp; Sedges</a></li><li><a href="catalog.html?cat=Ferns">Ferns</a></li><li><a href="catalog.html">All categories</a></li><li><a href="tissue-culture.html">Tissue Culture</a></li><li><a href="index.html#specialty-catalogs">Specialty Catalogs</a></li></ul>
       </div>
       <div>
         <h5>Company</h5>
@@ -588,8 +592,14 @@ function calc(){
  const R=US[name];
  if(!R){out.innerHTML='<p class="qempty">Contact us for pallet freight to '+name+'.</p>';return;}
  let cost=R[2]*units;
- out.innerHTML='<div class="qtotal"><span>'+units+' pallet'+(units>1?'s':'')+' · '+trays+' trays → '+name+'</span><b>'+cur+' $'+cost.toFixed(0)+'</b></div>'+
-   '<p class="qnote">FedEx Freight LTL estimate from our 2026 lane quotes — exact freight confirmed on your booking quote.</p>';
+ const plugs=traysIn*CELLS, perPlug=cost/plugs, perTray=cost/traysIn;
+ out.innerHTML='<div class="qroute">'+units+' pallet'+(units>1?'s':'')+' \u00b7 '+trays+' tray spots \u2192 '+name+'</div>'+
+   '<div class="price">$'+Math.round(cost).toLocaleString()+'</div><div class="cur">'+cur+' \u00b7 FedEx Freight LTL</div>'+
+   '<div class="qrow"><span>Per 72-cell plug</span><span>'+perPlug.toLocaleString(undefined,{style:'currency',currency:'USD',minimumFractionDigits:3,maximumFractionDigits:3})+'</span></div>'+
+   '<div class="qrow"><span>Per tray ('+traysIn.toLocaleString()+' trays \u00b7 '+plugs.toLocaleString()+' plugs)</span><span>$'+perTray.toFixed(2)+'</span></div>'+
+   '<div class="qrow"><span>Per pallet (80 trays)</span><span>$'+R[2].toLocaleString()+'</span></div>'+
+   (trays>traysIn?'<div class="qrow"><span>Room left on the last pallet</span><span>'+(trays-traysIn)+' trays</span></div>':'')+
+   '<p class="qnote">Estimate from our 2026 lane quotes \u2014 exact freight is confirmed on your booking quote.</p>';
 }
 function toggleLive(){
   var dv=(document.getElementById('dest').value||''), pc=(document.getElementById('destPostal').value||'').trim();
@@ -640,7 +650,7 @@ function fetchLive(){
       var t=fmtTransit(s.transit);
       return '<label class="fx-row">'
         +'<span class="fx-name"><input type="radio" name="fxsvc" value="'+s.serviceType+'">'+s.service+(t?' <span class="fx-meta">· '+t+'</span>':'')+'</span>'
-        +'<span class="fx-price">'+cur+' $'+Number(s.amount).toFixed(2)+'</span></label>';
+        +'<span class="fx-price">'+cur+' $'+Number(s.amount).toFixed(2)+'<small>$'+(Number(s.amount)/(d.trays*CELLS)).toFixed(3)+' / plug</small></span></label>';
     }).join('');
     out.innerHTML='<div class="fx-head">Live FedEx \u00b7 '+d.trays+' trays \u00b7 '+d.boxes+' box'+(d.boxes>1?'es':'')+' \u00b7 '+cur+'</div>'+rows;
   })

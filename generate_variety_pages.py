@@ -254,9 +254,8 @@ SITE_CSS = '\n'.join(b for b in _styles if (':root' in b or '.mmenu' in b or 'br
 
 def _rootify(block):
     """make page links root-relative so they work from /varieties/"""
-    for p in ('index.html', 'catalog.html', 'availability.html', 'shipping.html',
-              'contact.html', 'quote.html', 'about.html', 'variety.html'):
-        block = block.replace(f'href="{p}', f'href="/{p}')
+    # any bare top-level page link (foo.html, foo.html?x, foo.html#y) -> /foo.html
+    block = re.sub(r'href="(?!https?:|/|#|mailto:|tel:)([A-Za-z0-9_-]+\.html)', r'href="/\1', block)
     block = block.replace('href="/index.html"', 'href="/"')
     block = block.replace('href="//', 'href="/')  # already-absolute stays sane
     return block

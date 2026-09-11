@@ -5,6 +5,21 @@
   to = "/index.html"
   status = 301
 
+# Variety pages built before Sep 11 2026 carry a relative footer link to
+# tissue-culture.html, which resolves under /varieties/. Catch it until the
+# weekly rebuild replaces every page (generator now writes /tissue-culture.html).
+[[redirects]]
+  from = "/varieties/tissue-culture.html"
+  to = "/tissue-culture.html"
+  status = 301
+
+# Belt-and-braces: the duplicate site copy that was committed by mistake.
+[[redirects]]
+  from = "/westcan-site-update/*"
+  to = "/:splat"
+  status = 301
+  force = true
+
 
 # Legacy Shopify URLs that STILL earn Google impressions (GSC, Sep 2026).
 # These must stay ABOVE the catch-all /pages/* rule below — Netlify takes the

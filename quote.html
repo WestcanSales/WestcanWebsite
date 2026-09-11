@@ -229,6 +229,13 @@ footer{background:var(--navy-deep);color:#AEB7D4;padding:60px 0 30px;font-size:1
 .shipadd p{font-size:12.5px;color:var(--muted);margin-bottom:10px}
 .shipadd select,.shipadd input{width:100%;box-sizing:border-box;margin-bottom:10px}
 .shipadd .modes{display:flex;gap:8px;margin-bottom:10px}
+.shipadd .sa-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch}
+.shipadd .sa-grid .modes button{white-space:nowrap}
+.shipadd .sa-grid .modes,.shipadd .sa-grid select,.shipadd .sa-grid input{margin-bottom:0}
+.shipadd .sa-grid select,.shipadd .sa-grid input{padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-family:var(--ff-body);font-size:14px;background:#fff;color:var(--navy)}
+.shipadd .sa-grid .btn{margin-top:0;padding:10px 18px;white-space:nowrap;font-size:14px}
+@media(max-width:560px){.shipadd .sa-grid{grid-template-columns:1fr}}
+.freight-panel .fp-price small{display:block;font-size:12px;font-weight:600;text-align:right;opacity:.9}
 .shipadd .modes button{flex:1;padding:8px 6px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:12.5px;font-weight:600;color:var(--navy)}
 .shipadd .modes button.on{border-color:var(--gold,#C9A227);background:#fff;box-shadow:inset 0 0 0 1px var(--gold,#C9A227)}
 
@@ -489,7 +496,6 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
 <!-- Utility bar -->
 <div class="utilbar">
   <div class="wrap">
-    <div class="creds"><span>GCP Certified</span></div>
     <div class="contact"><a href="tel:+16045309298">+1 604-530-9298</a> &nbsp;·&nbsp; <a href="mailto:sales@westcangrhs.com">sales@westcangrhs.com</a></div>
   </div>
 </div>
@@ -538,6 +544,19 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
       <h2 class="freight-h">Shipping</h2>
       <div class="freight-panel" id="freightPanel"></div>
     </div>
+    <div class="shipadd" id="shipAdd" style="display:none">
+      <h3>Add shipping to this quote</h3>
+      <p>Freight is often the deciding factor — estimate it here. It re-prices automatically as your tray count changes.</p>
+      <div class="sa-grid">
+        <div class="modes">
+          <button type="button" id="fBox" class="on">📦 By the box</button>
+          <button type="button" id="fPal">🚛 By the pallet</button>
+        </div>
+        <select id="fDest"><option value="">Destination…</option><optgroup label="Canada" id="fog_ca"></optgroup><optgroup label="United States" id="fog_us"></optgroup></select>
+        <input type="text" id="fPostal" placeholder="Postal / ZIP (for live FedEx box rates)">
+        <button class="btn btn-gold" id="fAdd" type="button">Add shipping</button>
+      </div>
+    </div>
     <div class="empty" id="empty" style="display:none">Your quote is empty.<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:16px"><a class="btn btn-primary" href="catalog.html">Browse the catalog →</a><a class="btn btn-ghost" href="availability.html">Current availability →</a></div></div>
   </div>
   <div class="summary" id="summary">
@@ -549,17 +568,6 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
     <div class="srow tot"><span>Total plugs</span><span id="sPlug">0</span></div>
     <p class="sub">Each tray = 72 plugs. Minimum 4 trays per variety. Pricing is confirmed on your quote.</p>
     <form name="quote-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="quoteForm"><input type="hidden" name="form-name" value="quote-request"><input type="hidden" name="items" id="itemsField"><input type="hidden" name="order_method" id="orderMethod" value="Through my broker"><p style="display:none"><label>Leave blank: <input name="bot-field"></label></p><label>How would you like to order?</label>
-    <div class="shipadd" id="shipAdd" style="display:none">
-      <h3>Add shipping to this quote</h3>
-      <p>Freight is often the deciding factor — estimate it right here. It re-prices automatically as your tray count changes.</p>
-      <div class="modes">
-        <button type="button" id="fBox" class="on">📦 By the box</button>
-        <button type="button" id="fPal">🚛 By the pallet</button>
-      </div>
-      <select id="fDest"><option value="">Destination…</option><optgroup label="Canada" id="fog_ca"></optgroup><optgroup label="United States" id="fog_us"></optgroup></select>
-      <input type="text" id="fPostal" placeholder="Postal / ZIP (for live FedEx box rates)">
-      <button class="btn btn-gold" id="fAdd" type="button" style="width:100%">Add shipping</button>
-    </div>
     <div class="radio-cards">
       <div class="radio-card on" id="rb" onclick="route(true)"><b>Through my broker</b></div>
       <div class="radio-card" id="rd" onclick="route(false)"><b>Direct with Westcan</b></div>
@@ -586,7 +594,7 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
       </div>
       <div>
         <h5>Catalog</h5>
-        <ul><li><a href="catalog.html?cat=Perennials">Perennials</a></li><li><a href="catalog.html?cat=Grasses%20%26%20Sedges">Grasses &amp; Sedges</a></li><li><a href="catalog.html?cat=Ferns">Ferns</a></li><li><a href="catalog.html">All categories</a></li><li><a href="tissue-culture.html">Tissue Culture</a></li><li><a href="index.html#specialty-catalogs">Specialty Catalogs</a></li></ul>
+        <ul><li><a href="catalog.html?cat=Perennials">Perennials</a></li><li><a href="catalog.html?cat=Grasses">Grasses &amp; Sedges</a></li><li><a href="catalog.html?cat=Ferns">Ferns</a></li><li><a href="catalog.html">All categories</a></li><li><a href="tissue-culture.html">Tissue Culture</a></li><li><a href="index.html#specialty-catalogs">Specialty Catalogs</a></li></ul>
       </div>
       <div>
         <h5>Company</h5>
@@ -813,7 +821,7 @@ var Freight={
     }
     pan.innerHTML='<button class="rm" data-rm="'+f.i+'" title="Remove">\u00d7</button>'+
       '<div class="fp-row"><span class="fp-dest">'+modeTxt+' \u2192 '+it.destName+(it.postal?' \u00b7 '+it.postal:'')+'</span>'+
-      (p.est?'<span class="fp-price">'+p.est+'</span>':'')+'</div>'+
+      (p.est?'<span class="fp-price">'+p.est+(function(){var m=/\$([\d.,]+)/.exec(p.est);var a=m?parseFloat(m[1].replace(/,/g,'')):0;return (a>0&&trays>0)?'<small>$'+(a/(trays*72)).toFixed(3)+' per 72-cell plug \u00b7 $'+(a/trays).toFixed(2)+' per tray</small>':'';})()+'</span>':'')+'</div>'+
       '<div class="fp-meta">'+(rateBad?'Live rate unavailable right now \u2014 exact freight confirmed on your quote':p.t)+(p.sub?' \u00b7 '+p.sub:'')+'</div>'+
       svcRows+
       '<div class="fp-note">Based on the <b>'+trays+' tray'+(trays===1?'':'s')+'</b> in this quote \u2014 re-prices automatically when you change tray counts. Final freight is confirmed on your quote.</div>';
