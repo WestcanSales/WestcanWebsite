@@ -98,7 +98,8 @@ header{background:var(--white);border-bottom:1px solid var(--line);position:stic
 .fcard .fthumb{position:relative;aspect-ratio:4/3;background:var(--cream);overflow:hidden}
 .fcard .fthumb img{width:100%;height:100%;object-fit:cover;display:block}
 .fcard .chip{position:absolute;top:8px;left:8px;font-family:var(--ff-data);font-size:10px;font-weight:600;padding:4px 9px;border-radius:99px;white-space:nowrap}
-.chip-now{background:var(--green);color:var(--white)}
+.chip-new{background:var(--gold);color:var(--navy-deep);font-weight:700}
+  .chip-now{background:var(--green);color:var(--white)}
 .chip-week{background:var(--gold);color:var(--navy)}
 .fcard .fbody{padding:11px 13px 13px}
 .fcard .fname{font-weight:600;color:var(--ink);font-size:14px;line-height:1.25}
@@ -516,17 +517,17 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
       <div class="featured">
         <div class="ftitle"><b>This Week's Top Picks</b><span class="wk">WK 38</span></div>
         <div class="fcards">
-          <a class="fcard" href="variety.html?v=hakonechloa-macra-aureola">
-            <div class="fthumb"><img src="images/hakonechloa-macra-aureola-1.jpg" alt="Hakonechloa ’Aureola’" loading="lazy" decoding="async" class="fthumb-img"><span class="chip chip-now">Available now</span></div>
-            <div class="fbody"><span class="fname">Hakonechloa ’Aureola’</span><span class="fmeta">72 cell · Grass</span></div>
+          <a class="fcard" href="variety.html?v=alocasia-amazonica-frydek-variegata">
+            <div class="fthumb"><img src="images/alocasia-amazonica-frydek-variegata-1.jpg" alt="Alocasia &#39;Frydek Variegata&#39; — wholesale tropical plug" loading="lazy" decoding="async" class="fthumb-img"><span class="chip chip-new">New</span></div>
+            <div class="fbody"><span class="fname">Alocasia &#39;Frydek Variegata&#39;</span><span class="fmeta">72 cell &middot; Tropical</span></div>
           </a>
-          <a class="fcard" href="variety.html?v=hakonechloa-macra-all-gold">
-            <div class="fthumb"><img src="images/hakonechloa-macra-all-gold-1.jpg" alt="Hakonechloa ’All Gold’" loading="lazy" decoding="async" class="fthumb-img"><span class="chip chip-now">Available now</span></div>
-            <div class="fbody"><span class="fname">Hakonechloa ’All Gold’</span><span class="fmeta">72 cell · Grass</span></div>
+          <a class="fcard" href="variety.html?v=caladium-hybrida-ace-of-hearts">
+            <div class="fthumb"><img src="images/caladium-hybrida-ace-of-hearts-1.jpg" alt="Caladium &#39;Ace of Hearts&#39; — wholesale tropical plug" loading="lazy" decoding="async" class="fthumb-img"><span class="chip chip-new">New</span></div>
+            <div class="fbody"><span class="fname">Caladium &#39;Ace of Hearts&#39;</span><span class="fmeta">72 cell &middot; Tropical</span></div>
           </a>
-          <a class="fcard" href="variety.html?v=hakonechloa-macra-green">
-            <div class="fthumb"><img src="images/hakonechloa-macra-green-1.jpg" alt="Hakonechloa ’Green’" loading="lazy" decoding="async" class="fthumb-img"><span class="chip chip-now">Available now</span></div>
-            <div class="fbody"><span class="fname">Hakonechloa ’Green’</span><span class="fmeta">72 cell · Grass</span></div>
+          <a class="fcard" href="variety.html?v=philodendron-giganteum-blizzard-variegata">
+            <div class="fthumb"><img src="images/philodendron-giganteum-blizzard-variegata-1.jpg" alt="Philodendron &#39;Blizzard Variegata&#39; — wholesale tropical plug" loading="lazy" decoding="async" class="fthumb-img"><span class="chip chip-new">New</span></div>
+            <div class="fbody"><span class="fname">Philodendron &#39;Blizzard Variegata&#39;</span><span class="fmeta">72 cell &middot; Tropical</span></div>
           </a>
         </div>
       </div>
@@ -608,62 +609,6 @@ document.addEventListener('DOMContentLoaded',updateCartBadge);
       <a class="cat-card" href="catalog.html?cat=Tropicals"><div class="thumb"><img src="images/cat-tropicals.jpg" alt="Tropical plug — Monstera 'Thai Constellation'" loading="lazy" decoding="async"></div><h4>Tropicals</h4><span>31 varieties</span></a>
       <a class="cat-card" href="catalog.html?cat=Herbs"><div class="thumb"><img src="images/cat-herbs.jpg" alt="Herb plug — Lavandula 'Primavera'" loading="lazy" decoding="async"></div><h4>Herbs</h4><span>11 varieties</span></a>
       <a class="cat-card" href="https://webtrack.ballseed.com/" target="_blank" rel="noopener"><div class="thumb"><img src="images/cat-annuals.jpg" alt="Annual plug — Coleus" loading="lazy" decoding="async"></div><h4>Annuals ↗</h4><span>Book via Ball WebTrack</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- New tropicals -->
-<section class="newtrop" id="new-tropicals">
-  <style>
-    .newtrop{background:var(--white);padding:64px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-    .newtrop .sec-head{max-width:760px;margin-bottom:26px}
-    .newtrop h2{font-family:var(--ff-display);color:var(--navy);font-size:clamp(26px,3vw,34px);font-weight:400;margin-bottom:12px}
-    .newtrop .sec-head p{color:var(--muted);font-size:16px}
-    .ntgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
-    @media(max-width:1000px){.ntgrid{grid-template-columns:repeat(3,1fr)}}
-    @media(max-width:620px){.ntgrid{grid-template-columns:repeat(2,1fr)}}
-    .ntcard{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--white);transition:.18s;display:block}
-    .ntcard:hover{border-color:var(--green);transform:translateY(-2px)}
-    .ntthumb{aspect-ratio:1/1;overflow:hidden;background:var(--green-soft)}
-    .ntthumb img{width:100%;height:100%;object-fit:cover;display:block}
-    .ntbody{padding:13px 14px}
-    .ntname{display:block;font-weight:600;font-size:14px;line-height:1.35;color:var(--ink)}
-    .ntmeta{display:block;font-family:var(--ff-data);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:5px}
-    .ntfoot{margin-top:24px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-    .ntfoot .note{color:var(--muted);font-size:14.5px}
-  </style>
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow">New for 2027</div>
-      <h2>Five new tropicals, grown from tissue culture.</h2>
-      <p>Fresh additions to our tropical foliage range &mdash; started from tissue culture and grown on here in Langley as 72-cell liners.</p>
-    </div>
-    <div class="ntgrid">
-      <a class="ntcard" href="varieties/alocasia-amazonica-frydek-variegata.html">
-        <div class="ntthumb"><img src="images/alocasia-amazonica-frydek-variegata-1.jpg" alt="Alocasia amazonica &#39;Frydek Variegata&#39; — wholesale tropical plug" loading="lazy" decoding="async"></div>
-        <div class="ntbody"><span class="ntname">Alocasia amazonica &#39;Frydek Variegata&#39;</span><span class="ntmeta">Elephant Ear &middot; 72 cell</span></div>
-      </a>
-      <a class="ntcard" href="varieties/philodendron-giganteum-blizzard-variegata.html">
-        <div class="ntthumb"><img src="images/philodendron-giganteum-blizzard-variegata-1.jpg" alt="Philodendron giganteum &#39;Blizzard Variegata&#39; — wholesale tropical plug" loading="lazy" decoding="async"></div>
-        <div class="ntbody"><span class="ntname">Philodendron giganteum &#39;Blizzard Variegata&#39;</span><span class="ntmeta">Philodendron &middot; 72 cell</span></div>
-      </a>
-      <a class="ntcard" href="varieties/philodendron-hybrida-forest-of-white.html">
-        <div class="ntthumb"><img src="images/philodendron-hybrida-forest-of-white-1.jpg" alt="Philodendron hybrida &#39;Forest of White&#39; — wholesale tropical plug" loading="lazy" decoding="async"></div>
-        <div class="ntbody"><span class="ntname">Philodendron hybrida &#39;Forest of White&#39;</span><span class="ntmeta">Philodendron &middot; 72 cell</span></div>
-      </a>
-      <a class="ntcard" href="varieties/caladium-hybrida-ace-of-hearts.html">
-        <div class="ntthumb"><img src="images/caladium-hybrida-ace-of-hearts-1.jpg" alt="Caladium hybrida &#39;Ace of Hearts&#39; — wholesale tropical plug" loading="lazy" decoding="async"></div>
-        <div class="ntbody"><span class="ntname">Caladium hybrida &#39;Ace of Hearts&#39;</span><span class="ntmeta">Angel Wings &middot; 72 cell</span></div>
-      </a>
-      <a class="ntcard" href="varieties/caladium-hybrida-spring-fling.html">
-        <div class="ntthumb"><img src="images/caladium-hybrida-spring-fling-1.jpg" alt="Caladium hybrida &#39;Spring Fling&#39; — wholesale tropical plug" loading="lazy" decoding="async"></div>
-        <div class="ntbody"><span class="ntname">Caladium hybrida &#39;Spring Fling&#39;</span><span class="ntmeta">Angel Wings &middot; 72 cell</span></div>
-      </a>
-    </div>
-    <div class="ntfoot">
-      <a class="btn btn-primary" href="catalog.html?cat=Tropicals">Browse all tropicals</a>
-      <a class="btn btn-ghost" href="tissue-culture.html">About our tissue culture</a>
-      <span class="note">Ask us for availability and delivery weeks.</span>
     </div>
   </div>
 </section>
@@ -829,6 +774,75 @@ document.addEventListener('click',function(e){
 <script>
 /* refresh My Quote badge when returning via back/forward (bfcache) */
 window.addEventListener('pageshow',function(){ if(typeof updateCartBadge==='function') updateCartBadge(); });
+</script>
+
+<!-- New-tropicals scroll popup -->
+<style>
+  .ntpop{position:fixed;right:20px;bottom:20px;z-index:80;width:370px;max-width:calc(100vw - 32px);
+    background:var(--white);border:1px solid var(--line);border-left:4px solid var(--gold);
+    border-radius:12px;box-shadow:0 14px 40px rgba(31,42,92,.18);padding:16px 18px 17px;
+    opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .32s ease,transform .32s ease}
+  .ntpop.show{opacity:1;transform:translateY(0);pointer-events:auto}
+  .ntpop .eyebrow{font-family:var(--ff-data);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--green);font-weight:700;margin:0 0 6px}
+  .ntpop h4{font-family:var(--ff-display);font-weight:400;color:var(--navy);font-size:17.5px;line-height:1.3;margin:0 0 10px;padding-right:18px}
+  .ntpop .thumbs{display:flex;gap:6px;margin-bottom:12px}
+  .ntpop .thumbs img{width:100%;height:62px;object-fit:cover;border-radius:6px;display:block;border:1px solid var(--line)}
+  .ntpop .row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .ntpop a.ntgo{font-weight:600;font-size:14px;color:#fff;background:var(--green);padding:9px 15px;border-radius:8px;white-space:nowrap;display:inline-block}
+  .ntpop a.ntgo:hover{background:var(--green-dark);color:#fff}
+  .ntpop a.nttc{color:var(--muted)}
+  .ntpop .nttc{font-size:13.5px;color:var(--muted);text-decoration:underline}
+  .ntpop .x{position:absolute;top:9px;right:10px;border:none;background:none;cursor:pointer;
+    font-size:19px;line-height:1;color:var(--muted);padding:3px 6px;border-radius:5px}
+  .ntpop .x:hover{color:var(--navy);background:var(--cream)}
+  @media(max-width:620px){
+    .ntpop{right:10px;left:10px;bottom:10px;width:auto;padding:14px 15px 15px}
+    .ntpop .thumbs img{height:54px}
+  }
+  @media(prefers-reduced-motion:reduce){.ntpop{transition:none}}
+</style>
+<aside class="ntpop" id="ntpop" role="complementary" aria-label="New tropical varieties" aria-hidden="true">
+  <button class="x" id="ntpopX" aria-label="Dismiss">&times;</button>
+  <p class="eyebrow">New for 2027</p>
+  <h4>Five new tropicals, grown from tissue culture.</h4>
+  <div class="thumbs">
+    <img src="images/alocasia-amazonica-frydek-variegata-1.jpg" alt="Alocasia 'Frydek Variegata'" loading="lazy" decoding="async">
+    <img src="images/philodendron-giganteum-blizzard-variegata-1.jpg" alt="Philodendron 'Blizzard Variegata'" loading="lazy" decoding="async">
+    <img src="images/caladium-hybrida-ace-of-hearts-1.jpg" alt="Caladium 'Ace of Hearts'" loading="lazy" decoding="async">
+    <img src="images/philodendron-hybrida-forest-of-white-1.jpg" alt="Philodendron 'Forest of White'" loading="lazy" decoding="async">
+    <img src="images/caladium-hybrida-spring-fling-1.jpg" alt="Caladium 'Spring Fling'" loading="lazy" decoding="async">
+  </div>
+  <div class="row">
+    <a class="ntgo" href="catalog.html?cat=Tropicals">See the tropicals</a>
+    <a class="nttc" href="tissue-culture.html">About our tissue culture</a>
+  </div>
+</aside>
+<script>
+/* Slides up once the visitor starts scrolling; dismissible, and stays dismissed
+   for the rest of the browser session. */
+(function(){
+  var el=document.getElementById('ntpop'); if(!el) return;
+  var KEY='wcNewTropDismissed';
+  try{ if(sessionStorage.getItem(KEY)==='1') return; }catch(e){}
+  var shown=false;
+  function show(){
+    if(shown) return; shown=true;
+    el.classList.add('show'); el.setAttribute('aria-hidden','false');
+    window.removeEventListener('scroll',onScroll);
+    if(typeof gtag==='function') gtag('event','new_tropicals_popup_shown');
+  }
+  function hide(){
+    el.classList.remove('show'); el.setAttribute('aria-hidden','true');
+    try{ sessionStorage.setItem(KEY,'1'); }catch(e){}
+  }
+  function onScroll(){ if(window.scrollY>220) show(); }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  document.getElementById('ntpopX').addEventListener('click',hide);
+  el.querySelector('.ntgo').addEventListener('click',function(){
+    try{ sessionStorage.setItem(KEY,'1'); }catch(e){}
+  });
+})();
 </script>
 </body>
 
