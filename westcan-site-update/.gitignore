@@ -1,0 +1,13 @@
+# Local helper scripts — used on your computer, never published to the site
+deploy.sh
+deploy.bat
+update_site.py
+
+# one-off transfer archive (safe to delete)
+westcan-seo-pages.zip
+
+# OS clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+_to_delete/

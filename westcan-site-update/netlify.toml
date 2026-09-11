@@ -1,0 +1,146 @@
+# Westcan Greenhouses — static site config
+
+[[redirects]]
+  from = "/westcan-home.html"
+  to = "/index.html"
+  status = 301
+
+
+# Legacy Shopify URLs that STILL earn Google impressions (GSC, Sep 2026).
+# These must stay ABOVE the catch-all /pages/* rule below — Netlify takes the
+# first match. Each points at the closest real page so the old ranking transfers
+# instead of being dropped as a soft 404 (which a blanket redirect to / causes).
+[[redirects]]
+  from = "/pages/who-we-are"
+  to = "/about.html"
+  status = 301
+[[redirects]]
+  from = "/pages/catalog"
+  to = "/catalog.html"
+  status = 301
+[[redirects]]
+  from = "/pages/availability-list"
+  to = "/availability.html"
+  status = 301
+[[redirects]]
+  from = "/pages/cupressus-macrocarpa-mirjam-greencrest"
+  to = "/varieties/cupressus-macrocarpa-mirjam-greencrest.html"
+  status = 301
+[[redirects]]
+  from = "/pages/grasses"
+  to = "/ornamental-grass-plugs.html"
+  status = 301
+[[redirects]]
+  from = "/pages/perennials"
+  to = "/perennial-liners.html"
+  status = 301
+[[redirects]]
+  from = "/pages/conifers-shrubs"
+  to = "/shrub-conifer-liners.html"
+  status = 301
+[[redirects]]
+  from = "/pages/ferns"
+  to = "/fern-liners.html"
+  status = 301
+[[redirects]]
+  from = "/pages/ground-covers"
+  to = "/ground-cover-plugs.html"
+  status = 301
+[[redirects]]
+  from = "/pages/specialty-helleborus-perennials"
+  to = "/catalog.html?q=helleborus"
+  status = 301
+[[redirects]]
+  from = "/pages/succulents"
+  to = "/catalog.html?cat=Succulents"
+  status = 301
+[[redirects]]
+  from = "/pages/herbs"
+  to = "/catalog.html?cat=Herbs"
+  status = 301
+[[redirects]]
+  from = "/pages/tropicals"
+  to = "/catalog.html?cat=Tropicals"
+  status = 301
+[[redirects]]
+  from = "/pages/annuals"
+  to = "/catalog.html"
+  status = 301
+[[redirects]]
+  from = "/pages/tissue-culture"
+  to = "/tissue-culture.html"
+  status = 301
+[[redirects]]
+  from = "/pages/ball-rooting-station"
+  to = "/about.html"
+  status = 301
+[[redirects]]
+  from = "/pages/contract-propagation"
+  to = "/contact.html"
+  status = 301
+[[redirects]]
+  from = "/pages/contract-seeding"
+  to = "/contact.html"
+  status = 301
+[[redirects]]
+  from = "/pages/copy-of-contact"
+  to = "/contact.html"
+  status = 301
+[[redirects]]
+  from = "/collections/all"
+  to = "/catalog.html"
+  status = 301
+[[redirects]]
+  from = "/blogs/news"
+  to = "/index.html"
+  status = 301
+
+# Legacy Shopify paths → new pages (protects bookmarks + SEO)
+[[redirects]]
+  from = "/products/*"
+  to = "/catalog.html"
+  status = 301
+[[redirects]]
+  from = "/collections/*"
+  to = "/catalog.html"
+  status = 301
+[[redirects]]
+  from = "/pages/contact*"
+  to = "/contact.html"
+  status = 301
+[[redirects]]
+  from = "/pages/*"
+  to = "/index.html"
+  status = 301
+[[redirects]]
+  from = "/blogs/*"
+  to = "/index.html"
+  status = 301
+[[redirects]]
+  from = "/cart"
+  to = "/quote.html"
+  status = 301
+[[redirects]]
+  from = "/search"
+  to = "/catalog.html"
+  status = 301
+
+# Twight Sky merged entry renamed to Anouk Purple Flare (Aug 2026)
+[[redirects]]
+  from = "/varieties/lavandula-stoechas-anouk-purple-flare-or-twight-sky.html"
+  to = "/varieties/lavandula-stoechas-anouk-purple-flare.html"
+  status = 301
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+
+[[headers]]
+  for = "/catalogs/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
