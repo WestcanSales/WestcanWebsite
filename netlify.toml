@@ -68,7 +68,7 @@
   status = 301
 [[redirects]]
   from = "/pages/tissue-culture"
-  to = "/about.html"
+  to = "/tissue-culture.html"
   status = 301
 [[redirects]]
   from = "/pages/ball-rooting-station"

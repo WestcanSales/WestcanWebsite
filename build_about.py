@@ -26,7 +26,7 @@ ABOUT_CSS = '''
 .partners-list span{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);border-radius:99px;padding:6px 16px;font-size:14px}
 h2.sec{font-family:var(--ff-display);color:var(--navy);font-size:28px;margin:34px 0 14px}
 .ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px}
-main{padding-bottom:120px}
+main,main.wrap{padding-bottom:120px}
 .growing{display:grid;grid-template-columns:1.15fr 1fr;gap:44px;align-items:start;margin-top:8px}
 @media(max-width:860px){.growing{grid-template-columns:1fr}}
 .growing img{border-radius:14px;border:1px solid var(--line);width:100%;aspect-ratio:3/4;object-fit:cover;max-height:520px}

@@ -2,6 +2,7 @@ abelia-grandiflora-kaleidoscope
 acorus-gramineus-ogon
 agapanthus-hybrida-twister
 ajuga-reptans-pink-lightning
+alocasia-amazonica-frydek-variegata
 arctostaphylos-uva-ursi-massachussets
 armeria-maritima-splendens
 artemisia-gmelini-sunfern-olympia
@@ -13,6 +14,8 @@ brunnera-macrophylla-jack-frost
 brunnera-macrophylla-looking-glass
 brunnera-macrophylla-sterling-silver
 buxus-sempervirens-variegata
+caladium-hybrida-ace-of-hearts
+caladium-hybrida-spring-fling
 calamagrostis-x-acutiflora-karl-foerster
 carex-appalachica
 carex-comans-frosted-curls
@@ -114,6 +117,8 @@ panicum-virgatum-prairie-flame
 pennisetum-alopecuroides-little-bunny
 pennisetum-setaceum-rubrum
 phalaris-arundinacea-picta
+philodendron-giganteum-blizzard-variegata
+philodendron-hybrida-forest-of-white
 philodendron-pink-princess
 phlox-subulata-spring-lavender
 phormium-tenax-black

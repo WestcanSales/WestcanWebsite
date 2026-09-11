@@ -3,6 +3,10 @@ deploy.sh
 deploy.bat
 update_site.py
 
+# transfer archives + helper (root level only) — never published
+/*.zip
+apply-update.bat
+
 # OS clutter
 .DS_Store
 Thumbs.db
