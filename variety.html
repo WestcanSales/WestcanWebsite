@@ -588,6 +588,15 @@ const DB={"abelia-grandiflora-kaleidoscope": {"g": "Abelia", "n": "Abelia grandi
 if(window.stampAvailability)stampAvailability(Object.values(DB));
 function qp(k){return new URLSearchParams(location.search).get(k);}
 const slug=qp('v')||Object.keys(DB)[0];
+/* SEO: this interactive page duplicates the static /varieties/<slug>.html page.
+   Point the canonical (and og:url) at the static page so Google consolidates the
+   ranking there instead of on the bare /variety.html template. */
+(function(){try{
+  if(!qp('v'))return;               /* bare /variety.html is not a duplicate of any variety */
+  var u='https://westcangrhs.com/varieties/'+slug+'.html';
+  var c=document.querySelector('link[rel="canonical"]'); if(c)c.setAttribute('href',u);
+  var o=document.querySelector('meta[property="og:url"]'); if(o)o.setAttribute('content',u);
+}catch(e){}})();
 const v=DB[slug]||Object.values(DB)[0];
 // live availability sync: if this variety is on this week's list, mark it available and pre-fill trays
 if(window.AVAIL_NOW && AVAIL_NOW[slug]){

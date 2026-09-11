@@ -630,6 +630,7 @@ all.onclick=()=>{fCat='All';syncChips();build();};catchips.appendChild(all);
 cats.forEach(v=>{const b=document.createElement('button');b.className='chip-f';b.dataset.val=v;
   b.innerHTML=v+' <span class="ct">'+countBy(v)+'</span>';b.onclick=()=>{fCat=v;syncChips();build();};catchips.appendChild(b);});
 function syncChips(){catchips.querySelectorAll('.chip-f').forEach(b=>b.classList.toggle('on',(b.dataset.val||'All')===fCat));}
+const _pq=new URLSearchParams(location.search).get('q');if(_pq&&q){q.value=_pq;}   /* ?q= prefills the search box (used by legacy-URL redirects, e.g. /pages/specialty-helleborus-perennials) */
 const _pcat=new URLSearchParams(location.search).get('cat');if(_pcat){const _m=cats.find(c=>c.toLowerCase()===_pcat.toLowerCase());if(_m){fCat=_m;syncChips();}}
 const letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
 function build(){
