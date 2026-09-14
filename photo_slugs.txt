@@ -100,7 +100,7 @@ liriope-spicata
 lonicera-nitida-baggesen-s-gold
 lysimachia-nummularia-goldilocks
 malva-sylvestris-zebrina
-matteuccia-strutipteris-no-us-eligible
+matteuccia-struthiopteris
 miscanthus-sinensis-kaskade
 miscanthus-sinensis-little-kitten
 miscanthus-sinensis-morning-light
@@ -129,7 +129,7 @@ plectranthus-hybrida-nova-brilliant
 polemonium-hybrida-hurricane-ridge
 polemonium-pulcherrimum-golden-feathers
 polystichum-biaristatum
-polystichum-munitum-sword-fern-no-us-eligible
+polystichum-munitum-sword-fern
 polystichum-tsus-simense-korean-rock-fern
 pulmonaria-hybrida-high-contrast
 rhododendron-azalea-vuyk-s-scarlet

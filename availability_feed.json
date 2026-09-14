@@ -14991,7 +14991,7 @@
   },
   {
    "code": "POLYMUNISWOR072",
-   "desc": "Polystichum munitum 'Sword Fern' (NO US ELIGIBLE)",
+   "desc": "Polystichum munitum 'Sword Fern'",
    "group": "FERN",
    "size": "72",
    "cat": "Ferns",
@@ -15002,7 +15002,7 @@
    "first_year": 2027,
    "first_qty": 10000,
    "us": "yes",
-   "slug": "polystichum-munitum-sword-fern-no-us-eligible"
+   "slug": "polystichum-munitum-sword-fern"
   },
   {
    "code": "POLYMUNITASS072",

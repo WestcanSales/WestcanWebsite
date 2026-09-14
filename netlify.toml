@@ -13,6 +13,24 @@
   to = "/tissue-culture.html"
   status = 301
 
+
+# Renamed variety slugs (US-eligibility text removed from names, Sep 2026)
+[[redirects]]
+  from = "/varieties/aralia-cordata-sun-king-not-available-to-us.html"
+  to = "/varieties/aralia-cordata-sun-king.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/varieties/matteuccia-strutipteris-no-us-eligible.html"
+  to = "/varieties/matteuccia-struthiopteris.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/varieties/polystichum-munitum-sword-fern-no-us-eligible.html"
+  to = "/varieties/polystichum-munitum-sword-fern.html"
+  status = 301
+  force = true
+
 # Belt-and-braces: the duplicate site copy that was committed by mistake.
 [[redirects]]
   from = "/westcan-site-update/*"
